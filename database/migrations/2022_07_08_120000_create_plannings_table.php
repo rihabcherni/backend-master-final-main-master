@@ -19,9 +19,11 @@ class CreatePlanningsTable extends Migration
             $table->string('start');
             $table->string('end');
             $table->boolean('validation')->default(0);
+            $table->enum('statut', ['confirmed', 'non confirmed','collected','problem'])->default('non confirmed');
+            $table->dateTime('date_collecte')->nullable();
             $table->string('type_poubelle');
-            $table->integer('id_poubelle');
             $table->integer('id_ouvrier')->nullable();
+            // $table->foreignId('id_ouvrier')->constrained('ouvriers')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

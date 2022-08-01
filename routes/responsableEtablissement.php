@@ -23,7 +23,6 @@ use App\Http\Controllers\MessageController;
     Route::group(['prefix' =>'auth-responsable-etablissement'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::get('/planning-responsable', [PlanningController::class, 'planningResponsable']);
-
                     Route::group(['middleware' => 'auth:responsable_etablissement'], function() {
                         Route::post('/modifier-responsable-etablissement-password',[AuthResponsableEtablissementController::class,'modifierPasswordResponsableEtablissement']);
                         Route::post('/send',[AuthResponsableEtablissementController::class,'send']);

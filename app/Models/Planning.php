@@ -17,6 +17,8 @@ class Planning extends Model
         'start',
         'end',
         'validation',
+        'statut',
+        'date_collecte',
         'type_poubelle',
         'id_poubelle',
         'id_ouvrier',
