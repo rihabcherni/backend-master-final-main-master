@@ -53,7 +53,7 @@ class Poubelle extends JsonResource{
             'bloc_etablissement_id'=> $bloc_etabl->id,
             'etage'=> $etage_nom,
             'etage_id'=> $etage->id,
-            'qrcode' => $this->qrcode,
+            'qrcode' => $this->QRcode,
             'type' => $this->type,
             'Etat' => $this->Etat,
             'quantite' =>round((($this->Etat * config('global.capacite_poubelle'))/100)* 1000)/1000,

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
 use App\Http\Controllers\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Poubelle as PoubelleResource;
 use App\Models\Poubelle;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\GestionPoubelleEtablissements\PoubelleRequest;
 class PoubelleController extends BaseController{
     public function index(){
@@ -11,6 +12,11 @@ class PoubelleController extends BaseController{
     }
     public function store(PoubelleRequest $request){
         $input = $request->all();
+        $last_id=Poubelle::count()+1;
+        $poubelleNom=$request->nom_etablissement.'-'.$request->nom_bloc_etablissement.'-E'.$request->nom_etage_etablissement.'-BP'.$request->bloc_poubelle_id.'-N'.$last_id;
+        $qrcode= Hash::make($poubelleNom);
+        $input['QRcode']=  $qrcode;
+        $input['nom']=  $poubelleNom;
         $poubelle = Poubelle::create($input);
         return $this->handleResponse(new PoubelleResource($poubelle),'poubelle crée!');
     }

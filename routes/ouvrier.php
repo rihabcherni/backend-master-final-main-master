@@ -9,7 +9,8 @@
     use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ViderPoubellesController;
 
-    Route::group(['prefix' => 'auth-ouvrier'], function () {
+Route::put('confirme-planning-ouvrier/{id}',[AuthOuvrierController::class, 'confirmePlanningOuvrier']);
+Route::group(['prefix' => 'auth-ouvrier'], function () {
         Route::post('/qrlogin/{email}',[AuthOuvrierController::class, 'qrlogin']);
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::group(['middleware' => 'auth:ouvrier'], function() {

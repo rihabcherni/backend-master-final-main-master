@@ -1527,4 +1527,9 @@ class PlanningController extends BaseController{
         
         return response()->json($affichage);
     }
+
+
+    public function confirmePlanningOuvrier(){
+        return 'rrr';  
+    }
 }
