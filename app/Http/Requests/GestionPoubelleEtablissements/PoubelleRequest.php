@@ -14,22 +14,20 @@ class PoubelleRequest extends FormRequest{
     public function rules()  {
         if ($this->isMethod('post')) {
             return [
-                'nom_etablissement'=>'required',
-                'nom_bloc_etablissement'=>'required',
-                'nom_etage_etablissement'=>'required',
+                'etablissement_id'=>'required',
+                'bloc_etablissement_id'=>'required',
+                'etage_etablissement_id'=>'required',
                 'bloc_poubelle_id' =>'required',
                 'type'=>'required',Rule::in(['composte', 'plastique','papier','canette']),
-                'Etat'=> 'required|between:0,100',
             ];
         }else if($this->isMethod('PUT')){
             return [
-                'nom_etablissement'=>'sometimes',
-                'nom_bloc_etablissement'=>'sometimes',
-                'nom_etage_etablissement'=>'sometimes',
+                'etablissement_id'=>'sometimes',
+                'bloc_etablissement_id'=>'sometimes',
+                'etage_etablissement_id'=>'sometimes',
                 'bloc_poubelle_id' =>'sometimes',
                 'nom' =>'sometimes|string',
                 'type'=>'sometimes',Rule::in(['composte', 'plastique','papier','canette']),
-                'Etat'=> 'sometimes|between:0,100',
              ];
         }
 

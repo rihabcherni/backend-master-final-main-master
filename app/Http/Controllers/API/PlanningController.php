@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BaseController as BaseController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\PoubelleController;
-use App\Http\Controllers\API\Dashboard\DashboardEtablissementController;
+use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\GlobaleStatistiqueController;
 use App\Models\Planning;
 use Carbon\Carbon;
 use App\Http\Resources\GestionPoubelleEtablissements\Planning as Ressource_Planning;
@@ -34,15 +34,15 @@ class PlanningController extends BaseController{
 
     public function planningResponsable(){
         $allPlanning =Planning::all();
-        $dashboard_etablissement_controller = new DashboardEtablissementController;
-        $data_dashboard_etablissement_controller = $dashboard_etablissement_controller->dashboard_etablissement();
+        $GlobaleStatistiqueController = new GlobaleStatistiqueController;
+        $data_dashboard_etablissement_controller = $GlobaleStatistiqueController->globaleStatistiques();
 
         $poubelle_controller = new PoubelleController;
         $data_poubelle_controller = $poubelle_controller->index()->getData();
         $poubelles = $data_poubelle_controller->data;
 
         $week=['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-        $jour = strtolower(Carbon::now()->translatedFormat('l'));
+        $jour= strtolower(Carbon::now()->translatedFormat('l'));
         $heure_systeme = Carbon::now()->translatedFormat('H');
 
         $horaire= [6,12,13,15,16,19];

@@ -9,7 +9,6 @@ use App\Http\Controllers\API\TransportDechet\CamionController;
 use App\Http\Controllers\API\Dashboard\SommeDechetController;
 use App\Http\Controllers\API\Dashboard\RechercheController;
 use App\Http\Controllers\API\Dashboard\RegionController;
-use App\Http\Controllers\API\Dashboard\CalendrierController;
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\Auth\ClientDechet\AuthClientDechetController;
 use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
@@ -36,10 +35,6 @@ use App\Http\Controllers\ViderPoubellesController;
             Route::get('/camion/searchMatricule/{matricule}', [CamionController::class, 'searchMatricule']);
 
     /** -------------  **************         fin recherche      **************************  ------------------**/
-
-    /** -------------  **************         debut Calendrier      **************************  ------------------**/
-            Route::get('/calendrier', [CalendrierController::class, 'calendrier']);
-    /** -------------  **************         fin Calendrier      **************************  ------------------**/
 
 
 /** -------------  **************           fin web         **************************  ------------------**/
@@ -97,13 +92,7 @@ use App\Http\Controllers\ViderPoubellesController;
                 Route::get('/historique-vider-poubelle-responsable', [ViderPoubellesController::class,'HistoriqueViderResponsable']);
                 Route::get('/historique-vider-poubelle-gestionnaire', [ViderPoubellesController::class,'HistoriqueViderGestionnaire']);
 
-                Route::get('/situation-financiere-mois', [ViderPoubellesController::class,'SituationFianciereMoisResponsable']);
-                Route::get('/resp-quantite-collecte-mois', [ViderPoubellesController::class,'quantiteCollecteMoisResponsable']);
-                Route::get('/revenu-responsable-mois', [ViderPoubellesController::class,'revenu_etablissement_responsable']);
-                Route::get('/revenu-responsable-annee', [ViderPoubellesController::class,'revenuEtablissementResponsableAnnee']);
-                Route::get('/quantite-responsable-annee', [ViderPoubellesController::class,'QuantiteEtablissementResponsableAnnee']);
-
-
+                Route::get('/situation-financiere-mois', [ViderPoubellesController::class,'SituationFianciereMoisResponsable']);            
 
                 Route::get('/situation-financiere-mois-gestionnaire', [ViderPoubellesController::class,'SituationFianciereMoisGestionnaire']);
 

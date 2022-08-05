@@ -38,6 +38,15 @@ use App\Http\Controllers\ConversationController;
 
 
 
+        
+        Route::get('/etablissement-all-details',[PoubelleController::class,"etablissementAllDetails"]);
+
+
+        Route::get('/bloc-etablissement-liste/{etab}',[PoubelleController::class,"BlocEtablissementListe"]);
+        Route::get('/etage-etablissement-liste/{etab}/{bloc_etab}',[PoubelleController::class,"EtageEtablissementListe"]);
+        Route::get('/bloc-poubelle-liste/{etab}/{bloc_etab}/{etage}',[PoubelleController::class,"BlocPoubelleListe"]);
+        
+        
         Route::get('/situation-financiere-gestionnaire-jour', [SituationFinanciereController::class, 'SituationFinanciereGestionnaireJour']);
         Route::get('/situation-financiere-gestionnaire-mensuel', [SituationFinanciereController::class, 'SituationFinanciereGestionnaireMensuel']);
 

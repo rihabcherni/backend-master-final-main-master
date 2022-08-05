@@ -14,7 +14,7 @@ class CreatePoubellesTable extends Migration
             $table->string('nom');
             $table->string('QRcode',255)->nullable();
             $table->enum('type', ['plastique', 'composte','papier','canette']);
-            $table->float('Etat');
+            $table->float('Etat')->default(0);
             // $table->unique( array('type','bloc_poubelle_id') );
             $table->timestamps();
             $table->softDeletes();

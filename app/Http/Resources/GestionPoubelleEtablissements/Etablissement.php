@@ -32,7 +32,8 @@ class Etablissement extends JsonResource{
             'quantite_composte_mensuel' => $this->quantite_composte_mensuel,
             'quantite_canette_mensuel' => $this->quantite_canette_mensuel,
 
-
+            'bloc_etablissements'=>$this->bloc_etablissements,
+            'etage'=>$this->etage_etablissements,
             'bloc_poubelle'=>$this->bloc_poubelles,
             'camion'=>$this->camion,
 
