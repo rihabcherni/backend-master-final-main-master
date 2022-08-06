@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Bloc_poubelle as Bloc_poubelleResource;
 use App\Models\Bloc_poubelle;

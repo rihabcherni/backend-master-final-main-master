@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Etablissement as EtablissementResource;
 use App\Models\Etablissement;

@@ -1,6 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionPanne;
-
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Globale\BaseController as BaseController;

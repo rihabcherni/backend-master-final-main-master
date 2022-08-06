@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Poubelle as PoubelleResource;
 use App\Models\Poubelle;
@@ -36,7 +36,7 @@ class PoubelleController extends BaseController{
     public function update(PoubelleRequest $request, Poubelle $poubelle){
         $input = $request->all();
         $nom= $poubelle->nom;
-      
+
         $posEtab =strpos($nom,'-');
         $etab= substr($nom,0,$posEtab) ;
         if($request->has('etablissement_id')) {
@@ -59,7 +59,7 @@ class PoubelleController extends BaseController{
         };
 
         $nom= substr($nom,$posEtage+1 );
-       
+
         $posBlocPoubelle= strpos($nom, '-');
         $blocPouelle=  substr($nom,2,$posBlocPoubelle-2) ;
         if($request->has('bloc_poubelle_id')) {
@@ -127,7 +127,7 @@ class PoubelleController extends BaseController{
     public function EtageEtablissementListe($etab, $bloc_etab){
         $etab_id= Etablissement::where("nom_etablissement", $etab)->first()->id;
         $id_bloc_etablissement= Bloc_etablissement::where("etablissement_id",$etab_id)->where('nom_bloc_etablissement', $bloc_etab)->pluck("id");
-        $etage= Etage_etablissement::where("bloc_etablissement_id", $id_bloc_etablissement)->pluck("nom_etage_etablissement"); 
+        $etage= Etage_etablissement::where("bloc_etablissement_id", $id_bloc_etablissement)->pluck("nom_etage_etablissement");
         return $etage;
     }
 
@@ -135,7 +135,7 @@ class PoubelleController extends BaseController{
         $etab_id= Etablissement::where("nom_etablissement", $etab)->first()->id;
         $id_bloc_etablissement= Bloc_etablissement::where("etablissement_id",$etab_id)->where('nom_bloc_etablissement', $bloc_etab)->pluck("id");
         $id_etage= Etage_etablissement::where("bloc_etablissement_id",$id_bloc_etablissement)->where('nom_etage_etablissement', $etage)->pluck("id");
-        $bloc_poubelle= Bloc_poubelle::where("etage_etablissement_id", $id_etage)->pluck("id"); 
+        $bloc_poubelle= Bloc_poubelle::where("etage_etablissement_id", $id_etage)->pluck("id");
         return $bloc_poubelle;
     }
 }

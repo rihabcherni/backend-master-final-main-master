@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionCompte;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Client_dechet as Client_dechetResource;
 use App\Models\Client_dechet;
@@ -38,7 +38,6 @@ class Client_dechetController extends BaseController{
 
 
     }
-
     public function destroy($id) {
         $client = Client_dechet::find($id);
         if (is_null($client)) {
@@ -50,5 +49,4 @@ class Client_dechetController extends BaseController{
         }
 
     }
-
 }

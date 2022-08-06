@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionDechet;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet;
 use App\Models\Commande_dechet;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Dechet as DechetResource;

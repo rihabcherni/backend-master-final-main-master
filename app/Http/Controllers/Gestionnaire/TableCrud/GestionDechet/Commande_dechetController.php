@@ -1,10 +1,9 @@
 <?php
-namespace App\Http\Controllers\API\GestionDechet;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Commande_dechet as Commande_dechetResource;
 use App\Models\Commande_dechet;
 use App\Http\Requests\GestionDechet\Commande_dechetRequest;
-
 class Commande_dechetController extends BaseController{
     public function index(){
         $commande = Commande_dechet::all();
@@ -38,10 +37,7 @@ class Commande_dechetController extends BaseController{
             return $this->handleResponse(new Commande_dechetResource($commande), 'commande dechet supprimé!');
         }
     }
-
     public function afficherDechetsClient(){
-
-        
         $commande = Commande_dechet::where('client_dechet_id', '=',auth()->guard('client_dechet')->user()->id)->get();
         // return $commande;
         if (is_null($commande)) {

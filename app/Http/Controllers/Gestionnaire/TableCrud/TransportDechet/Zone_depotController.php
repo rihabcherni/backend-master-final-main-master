@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\TransportDechet;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\TransportDechet\Zone_depot as Zone_depotResource;
 use App\Models\Zone_depot;

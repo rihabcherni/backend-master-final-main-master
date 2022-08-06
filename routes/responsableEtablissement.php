@@ -1,11 +1,12 @@
 <?php
 use App\Http\Controllers\Globale\ViderPoubellesController;
 
+use App\Http\Controllers\ResponsableEtablissement\ResponableEtablissementResponsableController;
+
 
 use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\GlobaleStatistiqueController;
 use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\TablePoubellePlusRemplisController;
 use App\Http\Controllers\API\Dashboard\RechercheController;
-use App\Http\Controllers\API\GestionCompte\ResponableEtablissementResponsableController;
 use App\Http\Controllers\Globale\PlanningController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\Bloc_etablissementsController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\BlocPoubellesController;

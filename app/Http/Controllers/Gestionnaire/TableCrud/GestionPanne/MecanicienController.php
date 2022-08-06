@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionPanne;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPanne\Mecanicien as MecanicienResource;
 use App\Models\Mecanicien;

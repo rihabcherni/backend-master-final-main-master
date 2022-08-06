@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements;
 
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Etage_etablissements as Etage_etablissementsResource;
 use App\Models\Etage_etablissement;
 use App\Http\Requests\GestionPoubelleEtablissements\Etage_etablissementsRequest;
 
-class Etage_etablissementsControlller extends BaseController
-{
+class Etage_etablissementsControlller extends BaseController{
     public function index(){
         $etage_etablissement = Etage_etablissement::all();
         return $this->handleResponse(Etage_etablissementsResource::collection($etage_etablissement), 'Affichage des etages etablissement!');
@@ -41,7 +40,6 @@ class Etage_etablissementsControlller extends BaseController
             return $this->handleResponse(new Etage_etablissementsResource($etage_etablissement), 'etage etablissement supprimé!');
         }
     }
-
 }
 
 

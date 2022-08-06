@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements;
 
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Bloc_etablissements as Bloc_etablissementsResource;
 use App\Models\Bloc_etablissement;
 use App\Http\Requests\GestionPoubelleEtablissements\Bloc_etablissementsRequest;
-class Bloc_etablissementsController extends BaseController
-{
+class Bloc_etablissementsController extends BaseController{
     public function index(){
         $bloc_etablissement = Bloc_etablissement::all();
         return $this->handleResponse(Bloc_etablissementsResource::collection($bloc_etablissement), 'Affichage des blocs etablissement!');
@@ -40,6 +39,5 @@ class Bloc_etablissementsController extends BaseController
             return $this->handleResponse(new Bloc_etablissementsResource($bloc_etablissement), 'bloc etablissement supprimé!');
         }
     }
-
 }
 

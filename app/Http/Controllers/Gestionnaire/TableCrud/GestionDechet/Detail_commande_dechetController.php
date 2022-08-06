@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionDechet;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Detail_commande_dechet as Detail_commande_dechetResource;
 use App\Models\Detail_commande_dechet;
@@ -39,10 +39,7 @@ class Detail_commande_dechetController extends BaseController{
             return $this->handleResponse(new Detail_commande_dechetResource($detail_commande), 'detail commande dechet supprimé!');
         }
     }
-
-
     public function afficherDetailsDechet(Request $request){
-
         $detail_commande = Detail_commande_dechet::where('commande_dechet_id',$request->id)->get();
         if ( count($detail_commande)==0 ) {
             return $this->handleError('detail commande dechet n\'existe pas!');

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\GestionCompte;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
 use App\Models\Gestionnaire;
@@ -47,7 +47,6 @@ class GestionnaireController extends BaseController{
         $gestionnaire->update($input);
         return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire modifié avec succes');
     }
-
     public function destroy($id) {
         $gestionnaire = Gestionnaire::find($id);
         if (is_null($gestionnaire)) {
@@ -61,24 +60,16 @@ class GestionnaireController extends BaseController{
             return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé!');
         }
     }
-
-
-
-
-
-
     public function hdelete( $id) {
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
         $gestionnaire->forceDelete();
         return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé  avec force!');
     }
-
     public function restore( $id) {
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
         $gestionnaire->restore();
         return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé avec retour!');
     }
-
     public function restoreAll(){
         $gestionnaires= Gestionnaire::onlyTrashed()->get();
         foreach($gestionnaires as $gestionnaire){
@@ -86,15 +77,10 @@ class GestionnaireController extends BaseController{
         }
         return $this->handleResponse(GestionnaireResource::collection($gestionnaires), 'tous gestionnaires trashed');
     }
-
     public function gestionnairetrash(){
         $gestionnaire = Gestionnaire::onlyTrashed()->get();
         return $this->handleResponse(GestionnaireResource::collection($gestionnaire), 'affichage des gestionnaires');
     }
-
-
-
-
 /*
     public function storeGestionnaire(Request $request){
         $nom=$request->nom;

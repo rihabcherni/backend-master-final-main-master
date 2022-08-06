@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\ProductionPoubelle;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\ProductionPoubelle\MateriauxPrimaire as MateriauxPrimaireResource;
 use App\Models\Materiau_primaire;
