@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\TransportDechet;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\TransportDechet\Zone_depot as Zone_depotResource;
 use App\Models\Zone_depot;
 use App\Http\Requests\TransportDechet\Zone_depotRequest;

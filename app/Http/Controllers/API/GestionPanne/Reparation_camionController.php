@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API\GestionPanne;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPanne\Reparation_camion as Reparation_camionResource;
 use App\Models\Reparation_camion;
 use App\Http\Requests\GestionPanne\Reparation_camionRequest;

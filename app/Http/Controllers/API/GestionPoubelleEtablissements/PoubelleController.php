@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Poubelle as PoubelleResource;
 use App\Models\Poubelle;
 use App\Models\Bloc_etablissement;
@@ -65,7 +65,8 @@ class PoubelleController extends BaseController{
         if($request->has('bloc_poubelle_id')) {
             $blocPouelle=  $request->bloc_poubelle_id;
         };
-        $poubelleNom=$etab.'-'.$bloc_etab.'-E'.$etage.'-BP'.$blocPouelle.'-N';
+        $id= substr($nom,$posBlocPoubelle+2 );
+        $poubelleNom=$etab.'-'.$bloc_etab.'-E'.$etage.'-BP'.$blocPouelle.'-N'.$id;
         $qrcode= Hash::make($poubelleNom);
         $input['QRcode']=  $qrcode;
         $input['nom']=  $poubelleNom;

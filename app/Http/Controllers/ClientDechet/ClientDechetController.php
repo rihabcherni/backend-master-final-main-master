@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\API\ClientDechet;
-
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers\ClientDechet;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Commande_dechet;
 use App\Models\Detail_commande_dechet;
 use Illuminate\Http\Request;

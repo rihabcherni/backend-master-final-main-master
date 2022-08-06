@@ -1,10 +1,12 @@
 <?php
+use App\Http\Controllers\Globale\ViderPoubellesController;
+
+
 use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\GlobaleStatistiqueController;
 use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\TablePoubellePlusRemplisController;
-use App\Http\Controllers\ViderPoubellesController;
 use App\Http\Controllers\API\Dashboard\RechercheController;
 use App\Http\Controllers\API\GestionCompte\ResponableEtablissementResponsableController;
-use App\Http\Controllers\API\PlanningController;
+use App\Http\Controllers\Globale\PlanningController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\Bloc_etablissementsController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\BlocPoubellesController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\EtageEtablissementsController;
@@ -14,9 +16,8 @@ use App\Http\Controllers\API\ResponsableEtablissement\ResponsableController;
 use App\Http\Controllers\API\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Auth\ResponsableEtablissement\AuthResponsableEtablissementController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ConversationController;
-use App\Http\Controllers\MessageController;
-
+use App\Http\Controllers\Globale\ConversationController;
+use App\Http\Controllers\Globale\MessageController;
     Route::group(['prefix' =>'auth-responsable-etablissement'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::get('/planning-responsable', [PlanningController::class, 'planningResponsable']);

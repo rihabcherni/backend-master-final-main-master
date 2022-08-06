@@ -33,9 +33,8 @@
         use App\Http\Controllers\API\GestionPoubelleEtablissements\Zone_travailController;
         use App\Http\Controllers\API\GestionPoubelleEtablissements\PoubelleController;
 use App\Http\Controllers\API\ResponsableEtablissement\SituationFinanciereController;
-use App\Http\Controllers\ConversationController;
-        use App\Http\Controllers\MessageController;
-
+use App\Http\Controllers\Globale\ConversationController;
+    use App\Http\Controllers\Globale\MessageController;
 
 
         

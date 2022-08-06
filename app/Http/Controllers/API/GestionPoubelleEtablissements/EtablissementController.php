@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Etablissement as EtablissementResource;
 use App\Models\Etablissement;
 use App\Http\Requests\GestionPoubelleEtablissements\EtablissementRequest;

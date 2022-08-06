@@ -2,9 +2,8 @@
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Auth\ResponsableCommercial\ResponsableCommercialController;
     use App\Http\Controllers\Auth\ClientDechet\AuthClientDechetController;
-    use App\Http\Controllers\ConversationController;
-    use App\Http\Controllers\MessageController;
-
+    use App\Http\Controllers\Globale\ConversationController;
+use App\Http\Controllers\Globale\MessageController;
     Route::group(['prefix' => 'auth-responsable-commercial'], function () {
         Route::post('/qrlogin/{email}',[ResponsableCommercialController::class, 'qrlogin']);
 

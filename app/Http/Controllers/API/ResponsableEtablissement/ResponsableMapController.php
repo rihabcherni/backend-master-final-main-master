@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\ResponsableEtablissement;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Models\Camion;
 use App\Models\Etablissement;
 use App\Models\Responsable_etablissement;

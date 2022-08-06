@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionCompte;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
 use App\Models\Gestionnaire;
 use Illuminate\Support\Facades\Hash;

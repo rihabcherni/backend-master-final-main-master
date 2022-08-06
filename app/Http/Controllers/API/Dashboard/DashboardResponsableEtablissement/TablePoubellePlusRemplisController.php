@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Etablissement;
 use App\Models\Bloc_etablissement;
 use App\Models\Bloc_poubelle;

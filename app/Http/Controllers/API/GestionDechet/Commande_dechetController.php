@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionDechet;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Commande_dechet as Commande_dechetResource;
 use App\Models\Commande_dechet;
 use App\Http\Requests\GestionDechet\Commande_dechetRequest;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable;
 
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Bloc_etablissements as Bloc_etablissementsResource;
 use App\Models\Bloc_etablissement;
 use App\Http\Requests\GestionPoubelleEtablissements\Bloc_etablissementsRequest;

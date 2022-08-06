@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\TransportDechet;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\TransportDechet\Camion as CamionResource;
 use App\Models\Camion;
 use App\Http\Requests\TransportDechet\CamionRequest;

@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Globale;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\PoubelleController;
 use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\GlobaleStatistiqueController;
 use App\Models\Planning;

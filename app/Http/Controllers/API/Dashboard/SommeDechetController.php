@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Commande_dechet;
 use App\Models\Dechet;
 use App\Models\Zone_depot;

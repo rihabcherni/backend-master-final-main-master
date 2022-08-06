@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Zone_travail as Zone_travailResource;
 use App\Http\Requests\GestionPoubelleEtablissements\Zone_travailRequest;
 use App\Models\Zone_travail;

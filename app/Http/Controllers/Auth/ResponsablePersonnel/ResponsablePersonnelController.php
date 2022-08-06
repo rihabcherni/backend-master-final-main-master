@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth\ResponsablePersonnel;
 
 use App\Models\Responsable_personnel;
 use Illuminate\Http\Request;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

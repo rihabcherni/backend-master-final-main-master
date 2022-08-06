@@ -9,7 +9,7 @@ use App\Models\Etage_etablissement;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\GestionPoubelleEtablissements\Poubelle as PoubelleResource;
 
-class SituationFinanciereController extends Controller{
+class PannePoubelleController extends Controller{
    
 }
 

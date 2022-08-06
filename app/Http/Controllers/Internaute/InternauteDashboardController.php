@@ -1,6 +1,6 @@
 <?php
-namespace App\Http\Controllers\API\Dashboard;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers\Internaute;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Camion;
 use App\Models\Commande_dechet;
 use App\Models\Depot;

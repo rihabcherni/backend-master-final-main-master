@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\ResponsableEtablissement;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Etablissement;
 use App\Models\Reparation_poubelle;
 use Illuminate\Http\Request;

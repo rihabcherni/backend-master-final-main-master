@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\ProductionPoubelle;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\ProductionPoubelle\MateriauxPrimaire as MateriauxPrimaireResource;
 use App\Models\Materiau_primaire;
 use App\Http\Requests\ProductionPoubelle\MateriauxPrimaireRequest;

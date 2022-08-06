@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionPoubelleEtablissements;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Bloc_poubelle as Bloc_poubelleResource;
 use App\Models\Bloc_poubelle;
 use App\Http\Requests\GestionPoubelleEtablissements\Bloc_poubelleRequest;

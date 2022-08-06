@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Globale;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Client_dechet;
 use App\Models\Gestionnaire;
 use App\Models\Ouvrier;

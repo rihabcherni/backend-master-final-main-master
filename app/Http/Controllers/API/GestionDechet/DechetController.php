@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\API\GestionDechet;
 use App\Models\Commande_dechet;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Dechet as DechetResource;
 use App\Models\Dechet;
 use App\Http\Requests\GestionDechet\DechetRequest;

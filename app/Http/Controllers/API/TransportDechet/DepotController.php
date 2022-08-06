@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\TransportDechet;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\TransportDechet\Depot as DepotResource;
 use App\Models\Depot;
 use App\Http\Requests\TransportDechet\DepotRequest;

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Globale;
 use App\Models\Bloc_etablissement;
 use App\Models\Bloc_poubelle;
 use App\Models\Camion;

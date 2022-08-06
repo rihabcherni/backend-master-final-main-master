@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionCompte;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Client_dechet as Client_dechetResource;
 use App\Models\Client_dechet;
 use Illuminate\Support\Facades\Hash;

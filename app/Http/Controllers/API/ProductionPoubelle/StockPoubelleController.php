@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\ProductionPoubelle;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\ProductionPoubelle\Stock_poubelle as Stock_poubelleResource;
 use App\Models\Stock_poubelle;
 use App\Http\Requests\ProductionPoubelle\StockPoubelleRequest;

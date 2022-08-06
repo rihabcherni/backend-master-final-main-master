@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Globale;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Conversation;
 use Illuminate\Http\Request;

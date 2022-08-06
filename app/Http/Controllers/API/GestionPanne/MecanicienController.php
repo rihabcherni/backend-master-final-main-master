@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionPanne;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPanne\Mecanicien as MecanicienResource;
 use App\Models\Mecanicien;
 use App\Http\Requests\GestionPanne\MecanicienRequest;

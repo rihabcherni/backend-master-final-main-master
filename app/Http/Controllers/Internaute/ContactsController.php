@@ -1,6 +1,6 @@
 <?php
-namespace App\Http\Controllers\API;
-use App\Http\Controllers\BaseController as BaseController;
+namespace App\Http\Controllers\Internaute;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Requests\ContactRequest;
 use App\Http\Resources\Contact as ContactResources;
 use App\Models\Contact;

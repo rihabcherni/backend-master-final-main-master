@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\ContactsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -9,14 +8,12 @@ use App\Http\Controllers\API\TransportDechet\CamionController;
 use App\Http\Controllers\API\Dashboard\SommeDechetController;
 use App\Http\Controllers\API\Dashboard\RechercheController;
 use App\Http\Controllers\API\Dashboard\RegionController;
-use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\Globale\LoginController;
 use App\Http\Controllers\Auth\ClientDechet\AuthClientDechetController;
 use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
 use App\Http\Controllers\Auth\ResponsableEtablissement\AuthResponsableEtablissementController;
-use App\Http\Controllers\ViderPoubellesController;
-
-;
+use App\Http\Controllers\Globale\ViderPoubellesController;
 
 /**--------------  **************           debut web       ************************** -------------------**/
     /** -------------  **************          debut recherche    ************************** ------------------**/
@@ -80,7 +77,6 @@ use App\Http\Controllers\ViderPoubellesController;
                 Route::get('/all-gestionnaires', [AuthGestionnaireController::class, 'allGestionnaire']);
 
 
-                Route::apiResource('contact-us', ContactsController::class);
 
                 Route::post('/login', [LoginController::class,'login']);
                 Route::post('/logout', [LoginController::class,'logout']);

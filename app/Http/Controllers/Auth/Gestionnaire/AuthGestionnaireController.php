@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Auth\Gestionnaire;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gestionnaire;
 use Illuminate\Support\Facades\Hash;

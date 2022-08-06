@@ -1,7 +1,5 @@
 <?php
-
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Globale;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Resources\MessageResource;

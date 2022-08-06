@@ -5,9 +5,9 @@
     use App\Http\Controllers\API\Ouvrier\GoogleMapController;
     use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
     use App\Http\Controllers\API\Ouvrier\ViderController;
-    use App\Http\Controllers\ConversationController;
-    use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ViderPoubellesController;
+    use App\Http\Controllers\Globale\ConversationController;
+    use App\Http\Controllers\Globale\MessageController;
+    use App\Http\Controllers\Globale\ViderPoubellesController;
 
 Route::put('confirme-planning-ouvrier/{id}',[AuthOuvrierController::class, 'confirmePlanningOuvrier']);
 Route::group(['prefix' => 'auth-ouvrier'], function () {

@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionPanne;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPanne\Reparation_poubelle as Reparation_poubelleResource;
 use App\Models\Reparation_poubelle;
 use App\Http\Requests\GestionPanne\Reparation_poubelleRequest;

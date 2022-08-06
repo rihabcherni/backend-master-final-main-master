@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API\ResponsableEtablissement;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Dechet;
 use App\Models\Etablissement;
 class SituationFinanciereController extends Controller{

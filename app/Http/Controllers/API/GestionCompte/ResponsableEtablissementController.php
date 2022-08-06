@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\GestionCompte;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Responsable_etablissement as Responsable_etablissementResource;
 use App\Models\Responsable_etablissement;
 use App\Http\Requests\GestionCompte\ResponsableEtablissementRequest;

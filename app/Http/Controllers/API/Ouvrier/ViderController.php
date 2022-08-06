@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\API\Ouvrier;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Models\Poubelle;
 use App\Models\Ouvrier;
 use App\Models\Camion;

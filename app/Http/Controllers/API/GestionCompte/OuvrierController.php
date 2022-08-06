@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\API\GestionCompte;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Ouvrier as OuvrierResource;
 use App\Models\Ouvrier;
 use App\Http\Requests\GestionCompte\OuvrierRequest;

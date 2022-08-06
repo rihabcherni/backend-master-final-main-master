@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth\Ouvrier;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Requests\GestionCompte\OuvrierRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ouvrier;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth\ResponsableCommercial;
 use App\Models\Responsable_commercial;
 
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\BaseController as BaseController;
+use App\Http\Controllers\Globale\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;

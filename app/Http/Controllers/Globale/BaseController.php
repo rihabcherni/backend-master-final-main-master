@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Globale;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Globale\Controller as Controller;
 class BaseController extends Controller{
     public function handleResponse($result, $msg){
     	$res = [

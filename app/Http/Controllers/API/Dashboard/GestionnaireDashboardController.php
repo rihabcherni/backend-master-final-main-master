@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API\Dashboard;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Globale\Controller;
 use App\Models\Bloc_etablissement;
 use App\Models\Reparation_poubelle;
 use App\Models\Reparation_camion;
