@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Dashboard;
+namespace App\Http\Controllers\Globale;
 use App\Http\Controllers\Globale\Controller;
 use App\Models\Bloc_poubelle;
 use App\Models\Camion;

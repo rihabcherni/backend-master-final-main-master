@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable;
+namespace App\Http\Controllers\ResponsableEtablissement\CrudResponsable;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Poubelle as PoubelleResource;
 use App\Models\Poubelle;

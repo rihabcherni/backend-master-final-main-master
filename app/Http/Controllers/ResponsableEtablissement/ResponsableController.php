@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\ResponsableEtablissement;
+namespace App\Http\Controllers\ResponsableEtablissement;
 
 use App\Http\Controllers\Globale\Controller;
 use App\Models\Etablissement;

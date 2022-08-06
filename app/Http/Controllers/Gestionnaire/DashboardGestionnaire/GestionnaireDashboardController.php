@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Dashboard;
+namespace App\Http\Controllers\Gestionnaire\DashboardGestionnaire;
 use App\Http\Controllers\Globale\Controller;
 use App\Models\Bloc_etablissement;
 use App\Models\Reparation_poubelle;
@@ -22,7 +22,6 @@ use App\Models\Stock_poubelle;
 use App\Models\Zone_depot;
 use App\Models\Zone_travail;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class GestionnaireDashboardController extends Controller{
     public function dashbordValeur(){

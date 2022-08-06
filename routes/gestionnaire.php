@@ -30,13 +30,15 @@ use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Et
 use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Bloc_poubelleController;
 use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\PoubelleController;
 
-        use App\Http\Controllers\API\Dashboard\GestionnaireDashboardController;
-        use App\Http\Controllers\API\Dashboard\SommeDechetController;
+
+
+        use App\Http\Controllers\Gestionnaire\DashboardGestionnaire\GestionnaireDashboardController;
+        use App\Http\Controllers\Globale\SommeDechetController;
         use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 
 
 
-use App\Http\Controllers\API\ResponsableEtablissement\SituationFinanciereController;
+use App\Http\Controllers\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
 

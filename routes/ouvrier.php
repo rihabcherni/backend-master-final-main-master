@@ -1,10 +1,12 @@
 <?php
+    use App\Http\Controllers\Ouvrier\ViderController;
+    use App\Http\Controllers\Ouvrier\GoogleMapController;
+
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Auth\ResponsablePersonnel\ResponsablePersonnelController;
-    use App\Http\Controllers\API\Dashboard\RegionController;
-    use App\Http\Controllers\API\Ouvrier\GoogleMapController;
+    use App\Http\Controllers\Globale\RegionController;
     use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
-    use App\Http\Controllers\API\Ouvrier\ViderController;
+
     use App\Http\Controllers\Globale\ConversationController;
     use App\Http\Controllers\Globale\MessageController;
     use App\Http\Controllers\Globale\ViderPoubellesController;

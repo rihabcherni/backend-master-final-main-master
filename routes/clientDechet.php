@@ -3,7 +3,7 @@
     use App\Http\Controllers\ClientDechet\ClientDechetController;
 
 
-    use App\Http\Controllers\API\Dashboard\SommeDechetController;
+    use App\Http\Controllers\Globale\SommeDechetController;
     use App\Http\Controllers\Auth\ClientDechet\AuthClientDechetController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;

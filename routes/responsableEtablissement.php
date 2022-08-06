@@ -4,17 +4,17 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
 use App\Http\Controllers\ResponsableEtablissement\ResponableEtablissementResponsableController;
 
 
-use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\GlobaleStatistiqueController;
-use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\TablePoubellePlusRemplisController;
-use App\Http\Controllers\API\Dashboard\RechercheController;
+use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissement\GlobaleStatistiqueController;
+use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissement\TablePoubellePlusRemplisController;
+use App\Http\Controllers\Globale\RechercheController;
 use App\Http\Controllers\Globale\PlanningController;
-use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\Bloc_etablissementsController;
-use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\BlocPoubellesController;
-use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\EtageEtablissementsController;
-use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\PoubelleController;
-use App\Http\Controllers\API\ResponsableEtablissement\ResponsableMapController;
-use App\Http\Controllers\API\ResponsableEtablissement\ResponsableController;
-use App\Http\Controllers\API\ResponsableEtablissement\SituationFinanciereController;
+use App\Http\Controllers\ResponsableEtablissement\CrudResponsable\Bloc_etablissementsController;
+use App\Http\Controllers\ResponsableEtablissement\CrudResponsable\BlocPoubellesController;
+use App\Http\Controllers\ResponsableEtablissement\CrudResponsable\EtageEtablissementsController;
+use App\Http\Controllers\ResponsableEtablissement\CrudResponsable\PoubelleController;
+use App\Http\Controllers\ResponsableEtablissement\ResponsableMapController;
+use App\Http\Controllers\ResponsableEtablissement\ResponsableController;
+use App\Http\Controllers\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Auth\ResponsableEtablissement\AuthResponsableEtablissementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Globale\ConversationController;
@@ -28,20 +28,20 @@ use App\Http\Controllers\Globale\MessageController;
                   Route::get('/poubelle-plus-remplis-etablissement', [TablePoubellePlusRemplisController::class, 'PoubellePlusRemplis']);
                   Route::get('/revenu-responsable-mois', [ViderPoubellesController::class,'revenu_etablissement_responsable']);
                   Route::get('/revenu-responsable-annee', [ViderPoubellesController::class,'revenuEtablissementResponsableAnnee']);
-                  Route::get('/quantite-responsable-annee', [ViderPoubellesController::class,'QuantiteEtablissementResponsableAnnee']);  
+                  Route::get('/quantite-responsable-annee', [ViderPoubellesController::class,'QuantiteEtablissementResponsableAnnee']);
                   Route::get('/resp-quantite-collecte-mois', [ViderPoubellesController::class,'quantiteCollecteMoisResponsable']);
 
-               
+
                   Route::get('/situation-financiere-responsable-jour', [SituationFinanciereController::class, 'SituationFinanciereResponsableJour']);
                   Route::get('/situation-financiere-responsable-mensuel', [SituationFinanciereController::class, 'SituationFinanciereResponsableMensuel']);
-           
+
                   Route::get('/etablissement-responsable',[RechercheController::class, 'etablissementResponsable']);
                   Route::apiResource('add-resp-etablissement', ResponableEtablissementResponsableController::class);
-                
 
-             
-  
-                  /*****                 dashboard responsable etablissement                     ****/     
+
+
+
+                  /*****                 dashboard responsable etablissement                     ****/
                 Route::post('/modifier-responsable-etablissement-password',[AuthResponsableEtablissementController::class,'modifierPasswordResponsableEtablissement']);
                 Route::post('/send',[AuthResponsableEtablissementController::class,'send']);
                 Route::post('/sendImage',[AuthResponsableEtablissementController::class,'sendImage']);
@@ -66,8 +66,8 @@ use App\Http\Controllers\Globale\MessageController;
                                 /**                    poubelle                        */
                 Route::apiResource('poubelle-responsable', PoubelleController::class);
             });
-               
-               
+
+
             Route::get('/checkingAuthResponsable' , function(){
                 return response()->json(['message'=>'Responsable etablissement vous avez connecté','status'=>200],200);
             });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable;
+namespace App\Http\Controllers\ResponsableEtablissement\CrudResponsable;
 
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPoubelleEtablissements\Bloc_etablissements as Bloc_etablissementsResource;

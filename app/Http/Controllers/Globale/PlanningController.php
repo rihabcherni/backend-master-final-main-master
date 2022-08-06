@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Globale;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Globale\BaseController as BaseController;
-use App\Http\Controllers\API\ResponsableEtablissement\CrudResponsable\PoubelleController;
-use App\Http\Controllers\API\Dashboard\DashboardResponsableEtablissement\GlobaleStatistiqueController;
+use App\Http\Controllers\ResponsableEtablissement\CrudResponsable\PoubelleController;
+use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissement\GlobaleStatistiqueController;
 use App\Models\Planning;
 use Carbon\Carbon;
 use App\Http\Resources\GestionPoubelleEtablissements\Planning as Ressource_Planning;
@@ -29,7 +29,7 @@ class PlanningController extends BaseController{
     public function gererTemps($indicejour, $week){
         if(6<=$indicejour){
             return $indicejour-6;
-        }else return  $indicejour;      
+        }else return  $indicejour;
     }
 
     public function planningResponsable(){
@@ -201,7 +201,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier >= 75){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -244,7 +244,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte >= 75){
                         if($avg_composte <= 25){
                             Planning::create([
@@ -287,7 +287,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette >= 75){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -345,7 +345,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
                                 'jour' =>$week[$j],
@@ -374,7 +374,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier > 25 && $max_papier < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -382,7 +382,7 @@ class PlanningController extends BaseController{
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
-                            ]); 
+                            ]);
                             Planning::create([
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[2] ,
@@ -417,7 +417,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte > 25 && $max_composte < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -460,7 +460,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette > 25 && $max_canette < 75 ){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -533,7 +533,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -563,7 +563,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -593,7 +593,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette <= 25 ){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -623,8 +623,8 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
-                
+
+
             }elseif($heure_systeme > 12 && $heure_systeme <= 15 ){
                     $j = 0;
                     if(count($week)<$i){
@@ -674,7 +674,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier >= 75){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -717,7 +717,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte >= 75){
                         if($avg_composte <= 25){
                             Planning::create([
@@ -760,7 +760,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette >= 75){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -804,7 +804,7 @@ class PlanningController extends BaseController{
                         }
                     }
                     /**             25 < max < 75              */
-                    
+
                     if($max_plastique >25 && $max_plastique<= 75 ){
                         if($avg_plastique <= 25){
                             Planning::create([
@@ -847,7 +847,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier > 25 && $max_papier < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -890,7 +890,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte > 25 && $max_composte < 75 ){
                         if($avg_composte <= 25){
                             Planning::create([
@@ -933,7 +933,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-                    
+
                     if($max_canette > 25 && $max_canette < 75 ){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -977,7 +977,7 @@ class PlanningController extends BaseController{
                         }
                     }
                     /**               max >= 25              */
-                
+
                     if($max_plastique <= 25 ){
                         if($avg_plastique <= 25){
                             Planning::create([
@@ -1007,7 +1007,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -1037,7 +1037,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte <= 25 ){
                         if($avg_composte <= 25){
                             Planning::create([
@@ -1067,7 +1067,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette <= 25 ){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -1097,7 +1097,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
 
             }elseif($heure_systeme > 15 && $heure_systeme <= 19 ){
                     $j = 0;
@@ -1147,7 +1147,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier >= 75){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -1190,7 +1190,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte >= 75){
                         if($avg_composte <= 25){
                             Planning::create([
@@ -1233,7 +1233,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette >= 75){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -1319,7 +1319,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier > 25 && $max_papier < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -1328,7 +1328,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
                                 'jour' =>$week[$j+1],
@@ -1345,7 +1345,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte > 25 && $max_composte < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -1354,7 +1354,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
                                 'jour' =>$week[$j+1],
@@ -1371,7 +1371,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette > 25 && $max_canette < 75 ){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -1380,7 +1380,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
                                 'jour' =>$week[$j+1],
@@ -1406,7 +1406,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
                                 'jour' =>$week[$j+3],
@@ -1416,7 +1416,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_papier <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -1425,7 +1425,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
                                 'jour' =>$week[$j+3],
@@ -1435,7 +1435,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_composte <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
@@ -1444,7 +1444,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
                                 'jour' =>$week[$j+3],
@@ -1454,7 +1454,7 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
+
                     if($max_canette <= 25 ){
                         if($avg_canette <= 25){
                             Planning::create([
@@ -1463,7 +1463,7 @@ class PlanningController extends BaseController{
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
-        
+
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
                                 'jour' =>$week[$j+3],
@@ -1473,12 +1473,12 @@ class PlanningController extends BaseController{
                             ]);
                         }
                     }
-        
-    
+
+
             }
         } elseif($heure_systeme > 19){
             DB::table('plannings')->truncate();
-        }  
+        }
 
         $planninglist = Planning::all();
         // $planning_sorted = Planning::where('jour',"mardi")->get();
@@ -1507,13 +1507,13 @@ class PlanningController extends BaseController{
             ->select('start','end','type_poubelle','validation','statut')
             ->where('jour','samedi')
             ->get();
-        
+
         $affichage=[
-            ["Lundi",$lundi], 
-            ["Mardi",$mardi], 
-            ["Mercredi",$mercredi], 
-            ["Jeudi",$jeudi], 
-            ["Vendredi",$vendredi], 
+            ["Lundi",$lundi],
+            ["Mardi",$mardi],
+            ["Mercredi",$mercredi],
+            ["Jeudi",$jeudi],
+            ["Vendredi",$vendredi],
             ["Samedi",$samedi],
             // ['max_plastique',$max_plastique],
             // ['moy_plastique',$avg_plastique],
@@ -1524,12 +1524,12 @@ class PlanningController extends BaseController{
             // ['max_canette',$max_canette],
             // ['moy_canette',$avg_canette],
         ];
-        
+
         return response()->json($affichage);
     }
 
 
     public function confirmePlanningOuvrier(){
-        return 'rrr';  
+        return 'rrr';
     }
 }

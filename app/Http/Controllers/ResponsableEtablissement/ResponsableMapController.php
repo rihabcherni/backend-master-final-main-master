@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\ResponsableEtablissement;
+namespace App\Http\Controllers\ResponsableEtablissement;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Models\Camion;
 use App\Models\Etablissement;

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\Ouvrier;
+namespace App\Http\Controllers\Ouvrier;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Models\Poubelle;
 use App\Models\Ouvrier;
