@@ -19,9 +19,9 @@ class CreateResponsableEtablissementsTable extends Migration{
             $table->string('mot_de_passe',255);
             $table->string('adresse');
             $table->string('QRcode',255)->nullable();
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            $table->rememberToken();
         });
     }
     public function down()

@@ -27,7 +27,6 @@ class InternauteDashboardController extends Controller
         $qt_dechet_canette=  Zone_depot::all()->sum("quantite_depot_actuelle_canette");
         $qt_dechet_composte=  Zone_depot::all()->sum("quantite_depot_actuelle_composte");
 
-
         $myArray = [
             'qt_dechet_plastique'=>round($qt_dechet_plastique  * 1000) / 1000,
             'qt_dechet_papier'=>round($qt_dechet_papier  * 1000) / 1000,
@@ -43,4 +42,19 @@ class InternauteDashboardController extends Controller
         return response()->json($myArray);
     }
 
+    public function quantiteTotaleDechetCollecte(){
+        $qt_dechet_plastique= Zone_travail::all()->sum("quantite_total_collecte_plastique");
+        $qt_dechet_papier=  Zone_travail::all()->sum("quantite_total_collecte_papier");
+        $qt_dechet_canette=  Zone_travail::all()->sum("quantite_total_collecte_canette");
+        $qt_dechet_composte=  Zone_travail::all()->sum("quantite_total_collecte_composte");
+
+
+        $myArray = [
+            'qt_dechet_plastique'=>round($qt_dechet_plastique  * 1000) / 1000,
+            'qt_dechet_papier'=>round($qt_dechet_papier  * 1000) / 1000,
+            'qt_dechet_canette'=>round($qt_dechet_canette  * 1000) / 1000,
+            'qt_dechet_composte'=>round($qt_dechet_composte  * 1000) / 1000,
+        ];
+        return response()->json($myArray);
+    }
 }

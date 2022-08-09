@@ -6,8 +6,6 @@ use App\Http\Controllers\Globale\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Responsable_etablissement;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 class AuthResponsableEtablissementController extends BaseController{
@@ -31,32 +29,6 @@ class AuthResponsableEtablissementController extends BaseController{
         return response([
             'message' => 'verifier votre ancien mot de passe',
         ],403);
-    }
-    public function sendFirstPassword(Request $request){
-        $responsable = Responsable_etablissement::where('email',$request->email)->first();
-        if($responsable){
-            $mail_message = 'responsable etablissement votre mot de passe est ';
-            $pass = Str::random(8);
-            $mail_message .= $pass ;
-            $mail_data =[
-                'recipient'=> 'arijcherni001@gmail.com',
-                'fromEmail' =>$responsable->email ,
-                'fromName' => $responsable->name,
-                'subject' => 'nouveau mot de passe',
-                'body' => $mail_message,
-            ];
-            Mail::send('email-template' ,$mail_data , function($message) use ($mail_data){
-                $message->from($mail_data['fromEmail'], $mail_data['fromName'] );
-                $message->to($mail_data['recipient'], 'ReSchool')
-                ->subject($mail_data['subject']);
-            });
-            $responsable['mot_de_passe'] = Hash::make($pass);
-            $responsable->save();
-            return response([$responsable],200);
-        }
-
-        return response([],404);
-
     }
 
     public function sendImage(){
@@ -92,17 +64,5 @@ class AuthResponsableEtablissementController extends BaseController{
                     'client_dechet' =>$responsable,
                 ]);
         }
-    }
-    public function qrlogin($qrcode){
-        $responsable = Responsable_etablissement::where('QRcode',$qrcode)->first();
-        if(!$responsable){
-            return response([
-                    'message' => 'invalid qr'
-            ] , 401);
-        }
-        return response([
-            'user' => $responsable,
-            'token'=> $responsable->createToken('responsable-etablissement-login')->plainTextToken,
-        ],200);
     }
 }

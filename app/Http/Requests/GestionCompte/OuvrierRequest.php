@@ -13,31 +13,27 @@ class OuvrierRequest extends FormRequest{
         if ($this->isMethod('post')) {
             return [
             'camion_id' =>'required',
-            'poste' =>'required',
+            'poste' =>'required|string',
             'nom' => 'required|string|regex:/^[A-Za-z ]*$/i',
             'prenom' => 'required|string|regex:/^[A-Za-z ]*$/i',
             'CIN' => 'required|numeric',
             'adresse' => 'required|string',
             'numero_telephone'=> 'required',
             'email' => 'required|email|max:50',
-            'mot_de_passe' => 'required|string|min:6',
             'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
             ];
         }else if($this->isMethod('PUT')){
              return [
-        //         'camion_id' =>'required',
-        //         'poste' =>'required',
-        //         'qrcode' =>'required|string',
-        //         'nom' => 'required|string|regex:/^[A-Za-z ]*$/i',
-        //         'prenom' => 'required|string|regex:/^[A-Za-z ]*$/i',
-        //         'CIN' => 'required|numeric',
-        //         'numero_telephone'=> 'required|integer',
-        //         'email' => 'required|email|max:50',
-        //         'mot_de_passe' => 'required|string|min:6',
-        //         'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
-                 ];
+                'camion_id' =>'sometimes',
+                'poste' =>'sometimes|string',
+                'nom' => 'sometimes|string|regex:/^[A-Za-z ]*$/i',
+                'prenom' => 'sometimes|string|regex:/^[A-Za-z ]*$/i',
+                'CIN' => 'sometimes|numeric',
+                'numero_telephone'=> 'sometimes|integer',
+                'email' => 'sometimes|email|max:50',
+                'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ];
         }
     }
     public function failedValidation(Validator $validator){

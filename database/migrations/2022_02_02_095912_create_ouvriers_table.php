@@ -20,10 +20,9 @@ class CreateOuvriersTable extends Migration{
             $table->timestamp('email_verified_at')->nullable();
             $table->string('mot_de_passe',255);
             $table->string('adresse')->unique();
-
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            $table->rememberToken();
         });
         Schema::enableForeignKeyConstraints();
     }

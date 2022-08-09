@@ -4,6 +4,8 @@ use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
 use App\Models\Gestionnaire;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Globale\LoginController;
 use App\Http\Requests\GestionCompte\GestionnaireRequest;
 class GestionnaireController extends BaseController{
     public function index(){
@@ -12,13 +14,18 @@ class GestionnaireController extends BaseController{
     }
     public function store(GestionnaireRequest $request){
         $input = $request->all();
+        $pass = Str::random(8);
+        $pass = Str::random(8);
+        $SendEmail = new LoginController;
+        $mp=$SendEmail->sendFirstPassword( $input['email'], $input['nom'], $input['prenom'],$pass);
         if ($image = $request->file('photo')) {
             $destinationPath = 'storage/images/gestionnaire';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['photo'] = "$profileImage";
         }
-        $input['mot_de_passe'] = Hash::make($input['mot_de_passe']);
+        $input['mot_de_passe'] =  Hash::make($mp->getData()->mot_de_passe);
+        $input['QRcode'] =  Hash::make($mp->getData()->mot_de_passe);
         $gestionnaire= Gestionnaire::create($input);
         return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire crée!');
     }

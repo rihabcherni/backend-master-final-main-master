@@ -13,7 +13,6 @@
 
 Route::put('confirme-planning-ouvrier/{id}',[AuthOuvrierController::class, 'confirmePlanningOuvrier']);
 Route::group(['prefix' => 'auth-ouvrier'], function () {
-        Route::post('/qrlogin/{email}',[AuthOuvrierController::class, 'qrlogin']);
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::group(['middleware' => 'auth:ouvrier'], function() {
                     Route::post('/modifier-ouvrier-password/{email}',[AuthOuvrierController::class,'modifierPasswordOuvrier']);

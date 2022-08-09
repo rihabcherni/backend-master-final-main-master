@@ -19,9 +19,10 @@ class CreateGestionnairesTable extends Migration
             $table->string('mot_de_passe',255);
             $table->string('QRcode',255)->nullable();
             $table->string('adresse');
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            $table->rememberToken();
+
         });
     }
     public function down()

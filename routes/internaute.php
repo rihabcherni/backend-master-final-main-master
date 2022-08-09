@@ -4,5 +4,7 @@ use App\Http\Controllers\Internaute\ContactsController;
 use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'internaute'], function () {
     Route::get('/dashborad' , [InternauteDashboardController::class , 'dashbordInternaute']);
-    Route::apiResource('contact-us', ContactsController::class);
+    Route::apiResource('/contact-us', ContactsController::class);
+    Route::get('/quantite-dechete-totale-collecte',[InternauteDashboardController::class,'quantiteTotaleDechetCollecte']);
 });
+

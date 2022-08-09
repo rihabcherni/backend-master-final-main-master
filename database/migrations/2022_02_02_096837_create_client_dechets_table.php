@@ -21,9 +21,9 @@ class CreateClientDechetsTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('mot_de_passe');
             $table->string('QRcode',255)->nullable();
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            $table->rememberToken();
         });
     }
     public function down()

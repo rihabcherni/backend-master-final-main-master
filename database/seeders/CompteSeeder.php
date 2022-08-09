@@ -1,7 +1,5 @@
 <?php
-
 namespace Database\Seeders;
-
 use App\Models\Camion;
 use App\Models\Client_dechet;
 use App\Models\Gestionnaire;

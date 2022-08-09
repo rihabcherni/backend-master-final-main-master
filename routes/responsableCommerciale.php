@@ -5,8 +5,6 @@
     use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
     Route::group(['prefix' => 'auth-responsable-commercial'], function () {
-        Route::post('/qrlogin/{email}',[ResponsableCommercialController::class, 'qrlogin']);
-
             Route::group(['middleware'=>['auth:sanctum']], function() {
                         Route::post('/modifier-responsable-commercial-password/{email}',[ResponsableCommercialController::class,'modifierPasswordResponsableCommercial']);
                         Route::post('/sendImage',[ResponsableCommercialController::class,'sendImage']);
@@ -16,6 +14,6 @@ use App\Http\Controllers\Globale\MessageController;
                         Route::post('/conversation/read' , [ConversationController::class , 'makeConversationAsReaded']);
                         Route::post('/message' , [MessageController::class , 'store']);
 
-                        Route::get('/allClient',[AuthClientDechetController::class,'allClientDechets']);
+                        Route::get('/all-client-dechets',[AuthClientDechetController::class,'allClientDechets']);
             });
     });

@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
-use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\CamionController;
-
 use App\Http\Controllers\Globale\SommeDechetController;
 use App\Http\Controllers\Globale\RechercheController;
 use App\Http\Controllers\Globale\RegionController;
@@ -35,7 +31,7 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
 
 /** ---------------------------------------------- debut Dashboard ----------------------------------------------------*/
             /** -------------  **************         debut somme      **************************  ------------------**/
-                    Route::get('/somme-total-dechet-zone-depot', [SommeDechetController::class, 'SommeDechetZoneDepot']);
+                    Route::get('/somme-total-stock-dechet-zone-depot', [SommeDechetController::class, 'SommeDechetZoneDepot']);
                     Route::get('/stock-dechet-actuelle', [SommeDechetController::class, 'StockDechetActuelle']);
                     Route::get('/somme-total-dechet-zone-travail', [SommeDechetController::class, 'SommeDechetZoneTravail']);
                     // Route::get('/somme-total-dechet-etablissement/{zone_travail_id}', [SommeDechetController::class, 'SommeDechetBlocEtablissement']);
@@ -64,19 +60,13 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
                 Route::get('/google-map-camion', [RegionController::class, 'GoogleMapCamion']);
                 Route::get('/google-map-camion/{id}', [RegionController::class, 'GoogleMapCamionId']);
 
-                Route::get('/all-client-dechets', [AuthClientDechetController::class, 'allClientDechets']);
-                Route::get('/all-ouvriers', [AuthOuvrierController::class, 'allOuvriers']);
-                Route::get('/all-responsable-etablissements', [AuthResponsableEtablissementController::class, 'allResponsableEtablissement']);
-                Route::get('/all-gestionnaires', [AuthGestionnaireController::class, 'allGestionnaire']);
-
-
 
                 Route::post('/login', [LoginController::class,'login']);
                 Route::post('/logout', [LoginController::class,'logout']);
                 Route::post('/modifier-profile', [LoginController::class,'modifierProfile']);
                 Route::post('/modifier-photo', [LoginController::class,'updatePhoto']);
                 Route::get('/profile', [LoginController::class,'profile']);
-
+                Route::post('/qrlogin/{qrcode}',[LoginController::class,'qrlogin']);
 
                 Route::get('/historique-vider-poubelle-responsable', [ViderPoubellesController::class,'HistoriqueViderResponsable']);
                 Route::get('/historique-vider-poubelle-gestionnaire', [ViderPoubellesController::class,'HistoriqueViderGestionnaire']);
@@ -109,3 +99,6 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
 
 
 
+
+                Route::get('pdf', [LoginController::class, 'pdf']);
+                Route::post('grayscaleImagePost', [LoginController::class, 'grayscaleImagePost']);

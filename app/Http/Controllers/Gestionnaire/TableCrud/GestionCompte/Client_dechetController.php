@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
 use App\Http\Controllers\Globale\BaseController as BaseController;
+use App\Http\Controllers\Globale\LoginController;
 use App\Http\Resources\GestionCompte\Client_dechet as Client_dechetResource;
 use App\Models\Client_dechet;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\GestionCompte\Client_dechetRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Client_dechetController extends BaseController{
     public function index(){
@@ -14,9 +16,12 @@ class Client_dechetController extends BaseController{
     }
     public function store(Client_dechetRequest $request)  {
         $input = $request->all();
-
-        $input['mot_de_passe'] = Hash::make($input['mot_de_passe']);
-
+        $pass = Str::random(8);
+        $pass = Str::random(8);
+        $SendEmail = new LoginController;
+        $mp=$SendEmail->sendFirstPassword( $input['email'], $input['nom'], $input['prenom'],$pass);
+        $input['mot_de_passe'] =  Hash::make($mp->getData()->mot_de_passe);
+        $input['QRcode'] =  Hash::make($mp->getData()->mot_de_passe);
         $client= Client_dechet::create($input);
         return $this->handleResponse(new Client_dechetResource($client), 'Client crée!');
     }

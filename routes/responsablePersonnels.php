@@ -6,8 +6,6 @@
     use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
     Route::group(['prefix' => 'auth-responsable-personnel'], function () {
-        Route::post('/qrlogin/{email}',[ResponsablePersonnelController::class, 'qrlogin']);
-
             Route::group(['middleware'=>['auth:sanctum']], function() {
                         Route::post('/modifier-responsable-Personnel-password/{email}',[ResponsablePersonnelController::class,'modifierPasswordResponsablePersonnel']);
                         Route::post('/sendImage',[ResponsablePersonnelController::class,'sendImage']);
