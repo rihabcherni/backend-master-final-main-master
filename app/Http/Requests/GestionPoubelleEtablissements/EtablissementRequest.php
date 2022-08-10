@@ -17,8 +17,8 @@ class EtablissementRequest extends FormRequest{
                 'zone_travail_id' => 'required',
                 'camion_id' => 'required',
                 'nom_etablissement' => 'required|string',
-
-                'type_etablissement'=>'required',Rule::in(['ecole primaire','college','ecole secondaire','universite','societe']),
+                'type_etablissement'=>'required',Rule::in(['privee','public']),
+                'niveau_etablissement'=>'required',Rule::in(['ecole primaire','college','ecole secondaire','universite','societe']),
                 'nbr_personnes' => 'required',
                 'url_map'=>'required',
                 'adresse' => 'required',
@@ -38,8 +38,9 @@ class EtablissementRequest extends FormRequest{
             return [
                 //     'zone_travail_id' => 'required',
                 //     'nom_etablissement' => 'required|sring',
-                //     'type_etablissement' => 'required|sring',
-                //     'nbr_personnes',
+                // 'type_etablissement'=>'required',Rule::in(['privee','public']),
+                // 'niveau_etablissement'=>'required',Rule::in(['ecole primaire','college','ecole secondaire','universite','societe']),
+                  //     'nbr_personnes',
                 //      'url_map'=>'required',
                 //     'adresse' => 'required|string',
                 //     'longitude' => 'required',

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\ResponsableEtablissement;
 
 use App\Http\Controllers\Globale\Controller;
 use App\Models\Etablissement;
-use App\Models\Reparation_poubelle;
-use Illuminate\Http\Request;
 
 class ResponsableController extends Controller{
     public function BlocEtablissementResponsable(){
@@ -23,24 +21,4 @@ class ResponsableController extends Controller{
             }
         return ['bloc_etablissement'=>$blocetabs];
     }
-
-    public function panneetablissementPoubelle(Request $resquest){
-        $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;
-        $etablissement= Etablissement::find($etab_id);
-        $poubelleEtab=$etablissement->poubelles;
-        $poubelle=[];
-        foreach($poubelleEtab as $p){
-            array_push($poubelle,$p->id);
-        }
-        $poubelleEtb=[];
-
-        foreach($poubelle as $pp){
-             $poubellePanneetab=Reparation_poubelle::where("poubelle_id", $pp)->first();
-             if($poubellePanneetab !== null){
-                array_push($poubelleEtb,$poubellePanneetab);
-             }
-        }
-        return $poubelleEtb;
-    }
-
 }

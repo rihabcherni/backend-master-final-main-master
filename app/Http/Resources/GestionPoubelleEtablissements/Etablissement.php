@@ -15,6 +15,7 @@ class Etablissement extends JsonResource{
             'camion_id'=> $this->camion_id,
 
             'nom_etablissement' => $this->nom_etablissement,
+            'niveau_etablissement' => $this->niveau_etablissement,
             'type_etablissement' => $this->type_etablissement,
             'nbr_personnes' => $this->nbr_personnes,
             'url_map'=>$this->url_map,

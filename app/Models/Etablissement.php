@@ -12,6 +12,7 @@ class Etablissement extends Model
         'zone_travail_id',
         'camion_id',
         'nom_etablissement',
+        'niveau_etablissement',
         'type_etablissement',
         'nbr_personnes',
         'url_map',

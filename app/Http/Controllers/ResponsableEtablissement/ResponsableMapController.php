@@ -97,5 +97,4 @@ class ResponsableMapController extends BaseController{
         }
         return ['responsable'=>$responsable, 'camion'=>$camion,'zone_depot'=>$zone_depot,'etablissement'=>$eta];
     }
-
 }

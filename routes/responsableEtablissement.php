@@ -19,6 +19,8 @@ use App\Http\Controllers\Auth\ResponsableEtablissement\AuthResponsableEtablissem
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
+use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissement\PannePoubelleController;
+
     Route::group(['prefix' =>'auth-responsable-etablissement'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::get('/planning-responsable', [PlanningController::class, 'planningResponsable']);
@@ -39,14 +41,16 @@ use App\Http\Controllers\Globale\MessageController;
                   Route::apiResource('add-resp-etablissement', ResponableEtablissementResponsableController::class);
 
 
-
-
                   /*****                 dashboard responsable etablissement                     ****/
                 Route::post('/modifier-responsable-etablissement-password',[AuthResponsableEtablissementController::class,'modifierPasswordResponsableEtablissement']);
                 Route::post('/send',[AuthResponsableEtablissementController::class,'send']);
                 Route::post('/sendImage',[AuthResponsableEtablissementController::class,'sendImage']);
                 Route::post('/destroyImage',[AuthResponsableEtablissementController::class,'destroyImage']);
-                Route::get('/panne-etablissement-poubelle-responsable',[ResponsableController::class, 'panneetablissementPoubelle']);
+                Route::get('/panne-etablissement-poubelle-responsable',[PannePoubelleController::class, 'panneetablissementPoubelle']);
+                Route::get('/dashboard-panne-etablissement-poubelle-responsable',[PannePoubelleController::class, 'dashboardPanneetablissementPoubelle']);
+
+
+
 
                 Route::get('/bloc-etablissement-resp',[ResponsableController::class,'BlocEtablissementResponsable']);
 

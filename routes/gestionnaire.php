@@ -1,72 +1,77 @@
 <?php
 use Illuminate\Support\Facades\Route;
+/**                              dashboard                 */
+    use App\Http\Controllers\Gestionnaire\DashboardGestionnaire\GestionPannesController;
+    use App\Http\Controllers\Gestionnaire\DashboardGestionnaire\GlobalStatController;
+/**                              dashboard                 */
 
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\GestionnaireController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\Client_dechetController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\OuvrierController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsableEtablissementController;
+/*                                 crud                     */
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\GestionnaireController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\Client_dechetController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\OuvrierController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsableEtablissementController;
 
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Commande_dechetController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Detail_commande_dechetController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Commande_dechetController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Detail_commande_dechetController;
 
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\MecanicienController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_camionController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparateur_poubelleController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_poubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\MecanicienController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_camionController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparateur_poubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_poubelleController;
 
-use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\DepotController;
-use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\Zone_depotController;
-use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\CamionController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\DepotController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\Zone_depotController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\CamionController;
 
-use App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle\FournisseurController;
-use App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle\StockPoubelleController;
-use App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle\MateriauxPrimaireController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle\FournisseurController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle\StockPoubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\ProductionPoubelle\MateriauxPrimaireController;
 
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Zone_travailController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\EtablissementController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Bloc_etablissementsController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Etage_etablissementsControlller;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Bloc_poubelleController;
-use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\PoubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Zone_travailController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\EtablissementController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Bloc_etablissementsController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Etage_etablissementsControlller;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\Bloc_poubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPoubelleEtablissements\PoubelleController;
+
+/*                                 crud                     */
+use App\Http\Controllers\Gestionnaire\RechercheGestionnaireController;
 
 
-
-        use App\Http\Controllers\Gestionnaire\DashboardGestionnaire\GestionnaireDashboardController;
         use App\Http\Controllers\Globale\SommeDechetController;
         use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
-
-
-
 use App\Http\Controllers\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
 
 
+/**                              debut dashboard                            */
+    Route::get('/dashboard', [GlobalStatController::class, 'statGetionnaire']);
+    /**                             Panne                 */
+        Route::get('/pannes-dashboard', [GestionPannesController::class, 'pannes']);
+        Route::get('/pannes-camion-mois', [GestionPannesController::class, 'PanneCamionparMois']);
+        Route::get('/pannes-poubelle-mois', [GestionPannesController::class, 'PannePoubelleparMois']);
+        Route::get('/pannes-poubelle-annee', [GestionPannesController::class, 'PannesPoubelleAnnees']);
+        Route::get('/pannes-camion-annee', [GestionPannesController::class, 'PannesCamionAnnees']);
+    /**                             Panne                 */
 
-        Route::get('/etablissement-all-details',[PoubelleController::class,"etablissementAllDetails"]);
+/**                              fin dashboard                             */
 
-        Route::get('/bloc-etablissement-liste/{etab}',[PoubelleController::class,"BlocEtablissementListe"]);
-        Route::get('/etage-etablissement-liste/{etab}/{bloc_etab}',[PoubelleController::class,"EtageEtablissementListe"]);
-        Route::get('/bloc-poubelle-liste/{etab}/{bloc_etab}/{etage}',[PoubelleController::class,"BlocPoubelleListe"]);
-
-        Route::get('/situation-financiere-gestionnaire-jour', [SituationFinanciereController::class, 'SituationFinanciereGestionnaireJour']);
-        Route::get('/situation-financiere-gestionnaire-mensuel', [SituationFinanciereController::class, 'SituationFinanciereGestionnaireMensuel']);
-
-    /**--------------  **************           debut crud       ************************** -------------------**/
+/**                               debut crud                          **/
         /** -------------------------------------------gestion Compte -----------------------------------------*/
-                /**                 gestionnaire                        */
-                    Route::apiResource('gestionnaire', GestionnaireController::class);
-                    Route::delete('/gestionnaire/hard-delete/{id}', [GestionnaireController::class, 'hdelete']);
-                    Route::get('/gestionnaire/restore/{id}', [GestionnaireController::class, 'restore']);
-                    Route::get('/admin/restoreall', [GestionnaireController::class, 'restoreAll']);
-                    Route::get('/admin/trash', [GestionnaireController::class, 'gestionnairetrash']);
-                /**                 client                                  */
-                    Route::apiResource('client', Client_dechetController::class);
-                        /**                  ouvrier                                */
-                    Route::apiResource('ouvrier', OuvrierController::class);
-                        /**                  responsable etablissement              */
-                    Route::apiResource('responsable-etablissement', ResponsableEtablissementController::class);
+            /**                 gestionnaire                        */
+                Route::apiResource('gestionnaire', GestionnaireController::class);
+                Route::delete('/gestionnaire/hard-delete/{id}', [GestionnaireController::class, 'hdelete']);
+                Route::get('/gestionnaire/restore/{id}', [GestionnaireController::class, 'restore']);
+                Route::get('/admin/restoreall', [GestionnaireController::class, 'restoreAll']);
+                Route::get('/admin/trash', [GestionnaireController::class, 'gestionnairetrash']);
+            /**                 client                                  */
+                Route::apiResource('client', Client_dechetController::class);
+            /**                  ouvrier                                */
+                Route::apiResource('ouvrier', OuvrierController::class);
+            /**                  responsable etablissement              */
+                Route::apiResource('responsable-etablissement', ResponsableEtablissementController::class);
         /** -------------------------------------------gestion Dechet -----------------------------------------*/
                         /**                  commandes                     */
                     Route::apiResource('commande-dechet', Commande_dechetController::class);
@@ -75,77 +80,60 @@ use App\Http\Controllers\Globale\MessageController;
                     /**                  detail commande dechet         */
                     Route::apiResource('detail-commande-dechets', Detail_commande_dechetController::class);
         /** -------------------------------------------gestion Panne -----------------------------------------*/
-                    /**                        reparateur poubelle             */
-                    Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
-                    /**                        mecanicien                  */
-                    Route::apiResource('mecanicien', MecanicienController::class);
-                    /**                        reparation poubelle            */
-                    Route::apiResource('reparation-poubelle', Reparation_poubelleController::class);
-                    /**                        reparation camion               */
-                    Route::apiResource('reparation-camion', Reparation_camionController::class);
+                /**                        reparateur poubelle             */
+                Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
+                /**                        mecanicien                  */
+                Route::apiResource('mecanicien', MecanicienController::class);
+                /**                        reparation poubelle            */
+                Route::apiResource('reparation-poubelle', Reparation_poubelleController::class);
+                /**                        reparation camion               */
+                Route::apiResource('reparation-camion', Reparation_camionController::class);
         /** -------------------------------------------gestion Poubelle par etablissement -----------------------------------------------*/
-                            /**                   zone-travail                        */
-                    Route::apiResource('zone-travail', Zone_travailController::class);
-                            /**                  etablissement                      */
-                    Route::apiResource('etablissement', EtablissementController::class);
-                            /**                bloc   etablissements                      */
-                    Route::apiResource('bloc-etablissement', Bloc_etablissementsController::class);
-                            /**                etage etablissements                      */
-                    Route::apiResource('etage-etablissement', Etage_etablissementsControlller::class);
+                        /**                   zone-travail                        */
+                Route::apiResource('zone-travail', Zone_travailController::class);
+                        /**                  etablissement                      */
+                Route::apiResource('etablissement', EtablissementController::class);
+                        /**                bloc   etablissements                      */
+                Route::apiResource('bloc-etablissement', Bloc_etablissementsController::class);
+                        /**                etage etablissements                      */
+                Route::apiResource('etage-etablissement', Etage_etablissementsControlller::class);
 
-                            /**                  bloc-poubelle                      */
-                    Route::apiResource('bloc-poubelle', Bloc_poubelleController::class);
-                            /**                    poubelle                        */
-                    Route::apiResource('poubelle', PoubelleController::class);
+                        /**                  bloc-poubelle                      */
+                Route::apiResource('bloc-poubelle', Bloc_poubelleController::class);
+                        /**                    poubelle                        */
+                Route::apiResource('poubelle', PoubelleController::class);
 
         /** -------------------------------------------transport poubelle -----------------------------------------*/
-                        /**                       camion                            */
-                Route::apiResource('camion', CamionController::class);
-                        /**                        zone depot                       */
-                Route::apiResource('zone-depot', Zone_depotController::class);
-                        /**                       depot                            */
-                Route::apiResource('depot', DepotController::class);
+                    /**                       camion                            */
+            Route::apiResource('camion', CamionController::class);
+                    /**                        zone depot                       */
+            Route::apiResource('zone-depot', Zone_depotController::class);
+                    /**                       depot                            */
+            Route::apiResource('depot', DepotController::class);
         /** -------------------------------------------production poubelle -----------------------------------------*/
-                    /**                   Fournisseur                         */
-                Route::apiResource('fournisseurs', FournisseurController::class);
-                    /**                    Materiaux Primaires               */
-                Route::apiResource('materiaux-primaires',MateriauxPrimaireController::class);
-                    /**                   Stock poubelle                  */
-                Route::apiResource('stock-poubelle', StockPoubelleController::class);
-                Route::post('/update-stock-image/{id}', [StockPoubelleController::class, 'updateStockImage']);
+                /**                   Fournisseur                         */
+            Route::apiResource('fournisseurs', FournisseurController::class);
+                /**                    Materiaux Primaires               */
+            Route::apiResource('materiaux-primaires',MateriauxPrimaireController::class);
+                /**                   Stock poubelle                  */
+            Route::apiResource('stock-poubelle', StockPoubelleController::class);
+            Route::post('/update-stock-image/{id}', [StockPoubelleController::class, 'updateStockImage']);
 
-    /**--------------  **************          fin crud          ************************** -------------------**/
+/**                               fin crud                            **/
 
-    /** -------------  **************         debut dashborad gestionnaire      **************************  ------------------**/
-          Route::get('/dashboard', [GestionnaireDashboardController::class, 'dashbordValeur']);
+/**                               debut Rechecher                          **/
+        Route::get('/bloc-etablissement-liste/{etab}',[RechercheGestionnaireController::class,"BlocEtablissementListe"]);
+        Route::get('/etage-etablissement-liste/{etab}/{bloc_etab}',[RechercheGestionnaireController::class,"EtageEtablissementListe"]);
+        Route::get('/bloc-poubelle-liste/{etab}/{bloc_etab}/{etage}',[RechercheGestionnaireController::class,"BlocPoubelleListe"]);
+/**                               fin Rechecher                          **/
 
-          Route::get('/stock-poubelles-dashboard', [GestionnaireDashboardController::class, 'stockPoubelles']);
-          Route::get('/etablissements-poubelles-dashboard', [GestionnaireDashboardController::class, 'poubellesEtablissement']);
-
-
-          Route::get('/commandes-dechets-dashboard', [GestionnaireDashboardController::class, 'CommandesDechets']);
-          Route::get('/collecte-dechets-dashboard', [GestionnaireDashboardController::class, 'collecteDechets']);
-
-
-          Route::get('/personnels-dashboard', [GestionnaireDashboardController::class, 'personnels']);
-
-
-          Route::get('/camions-dashboard', [GestionnaireDashboardController::class, 'camions']);
+        Route::get('/situation-financiere-gestionnaire-jour', [SituationFinanciereController::class, 'SituationFinanciereGestionnaireJour']);
+        Route::get('/situation-financiere-gestionnaire-mensuel', [SituationFinanciereController::class, 'SituationFinanciereGestionnaireMensuel']);
 
 
     Route::get('/somme-dechets-depot-par-mois', [SommeDechetController::class, 'sommeDechetsDepotparMois']);
     Route::get('/somme-dechet-annees', [SommeDechetController::class, 'sommeDechetAnnees']);
     Route::get('/somme-dechets-vendus', [SommeDechetController::class, 'sommeDechetsVendus']);
-
-    Route::get('/pannes-dashboard', [GestionnaireDashboardController::class, 'pannes']);
-
-    Route::get('/pannes-camion-mois', [GestionnaireDashboardController::class, 'PanneCamionparMois']);
-    Route::get('/pannes-poubelle-mois', [GestionnaireDashboardController::class, 'PannePoubelleparMois']);
-
-    Route::get('/pannes-poubelle-annee', [GestionnaireDashboardController::class, 'PannesPoubelleAnnees']);
-    Route::get('/pannes-camion-annee', [GestionnaireDashboardController::class, 'PannesCamionAnnees']);
-
-
     /** -------------  **************         fin dashborad gestionnaire      **************************  ------------------**/
 
     Route::group(['prefix' => 'auth-gestionnaire'], function () {

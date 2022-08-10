@@ -11,7 +11,8 @@ class CreateEtablissementsTable extends Migration{
             $table->foreignId('zone_travail_id')->constrained('zone_travails')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('camion_id')->constrained('camions')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('nom_etablissement',30)->unique();
-            $table->enum('type_etablissement', ['ecole primaire', 'college','ecole secondaire','universite','societe']);
+            $table->enum('type_etablissement', ['privee','public']);
+            $table->enum('niveau_etablissement', ['ecole primaire', 'college','ecole secondaire','universite','societe']);
             $table->integer('nbr_personnes');
             $table->string('url_map');
             $table->string('adresse')->unique();
