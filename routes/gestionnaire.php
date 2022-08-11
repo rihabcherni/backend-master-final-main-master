@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\Client_dechetController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\OuvrierController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsableEtablissementController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsableCommercialeController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsablePersonnelController;
 
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Commande_dechetController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;
@@ -68,11 +70,11 @@ use App\Http\Controllers\Globale\MessageController;
                 Route::get('/admin/trash', [GestionnaireController::class, 'gestionnairetrash']);
             /**                 client                                  */
                 Route::apiResource('client', Client_dechetController::class);
-            /**                  ouvrier                                */
                 Route::apiResource('ouvrier', OuvrierController::class);
-            /**                  responsable etablissement              */
+                Route::apiResource('responsable-commercial', ResponsableCommercialeController::class);
+                Route::apiResource('responsable-personnel', ResponsablePersonnelController::class);
                 Route::apiResource('responsable-etablissement', ResponsableEtablissementController::class);
-        /** -------------------------------------------gestion Dechet -----------------------------------------*/
+            /** -------------------------------------------gestion Dechet -----------------------------------------*/
                         /**                  commandes                     */
                     Route::apiResource('commande-dechet', Commande_dechetController::class);
                         /**                  dechets                       */
