@@ -220,9 +220,6 @@ class EtablissementSeeder extends Seeder{
                 Bloc_poubelle::create([
                     'etage_etablissement_id'=> $etage->id,
                 ]);
-                Bloc_poubelle::create([
-                    'etage_etablissement_id'=> $etage->id,
-                ]);
         }
 
         $bloc_poubelle=\App\Models\Bloc_poubelle::get();

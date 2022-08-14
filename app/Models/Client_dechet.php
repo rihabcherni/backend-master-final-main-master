@@ -2,7 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\GestionCompte\Client_dechet as ClientDechetResource;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -38,4 +38,14 @@ class Client_dechet  extends Authenticatable{
         return $this->belongsTo(Commande_dechet::class);
     }
     protected $dates=['deleted_at'];
+
+    public static function getClientDechet(){
+        $client = ClientDechetResource::collection(Client_dechet::all());
+        return $client;
+    }
+
+    public static function getClientDechetById($id){
+        $client = ClientDechetResource::collection(Client_dechet::where('id',$id)->get());
+        return $client;
+    }
 }

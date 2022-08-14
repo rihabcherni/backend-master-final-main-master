@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionPanne\Mecanicien as MecanicienResource;
 
 class Mecanicien extends Model
 {
@@ -26,4 +27,13 @@ class Mecanicien extends Model
     }
     protected $dates=['deleted_at'];
 
+    public static function getMecanicien(){
+        $mecanicien = MecanicienResource::collection(Mecanicien::all());
+        return $mecanicien;
+    }
+
+    public static function getMecanicienById($id){
+        $mecanicien = MecanicienResource::collection(Mecanicien::where('id',$id)->get());
+        return $mecanicien;
+    }
 }

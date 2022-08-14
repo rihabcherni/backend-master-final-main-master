@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionDechet\Dechet as DechetResource;
 
 class Dechet extends Model
 {
@@ -26,5 +27,13 @@ class Dechet extends Model
     }
 
     protected $dates=['deleted_at'];
+    public static function getDechet(){
+        $dechet = DechetResource::collection(Dechet::all());
+        return $dechet;
+    }
 
+    public static function getDechetById($id){
+        $dechet = DechetResource::collection(Dechet::where('id',$id)->get());
+        return $dechet;
+    }
 }

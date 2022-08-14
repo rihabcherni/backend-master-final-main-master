@@ -161,6 +161,7 @@ class RegionController extends Controller{
         $etabs= Etablissement::with('bloc_etablissements')->get();
         $eta=[];
         foreach($etabs as $etb){
+            $nbrPoubelle=0;
                 $blocetabs= $etb->bloc_etablissements;
                 foreach($blocetabs as $blocetab){
                     $etageetabs= $blocetab->etage_etablissements;
@@ -168,10 +169,13 @@ class RegionController extends Controller{
                         $blocpoubelles= $etageetab->bloc_poubelles;
                         foreach($blocpoubelles as $blocpoubelle){
                             $poubelles= $blocpoubelle->poubelles;
-
+                            foreach($poubelles as $p){
+                              $nbrPoubelle+=1;
+                            }
                          }
-        }
-            }
+                     }
+                }
+        $etb['nbr_poubelle']=$nbrPoubelle;
         array_push($eta,$etb);
      }
         return $eta;

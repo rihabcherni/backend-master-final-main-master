@@ -38,25 +38,28 @@ class Poubelle extends JsonResource{
 
         return [
             'id' => $this->id,
-            'bloc_poubelle_id' => $this->bloc_poubelle_id,
-
-            'nombre_bloc'=>$lengthBloc,
-            'nombre_poubelle'=>$lengthPoubelles,
-
             'poubelle_id_resp' => $id_resp_Poubelles,
-            'bloc_poubelle_id_resp' => $id_resp_Bloc,
-            'nom' => $this->nom,
-            'nom_poubelle_responsable'=>$nom_poubelle_responsable,
+
             'etablissement'=>$etablissement->nom_etablissement ,
             'etablissement_id'=>$etablissement->id ,
-            'bloc_etablissement'=> $bloc_etabl_nom,
-            'bloc_etablissement_id'=> $bloc_etabl->id,
-            'etage'=> $etage_nom,
-            'etage_id'=> $etage->id,
-            'qrcode' => $this->QRcode,
+
+            'nom' => $this->nom,
+            'nom_poubelle_responsable'=>$nom_poubelle_responsable,
             'type' => $this->type,
             'Etat' => $this->Etat,
             'quantite' =>round((($this->Etat * config('global.capacite_poubelle'))/100)* 1000)/1000,
+
+            'bloc_poubelle_id' => $this->bloc_poubelle_id,
+            'bloc_poubelle_id_resp' => $id_resp_Bloc,
+
+            'bloc_etablissement'=> $bloc_etabl_nom,
+            'bloc_etablissement_id'=> $bloc_etabl->id,
+
+            'etage'=> $etage_nom,
+            'etage_id'=> $etage->id,
+
+            'qrcode' => $this->QRcode,
+
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
             'deleted_at' => $this->deleted_at,

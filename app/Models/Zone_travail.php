@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionPoubelleEtablissements\Zone_travail as ZoneTravailResource;
 
 class Zone_travail extends Model
 {
@@ -28,4 +29,13 @@ class Zone_travail extends Model
         return $this->hasMany(Etablissement::class);
     }
     protected $dates=['deleted_at'];
+    public static function getZoneTravail(){
+        $zoneTravail = ZoneTravailResource::collection(Zone_travail::all());
+        return $zoneTravail;
+    }
+
+    public static function getZoneTravailById($id){
+        $zoneTravail = ZoneTravailResource::collection(Zone_travail::where('id',$id)->get());
+        return $zoneTravail;
+    }
 }

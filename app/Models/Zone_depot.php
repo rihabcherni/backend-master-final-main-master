@@ -3,6 +3,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\TransportDechet\Zone_depot as ZoneDepotResource;
+
 class Zone_depot extends Model
 {
     use HasFactory, SoftDeletes;
@@ -26,4 +28,13 @@ class Zone_depot extends Model
         return $this->hasMany(Camion::class);
     }
     protected $dates=['deleted_at'];
+    public static function getZoneDepot(){
+        $zone_depot = ZoneDepotResource::collection(Zone_depot::all());
+        return $zone_depot;
+    }
+
+    public static function getZoneDepotById($id){
+        $zone_depot = ZoneDepotResource::collection(Zone_depot::where('id',$id)->get());
+        return $zone_depot;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionDechet\Detail_commande_dechet as DetailCommandeDechetResource;
 
 class Detail_commande_dechet extends Model
 {
@@ -18,5 +19,14 @@ class Detail_commande_dechet extends Model
     public function commande_dechet()
     {
         return $this->belongsTo(Commande_dechet::class);
+    }
+    public static function getDetailCommandeDechet(){
+        $DetailCommandeDechet = DetailCommandeDechetResource::collection(Detail_commande_dechet::all());
+        return $DetailCommandeDechet;
+    }
+
+    public static function getDetailCommandeDechetById($id){
+        $DetailCommandeDechet = DetailCommandeDechetResource::collection(Detail_commande_dechet::where('id',$id)->get());
+        return $DetailCommandeDechet;
     }
 }

@@ -3,8 +3,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Etablissement extends Model
-{
+use App\Http\Resources\GestionPoubelleEtablissements\Etablissement as EtablissementResource;
+
+class Etablissement extends Model{
     use HasFactory,  SoftDeletes;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
@@ -44,7 +45,6 @@ class Etablissement extends Model
     public function camion() {
         return $this->belongsTo(Camion::class);
     }
-
     public function etage_etablissements(){
         return $this->hasManyDeep(Etage_etablissement::class, [Bloc_etablissement::class]);
     }
@@ -58,4 +58,13 @@ class Etablissement extends Model
         return $this->hasOne(Revenu::class);
     }
     protected $dates=['deleted_at'];
+    public static function getEtablissement(){
+        $Etablissement = EtablissementResource::collection(Etablissement::all());
+        return $Etablissement;
+    }
+
+    public static function getEtablissementById($id){
+        $Etablissement = EtablissementResource::collection(Etablissement::where('id',$id)->get());
+        return $Etablissement;
+    }
 }

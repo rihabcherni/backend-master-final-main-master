@@ -23,7 +23,7 @@
     <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
     <div id="qrcode" style="height:450px;width:450px;" v-loading="PanoramaInfo.bgenerateing"></div>
 
-<script>
+{{--  <script>
     let dataUrl='';
         let qrcode = new QRCode(document.getElementById("qrcode"),
                    {
@@ -45,7 +45,7 @@
             document.cookie="dataUrl="+d;
         }
           ,1000);
-</script>
+</script>  --}}
     {{--  <script src="/js/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
@@ -72,7 +72,7 @@
 
 
                 <body class="antialiased">
-                    <img src={{ $cookie= $_COOKIE['dataUrl'] }} />
+                    {{--  <img src={{ $cookie= $_COOKIE['dataUrl'] }} />  --}}
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionPoubelleEtablissements\Etage_etablissements as EtageEtablissementResource;
 
 class Etage_etablissement extends Model
 {
@@ -21,4 +22,13 @@ class Etage_etablissement extends Model
         return $this->belongsTo(Bloc_etablissement::class);
     }
     protected $dates=['deleted_at'];
+    public static function getEtageEtablissement(){
+        $etageEtablissement = EtageEtablissementResource::collection(Etage_etablissement::all());
+        return $etageEtablissement;
+    }
+
+    public static function getEtageEtablissementById($id){
+        $etageEtablissement = EtageEtablissementResource::collection(Etage_etablissement::where('id',$id)->get());
+        return $etageEtablissement;
+    }
 }

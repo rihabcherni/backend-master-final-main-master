@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissement;
 use App\Http\Controllers\Globale\Controller;
 use App\Models\Etablissement;
+use App\Models\Poubelle;
 use App\Models\Reparation_poubelle;
 use Carbon\Carbon;
 
@@ -36,11 +37,15 @@ class PannePoubelleController extends Controller{
         $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;
         $etablissement= Etablissement::where('id',$etab_id)->  withcount('poubelles')->get();
 
-        $nbr_poubelle=$etablissement[0]->poubelles_count;
-        if($nbr_poubelle!=0){
-            $pourcentage_panne_poubelle=count($t)/$nbr_poubelle;
+        $nbr_poubelle_etab=$etablissement[0]->poubelles_count;
+        $nbr_poubelle_Total=Poubelle::count();
+        if($nbr_poubelle_etab!=0){ $pourcentage_panne_poubelle_etab=count($t)/$nbr_poubelle_etab; }
+        else {  $pourcentage_panne_poubelle_etab=0; }
+
+        if($nbr_poubelle_Total!=0){
+            $pourcentage_panne_poubelle_totale=count($t)/$nbr_poubelle_Total;
         }else {
-            $pourcentage_panne_poubelle=0;
+            $pourcentage_panne_poubelle_totale=0;
         }
         $cout=[];
         foreach($t as $a){
@@ -63,7 +68,8 @@ class PannePoubelleController extends Controller{
             'duree_min_panne'=>min($duree),
             'duree_max_panne'=>max($duree),
 
-            'pourcentage_panne'=>$pourcentage_panne_poubelle,
+            'pourcentage_panne_par_rapport_poubelles_etablissement'=>$pourcentage_panne_poubelle_etab,
+            'pourcentage_panne_par_rapport_totat_poubelle'=>$pourcentage_panne_poubelle_totale,
         ];
 
     }

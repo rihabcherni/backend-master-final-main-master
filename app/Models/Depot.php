@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\TransportDechet\Depot as DepotResource;
 
 class Depot extends Model
 {
@@ -31,4 +32,13 @@ class Depot extends Model
     }
     protected $dates=['deleted_at'];
 
+    public static function getDepot(){
+        $depot = DepotResource::collection(Depot::all());
+        return $depot;
+    }
+
+    public static function getDepotById($id){
+        $depot = DepotResource::collection(Depot::where('id',$id)->get());
+        return $depot;
+    }
 }

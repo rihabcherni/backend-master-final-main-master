@@ -3,6 +3,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\ProductionPoubelle\Fournisseur as FournisseurResource;
 
 class Fournisseur extends Model{
     use HasFactory,  SoftDeletes;
@@ -20,4 +21,13 @@ class Fournisseur extends Model{
         return $this->belongsTo(Materiau_primaire::class);
     }
     protected $dates=['deleted_at'];
+    public static function getFournisseur(){
+        $fournisseur = FournisseurResource::collection(Fournisseur::all());
+        return $fournisseur;
+    }
+
+    public static function getFournisseurById($id){
+        $fournisseur = FournisseurResource::collection(Fournisseur::where('id',$id)->get());
+        return $fournisseur;
+    }
 }

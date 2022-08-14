@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Http\Resources\GestionCompte\Responsable_etablissement as ResponsableEtablissementResource;
 
 class Responsable_etablissement extends Authenticatable{
     use HasFactory, SoftDeletes, Notifiable , HasApiTokens;
@@ -35,6 +36,15 @@ class Responsable_etablissement extends Authenticatable{
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getResponsableEtablissement(){
+        $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::all());
+        return $responsableEtablissement;
+    }
+
+    public static function getResponsableEtablissementById($id){
+        $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::where('id',$id)->get());
+        return $responsableEtablissement;
+    }
 }
 
 

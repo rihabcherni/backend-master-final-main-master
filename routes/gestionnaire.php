@@ -40,9 +40,8 @@ use Illuminate\Support\Facades\Route;
 /*                                 crud                     */
 use App\Http\Controllers\Gestionnaire\RechercheGestionnaireController;
 
-
-        use App\Http\Controllers\Globale\SommeDechetController;
-        use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
+use App\Http\Controllers\Globale\SommeDechetController;
+use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 use App\Http\Controllers\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
@@ -68,12 +67,41 @@ use App\Http\Controllers\Globale\MessageController;
                 Route::get('/gestionnaire/restore/{id}', [GestionnaireController::class, 'restore']);
                 Route::get('/admin/restoreall', [GestionnaireController::class, 'restoreAll']);
                 Route::get('/admin/trash', [GestionnaireController::class, 'gestionnairetrash']);
+                Route::get('gestionnaire-excel', [GestionnaireController::class, 'exportInfoGestionnaireExcel']);
+                Route::get('gestionnaire-csv', [GestionnaireController::class, 'exportInfoGestionnaireCSV']);
+                Route::get('gestionnaire-pdf/{id}', [GestionnaireController::class, 'pdfGestionnaire']);
+                Route::get('gestionnaire-all-pdf', [GestionnaireController::class, 'pdfAllGestionnaire']);
             /**                 client                                  */
-                Route::apiResource('client', Client_dechetController::class);
+                Route::apiResource('client-dechets', Client_dechetController::class);
+                Route::get('client-dechets-excel', [Client_dechetController::class, 'exportInfoClientDechetExcel']);
+                Route::get('client-dechets-csv', [Client_dechetController::class, 'exportInfoClientDechetCSV']);
+                Route::get('client-dechets-pdf/{id}', [Client_dechetController::class, 'pdfClientDechet']);
+                Route::get('client-dechets-all-pdf', [Client_dechetController::class, 'pdfAllClientDechet']);
+            /**                 ouvrier                                  */
                 Route::apiResource('ouvrier', OuvrierController::class);
+                Route::get('ouvrier-excel', [OuvrierController::class, 'exportInfoOuvrierExcel']);
+                Route::get('ouvrier-csv', [OuvrierController::class, 'exportInfoOuvrierCSV']);
+                Route::get('ouvrier-pdf/{id}', [OuvrierController::class, 'pdfOuvrier']);
+                Route::get('ouvrier-all-pdf', [OuvrierController::class, 'pdfAllOuvrier']);
+            /**                 responsable commercial                                  */
                 Route::apiResource('responsable-commercial', ResponsableCommercialeController::class);
+                Route::get('responsable-commercial-excel', [ResponsableCommercialeController::class, 'exportInfoResponsableCommercialeExcel']);
+                Route::get('responsable-commercial-csv', [ResponsableCommercialeController::class, 'exportInfoResponsableCommercialeCSV']);
+                Route::get('responsable-commercial-pdf/{id}', [ResponsableCommercialeController::class, 'pdfResponsableCommerciale']);
+                Route::get('responsable-commercial-all-pdf', [ResponsableCommercialeController::class, 'pdfAllResponsableCommerciale']);
+            /**                 responsable personnel                                  */
                 Route::apiResource('responsable-personnel', ResponsablePersonnelController::class);
+                Route::get('responsable-personnel-excel', [ResponsablePersonnelController::class, 'exportInfoResponsablePersonnelExcel']);
+                Route::get('responsable-personnel-csv', [ResponsablePersonnelController::class, 'exportInfoResponsablePersonnelCSV']);
+                Route::get('responsable-personnel-pdf/{id}', [ResponsablePersonnelController::class, 'pdfResponsablePersonnel']);
+                Route::get('responsable-personnel-all-pdf', [ResponsablePersonnelController::class, 'pdfAllResponsablePersonnel']);
+            /**                 responsable etablissement                                  */
                 Route::apiResource('responsable-etablissement', ResponsableEtablissementController::class);
+                Route::get('responsable-etablissement-excel', [ResponsableEtablissementController::class, 'exportInfoResponsableEtablissementExcel']);
+                Route::get('responsable-etablissement-csv', [ResponsableEtablissementController::class, 'exportInfoResponsableEtablissementCSV']);
+                Route::get('responsable-etablissement-pdf/{id}', [ResponsableEtablissementController::class, 'pdfResponsableEtablissement']);
+                Route::get('responsable-etablissement-all-pdf', [ResponsableEtablissementController::class, 'pdfAllResponsableEtablissement']);
+
             /** -------------------------------------------gestion Dechet -----------------------------------------*/
                         /**                  commandes                     */
                     Route::apiResource('commande-dechet', Commande_dechetController::class);
@@ -82,44 +110,111 @@ use App\Http\Controllers\Globale\MessageController;
                     /**                  detail commande dechet         */
                     Route::apiResource('detail-commande-dechets', Detail_commande_dechetController::class);
         /** -------------------------------------------gestion Panne -----------------------------------------*/
-                /**                        reparateur poubelle             */
+            /**                        reparateur poubelle             */
                 Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
-                /**                        mecanicien                  */
+                Route::get('reparateur-poubelle-excel', [Reparateur_poubelleController::class, 'exportInfoReparateurPoubelleExcel']);
+                Route::get('reparateur-poubelle-csv', [Reparateur_poubelleController::class, 'exportInfoReparateurPoubelleCSV']);
+                Route::get('reparateur-poubelle-pdf/{id}', [Reparateur_poubelleController::class, 'pdfReparateurPoubelle']);
+                Route::get('reparateur-poubelle-all-pdf', [Reparateur_poubelleController::class, 'pdfAllReparateurPoubelle']);
+            /**                        mecanicien                  */
                 Route::apiResource('mecanicien', MecanicienController::class);
-                /**                        reparation poubelle            */
+                Route::get('mecanicien-excel', [MecanicienController::class, 'exportInfoMecanicienExcel']);
+                Route::get('mecanicien-csv', [MecanicienController::class, 'exportInfoMecanicienCSV']);
+                Route::get('mecanicien-pdf/{id}', [MecanicienController::class, 'pdfMecanicien']);
+                Route::get('mecanicien-all-pdf', [MecanicienController::class, 'pdfAllMecanicien']);
+            /**                        reparation poubelle            */
                 Route::apiResource('reparation-poubelle', Reparation_poubelleController::class);
-                /**                        reparation camion               */
+                Route::get('reparation-poubelle-excel', [Reparation_poubelleController::class, 'exportInfoReparationPoubelleExcel']);
+                Route::get('reparation-poubelle-csv', [Reparation_poubelleController::class, 'exportInfoReparationPoubelleCSV']);
+                Route::get('reparation-poubelle-pdf/{id}', [Reparation_poubelleController::class, 'pdfReparationPoubelle']);
+                Route::get('reparation-poubelle-all-pdf', [Reparation_poubelleController::class, 'pdfAllReparationPoubelle']);
+            /**                        reparation camion               */
                 Route::apiResource('reparation-camion', Reparation_camionController::class);
+                Route::get('reparation-camion-excel', [Reparation_camionController::class, 'exportInfoReparationCamionExcel']);
+                Route::get('reparation-camion-csv', [Reparation_camionController::class, 'exportInfoReparationCamionCSV']);
+                Route::get('reparation-camion-pdf/{id}', [Reparation_camionController::class, 'pdfReparationCamion']);
+                Route::get('reparation-camion-all-pdf', [Reparation_camionController::class, 'pdfAllReparationCamion']);
         /** -------------------------------------------gestion Poubelle par etablissement -----------------------------------------------*/
-                        /**                   zone-travail                        */
+            /**                   zone-travail                        */
                 Route::apiResource('zone-travail', Zone_travailController::class);
-                        /**                  etablissement                      */
+                Route::get('zone-travail-excel', [Zone_travailController::class, 'exportInfoZoneTravailExcel']);
+                Route::get('zone-travail-csv', [Zone_travailController::class, 'exportInfoZoneTravailCSV']);
+                Route::get('zone-travail-pdf/{id}', [Zone_travailController::class, 'pdfZoneTravail']);
+                Route::get('zone-travail-all-pdf', [Zone_travailController::class, 'pdfAllZoneTravail']);
+            /**                  etablissement                      */
                 Route::apiResource('etablissement', EtablissementController::class);
-                        /**                bloc   etablissements                      */
+                Route::get('etablissement-excel', [EtablissementController::class, 'exportInfoEtablissementExcel']);
+                Route::get('etablissement-csv', [EtablissementController::class, 'exportInfoEtablissementCSV']);
+                Route::get('etablissement-pdf/{id}', [EtablissementController::class, 'pdfEtablissement']);
+                Route::get('etablissement-all-pdf', [EtablissementController::class, 'pdfAllEtablissement']);
+            /**                bloc   etablissements                      */
                 Route::apiResource('bloc-etablissement', Bloc_etablissementsController::class);
-                        /**                etage etablissements                      */
+                Route::get('bloc-etablissement-excel', [Bloc_etablissementsController::class, 'exportInfoBlocetablissementsExcel']);
+                Route::get('bloc-etablissement-csv', [Bloc_etablissementsController::class, 'exportInfoBlocEtablissementsCSV']);
+                Route::get('bloc-etablissement-pdf/{id}', [Bloc_etablissementsController::class, 'pdfBlocEtablissements']);
+                Route::get('bloc-etablissement-all-pdf', [Bloc_etablissementsController::class, 'pdfAllBlocEtablissements']);
+            /**                etage etablissements                      */
                 Route::apiResource('etage-etablissement', Etage_etablissementsControlller::class);
-
-                        /**                  bloc-poubelle                      */
+                Route::get('etage-etablissement-excel', [Etage_etablissementsControlller::class, 'exportInfoEtageEtablissementsExcel']);
+                Route::get('etage-etablissement-csv', [Etage_etablissementsControlller::class, 'exportInfoEtageEtablissementsCSV']);
+                Route::get('etage-etablissement-pdf/{id}', [Etage_etablissementsControlller::class, 'pdfEtageEtablissements']);
+                Route::get('etage-etablissement-all-pdf', [Etage_etablissementsControlller::class, 'pdfAllEtageEtablissements']);
+            /**                  bloc-poubelle                      */
                 Route::apiResource('bloc-poubelle', Bloc_poubelleController::class);
-                        /**                    poubelle                        */
-                Route::apiResource('poubelle', PoubelleController::class);
-
+                Route::get('bloc-poubelle-excel', [Bloc_poubelleController::class, 'exportInfoBlocPoubelleExcel']);
+                Route::get('bloc-poubelle-csv', [Bloc_poubelleController::class, 'exportInfoBlocPoubelleCSV']);
+                Route::get('bloc-poubelle-pdf/{id}', [Bloc_poubelleController::class, 'pdfBlocPoubelle']);
+                Route::get('bloc-poubelle-all-pdf', [Bloc_poubelleController::class, 'pdfAllBlocPoubelle']);
+            /**                    poubelle                        */
+                Route::apiResource('poubelle', PoubelleController::class,);
+                Route::get('poubelle-excel', [PoubelleController::class, 'exportInfoPoubelleExcel']);
+                Route::get('poubelle-csv', [PoubelleController::class, 'exportInfoPoubelleCSV']);
+                Route::get('poubelle-pdf/{id}', [PoubelleController::class, 'pdfPoubelle']);
+                Route::get('poubelle-all-pdf', [PoubelleController::class, 'pdfAllPoubelle']);
         /** -------------------------------------------transport poubelle -----------------------------------------*/
-                    /**                       camion                            */
-            Route::apiResource('camion', CamionController::class);
-                    /**                        zone depot                       */
-            Route::apiResource('zone-depot', Zone_depotController::class);
-                    /**                       depot                            */
-            Route::apiResource('depot', DepotController::class);
+            /**                       camion                            */
+                Route::apiResource('camion', CamionController::class);
+                Route::get('camion-excel', [CamionController::class, 'exportInfoCamionExcel']);
+                Route::get('camion-csv', [CamionController::class, 'exportInfoCamionCSV']);
+                Route::get('camion-pdf/{id}', [CamionController::class, 'pdfCamion']);
+                Route::get('camion-all-pdf', [CamionController::class, 'pdfAllCamion']);
+
+            /**                        zone depot                        */
+                Route::apiResource('zone-depot', Zone_depotController::class);
+                Route::get('zone-depot-excel', [Zone_depotController::class, 'exportInfoZoneDepotExcel']);
+                Route::get('zone-depot-csv', [Zone_depotController::class, 'exportInfoZoneDepotCSV']);
+                Route::get('zone-depot-pdf/{id}', [Zone_depotController::class, 'pdfZoneDepot']);
+                Route::get('zone-depot-all-pdf', [Zone_depotController::class, 'pdfAllZoneDepot']);
+            /**                       depot                            */
+                Route::apiResource('depot', DepotController::class);
+                Route::get('depot-excel', [DepotController::class, 'exportInfoDepotExcel']);
+                Route::get('depot-csv', [DepotController::class, 'exportInfoDepotCSV']);
+                Route::get('depot-pdf/{id}', [DepotController::class, 'pdfDepot']);
+                Route::get('depot-all-pdf', [DepotController::class, 'pdfAllDepot']);
+
         /** -------------------------------------------production poubelle -----------------------------------------*/
-                /**                   Fournisseur                         */
-            Route::apiResource('fournisseurs', FournisseurController::class);
-                /**                    Materiaux Primaires               */
-            Route::apiResource('materiaux-primaires',MateriauxPrimaireController::class);
-                /**                   Stock poubelle                  */
-            Route::apiResource('stock-poubelle', StockPoubelleController::class);
-            Route::post('/update-stock-image/{id}', [StockPoubelleController::class, 'updateStockImage']);
+            /**                   Fournisseur                         */
+                Route::apiResource('fournisseurs', FournisseurController::class);
+                Route::get('fournisseurs-excel', [FournisseurController::class, 'exportInfoFournisseurExcel']);
+                Route::get('fournisseurs-csv', [FournisseurController::class, 'exportInfoFournisseurCSV']);
+                Route::get('fournisseurs-pdf/{id}', [FournisseurController::class, 'pdfFournisseur']);
+                Route::get('fournisseurs-all-pdf', [FournisseurController::class, 'pdfAllFournisseur']);
+
+            /**                    Materiaux Primaires               */
+                Route::apiResource('materiaux-primaires',MateriauxPrimaireController::class);
+                Route::get('materiaux-primaires-excel', [MateriauxPrimaireController::class, 'exportInfoMateriauxPrimaireExcel']);
+                Route::get('materiaux-primaires-csv', [MateriauxPrimaireController::class, 'exportInfoMateriauxPrimaireCSV']);
+                Route::get('materiaux-primaires-pdf/{id}', [MateriauxPrimaireController::class, 'pdfMateriauxPrimaire']);
+                Route::get('materiaux-primaires-all-pdf', [MateriauxPrimaireController::class, 'pdfAllMateriauxPrimaire']);
+
+            /**                   Stock poubelle                  */
+                Route::apiResource('stock-poubelle', StockPoubelleController::class);
+                Route::get('stock-poubelle-excel', [StockPoubelleController::class, 'exportInfoStockPoubelleExcel']);
+                Route::get('stock-poubelle-csv', [StockPoubelleController::class, 'exportInfoStockPoubelleCSV']);
+                Route::get('stock-poubelle-pdf/{id}', [StockPoubelleController::class, 'pdfStockPoubelle']);
+                Route::get('stock-poubelle-all-pdf', [StockPoubelleController::class, 'pdfAllStockPoubelle']);
+
+                Route::post('/update-stock-image/{id}', [StockPoubelleController::class, 'updateStockImage']);
 
 /**                               fin crud                            **/
 

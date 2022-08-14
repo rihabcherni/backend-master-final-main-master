@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionPanne\Reparation_poubelle as ReparationPoubelleResource;
 
 class Reparation_poubelle extends Model
 {
@@ -29,4 +30,13 @@ class Reparation_poubelle extends Model
     }
     protected $dates=['deleted_at'];
 
+    public static function getReparationPoubelle(){
+        $reparationPoubelle = ReparationPoubelleResource::collection(Reparation_poubelle::all());
+        return $reparationPoubelle;
+    }
+
+    public static function getReparationPoubelleById($id){
+        $reparationPoubelle = ReparationPoubelleResource::collection(Reparation_poubelle::where('id',$id)->get());
+        return $reparationPoubelle;
+    }
 }

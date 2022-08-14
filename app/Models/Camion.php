@@ -3,6 +3,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\TransportDechet\Camion as CamionResource;
+
 class Camion extends Model{
     use HasFactory, SoftDeletes;
     protected $fillable = [
@@ -22,22 +24,7 @@ class Camion extends Model{
         'volume_carburant_consomme',
         'Kilometrage',
     ];
-/*    protected $casts = [
-        'volume' => 'array',
-    ];
-    public function setVolumeAttribute($value)
-{
-    $volume = [];
 
-    foreach ($value as $array_item) {
-        if (!is_null($array_item['key'])) {
-            $volume[] = $array_item;
-        }
-    }
-
-    $this->attributes['volume'] = json_encode($volume);
-}
-*/
     public function zone_travail()
     {
         return $this->belongsTo(Zone_travail::class);
@@ -58,6 +45,15 @@ class Camion extends Model{
         return $this->hasMany(Etablissement::class);
     }
     protected $dates=['deleted_at'];
+    public static function getCamion(){
+        $camion = CamionResource::collection(Camion::all());
+        return $camion;
+    }
+
+    public static function getCamionById($id){
+        $camion = CamionResource::collection(Camion::where('id',$id)->get());
+        return $camion;
+    }
 
 }
 

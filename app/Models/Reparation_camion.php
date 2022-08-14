@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\GestionPanne\Reparation_camion as ReparationCamionResource;
 
 class Reparation_camion extends Model
 {
@@ -29,4 +30,13 @@ class Reparation_camion extends Model
     }
     protected $dates=['deleted_at'];
 
+    public static function getReparationCamion(){
+        $reparationCamion = ReparationCamionResource::collection(Reparation_camion::all());
+        return $reparationCamion;
+    }
+
+    public static function getReparationCamionById($id){
+        $reparationCamion = ReparationCamionResource::collection(Reparation_camion::where('id',$id)->get());
+        return $reparationCamion;
+    }
 }

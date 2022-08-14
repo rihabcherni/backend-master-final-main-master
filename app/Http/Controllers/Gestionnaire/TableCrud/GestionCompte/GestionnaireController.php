@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
+
+use App\Exports\GestionCompte\GestionnaireExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
 use App\Models\Gestionnaire;
@@ -7,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Globale\LoginController;
 use App\Http\Requests\GestionCompte\GestionnaireRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 class GestionnaireController extends BaseController{
     public function index(){
         $gestionnaire = Gestionnaire::all();
@@ -149,4 +153,40 @@ class GestionnaireController extends BaseController{
     }
 
 */
+
+public function exportInfoGestionnaireExcel(){
+    return Excel::download(new GestionnaireExport  , 'gestionnaire-liste.xlsx');
+}
+
+public function exportInfoGestionnaireCSV(){
+    return Excel::download(new GestionnaireExport, 'gestionnaire-liste.csv');
+}
+
+public function pdfGestionnaire($id){
+    $Gestionnaire = Gestionnaire::find($id);
+    if (is_null($Gestionnaire)) {
+        return $this->handleError('Gestionnaire n\'existe pas!');
+    }else{
+        $data= collect(Gestionnaire::getGestionnaireById($id))->toArray();
+        $liste = [
+            'id' => $data[0]['id'],
+            
+            "created_at" => $data[0]['created_at'],
+            "updated_at" => $data[0]['updated_at'],
+        ];
+        $pdf = Pdf::loadView('pdf/unique/GestionCompte/Gestionnaire', $liste);
+        return $pdf->download('gestionnaire.pdf');
+    }
+}
+public function pdfAllGestionnaire(){
+    $gestionnaire = Gestionnaire::all();
+    if (is_null($gestionnaire)) {
+        return $this->handleError('gestionnaire n\'existe pas!');
+    }else{
+        $p= GestionnaireResource::collection( $gestionnaire);
+        $data= collect($p)->toArray();
+        $pdf = Pdf::loadView('pdf/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
+        return $pdf->download('gestionnaire.pdf');
+    }
+}
 }

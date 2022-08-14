@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -175,7 +174,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-		'Intervention\Image\ImageServiceProvider'
+		'Intervention\Image\ImageServiceProvider',
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
         // SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
@@ -237,8 +237,8 @@ return [
         // 'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
-		'Image' => 'Intervention\Image\Facades\Image'
-
+		'Image' => 'Intervention\Image\Facades\Image',
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

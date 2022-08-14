@@ -391,33 +391,32 @@ class LoginController extends Controller{
         return response([],404);
     }
 
-    // public function pdf(){
-    //         $data = [
-    //             'title' => 'Welcome to Tutsmake.com',
-    //             'date' => date('m/d/Y')
-    //         ];
+    public function pdf(){
+            $data = [
+                'title' => 'Welcome to Tutsmake.com',
+                'date' => date('m/d/Y')
+            ];
 
-    //         $pdf = PDF::loadView('email-template', $data)->setOptions(['defaultFont' => 'sans-serif']);
 
-    //         return $pdf->save('tutsmake.pdf');
-
-    // }
-
-    public function pdf()
-    {
-        $data["email"] = "reschool2022.ecolgy@gmail.com";
-        $data["title"] = "From reschool.tech";
-        $data["body"] = "This is Demo";
-
-        $pdf = PDF::loadView('email', $data)->setOptions(['defaultFont' => 'sans-serif']);
-
-        Mail::send('email', $data, function($message)use($data, $pdf) {
-            $message->to($data["email"], $data["email"])
-                    ->subject($data["title"])
-                    ->attachData($pdf->output(), "qrcode.pdf");
-        });
-
-        return('Mail sent successfully');
+            $pdf = Pdf::loadView('pdf', $data);
+            return $pdf->download('poubelle.pdf');
     }
+
+    // public function pdf()
+    // {
+    //     $data["email"] = "reschool2022.ecolgy@gmail.com";
+    //     $data["title"] = "From reschool.tech";
+    //     $data["body"] = "This is Demo";
+
+    //     $pdf = PDF::loadView('email', $data)->setOptions(['defaultFont' => 'sans-serif']);
+
+    //     // Mail::send('email', $data, function($message)use($data, $pdf) {
+    //     //     $message->to($data["email"], $data["email"])
+    //     //             ->subject($data["title"])
+    //     //             ->attachData($pdf->output(), "qrcode.pdf");
+    //     // });
+
+    //     return('Mail sent successfully');
+    // }
 }
 
