@@ -4,8 +4,9 @@ namespace App\Exports\GestionPoubelleEtablissements;
 
 use App\Models\Zone_travail;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Zone_travailExport implements FromCollection{
+class Zone_travailExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class Zone_travailExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Zone_travail::getZoneTravail());
     }
 }

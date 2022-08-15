@@ -4,9 +4,9 @@ namespace App\Exports\GestionPanne;
 
 use App\Models\Reparateur_poubelle;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Reparateur_poubelleExport implements FromCollection
-{
+class Reparateur_poubelleExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -19,6 +19,6 @@ class Reparateur_poubelleExport implements FromCollection
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Reparateur_poubelle::getReparateurPoubelle());
     }
 }

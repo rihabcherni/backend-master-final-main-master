@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use App\Models\Contact;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ContactExport implements FromCollection{
+class ContactExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class ContactExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Contact::getPoubelle());
+        return collect(Contact::getContact());
     }
 }

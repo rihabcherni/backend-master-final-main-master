@@ -4,14 +4,23 @@ namespace App\Exports\GestionCompte;
 
 use App\Models\Responsable_etablissement;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Responsable_etablissementExport implements FromCollection
-{
+class Responsable_etablissementExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
-            "Crée le",
-            "Modifié le",
+            "etablissement_id",
+            "etablissement",
+            "nom",
+            "prenom",
+            "photo",
+            "numero_fixe",
+            "adresse",
+            "numero_telephone",
+            "email",
+            "Cree le",
+            "Modifie le",
         ];
     }
     /**
@@ -19,6 +28,6 @@ class Responsable_etablissementExport implements FromCollection
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Responsable_etablissement::getResponsableEtablissement());
     }
 }

@@ -4,8 +4,9 @@ namespace App\Exports\ProductionPoubelle;
 
 use App\Models\Fournisseur;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class FournisseurExport implements FromCollection{
+class FournisseurExport implements FromCollection , WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class FournisseurExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Fournisseur::getFournisseur());
     }
 }

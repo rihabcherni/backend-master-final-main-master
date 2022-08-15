@@ -45,7 +45,8 @@ use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 use App\Http\Controllers\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
-
+use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
+use App\Models\Gestionnaire;
 
 /**                              debut dashboard                            */
     Route::get('/dashboard', [GlobalStatController::class, 'statGetionnaire']);
@@ -102,13 +103,25 @@ use App\Http\Controllers\Globale\MessageController;
                 Route::get('responsable-etablissement-pdf/{id}', [ResponsableEtablissementController::class, 'pdfResponsableEtablissement']);
                 Route::get('responsable-etablissement-all-pdf', [ResponsableEtablissementController::class, 'pdfAllResponsableEtablissement']);
 
-            /** -------------------------------------------gestion Dechet -----------------------------------------*/
+        /** -------------------------------------------gestion Dechet -----------------------------------------*/
                         /**                  commandes                     */
                     Route::apiResource('commande-dechet', Commande_dechetController::class);
+                    Route::get('commande-dechet-excel', [Commande_dechetController::class, 'exportInfoCommandeDechetExcel']);
+                    Route::get('commande-dechet-csv', [Commande_dechetController::class, 'exportInfoCommandeDechetCSV']);
+                    Route::get('commande-dechet-pdf/{id}', [Commande_dechetController::class, 'pdfCommandeDechet']);
+                    Route::get('commande-dechet-all-pdf', [Commande_dechetController::class, 'pdfAllCommandeDechet']);
                         /**                  dechets                       */
                     Route::apiResource('dechets', DechetController::class);
+                    Route::get('dechets-excel', [DechetController::class, 'exportInfoDechetExcel']);
+                    Route::get('dechets-csv', [DechetController::class, 'exportInfoDechetCSV']);
+                    Route::get('dechets-pdf/{id}', [DechetController::class, 'pdfDechet']);
+                    Route::get('dechets-all-pdf', [DechetController::class, 'pdfAllDechet']);
                     /**                  detail commande dechet         */
                     Route::apiResource('detail-commande-dechets', Detail_commande_dechetController::class);
+                    Route::get('detail-commande-dechets-excel', [Detail_commande_dechetController::class, 'exportInfoDetailCommandeDechetExcel']);
+                    Route::get('detail-commande-dechets-csv', [Detail_commande_dechetController::class, 'exportInfoDetailCommandeDechetCSV']);
+                    Route::get('detail-commande-dechets-pdf/{id}', [Detail_commande_dechetController::class, 'pdfDetailCommandeDechet']);
+                    Route::get('detail-commande-dechets-all-pdf', [Detail_commande_dechetController::class, 'pdfAllDetailCommandeDechet']);
         /** -------------------------------------------gestion Panne -----------------------------------------*/
             /**                        reparateur poubelle             */
                 Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
@@ -251,4 +264,5 @@ use App\Http\Controllers\Globale\MessageController;
                 });
          });
 });
+
 

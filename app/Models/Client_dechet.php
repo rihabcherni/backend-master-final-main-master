@@ -28,22 +28,19 @@ class Client_dechet  extends Authenticatable{
         'mot_de_passe',
         'remember_token',
     ];
-
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function commande_dechet()
-    {
+    public function commande_dechet(){
         return $this->belongsTo(Commande_dechet::class);
     }
     protected $dates=['deleted_at'];
-
     public static function getClientDechet(){
-        $client = ClientDechetResource::collection(Client_dechet::all());
+        $client = ClientDechetResource::collection(Client_dechet::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at','mot_de_passe','qrcode','QRcode', 'email_verified_at'])->toArray();
+        });
         return $client;
     }
-
     public static function getClientDechetById($id){
         $client = ClientDechetResource::collection(Client_dechet::where('id',$id)->get());
         return $client;

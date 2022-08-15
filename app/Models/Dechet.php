@@ -28,7 +28,9 @@ class Dechet extends Model
 
     protected $dates=['deleted_at'];
     public static function getDechet(){
-        $dechet = DechetResource::collection(Dechet::all());
+        $dechet = DechetResource::collection(Dechet::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $dechet;
     }
 

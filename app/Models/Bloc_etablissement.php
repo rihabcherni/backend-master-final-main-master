@@ -24,7 +24,9 @@ class Bloc_etablissement extends Model
     protected $dates=['deleted_at'];
 
     public static function getBlocEtablissement(){
-        $blocEtablissement = BlocEtablissementResource::collection(Bloc_etablissement::all());
+        $blocEtablissement = BlocEtablissementResource::collection(Bloc_etablissement::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $blocEtablissement;
     }
 

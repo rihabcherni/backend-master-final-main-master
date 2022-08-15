@@ -153,40 +153,43 @@ class GestionnaireController extends BaseController{
     }
 
 */
-
-public function exportInfoGestionnaireExcel(){
-    return Excel::download(new GestionnaireExport  , 'gestionnaire-liste.xlsx');
-}
-
-public function exportInfoGestionnaireCSV(){
-    return Excel::download(new GestionnaireExport, 'gestionnaire-liste.csv');
-}
-
-public function pdfGestionnaire($id){
-    $Gestionnaire = Gestionnaire::find($id);
-    if (is_null($Gestionnaire)) {
-        return $this->handleError('Gestionnaire n\'existe pas!');
-    }else{
-        $data= collect(Gestionnaire::getGestionnaireById($id))->toArray();
-        $liste = [
-            'id' => $data[0]['id'],
-            
-            "created_at" => $data[0]['created_at'],
-            "updated_at" => $data[0]['updated_at'],
-        ];
-        $pdf = Pdf::loadView('pdf/unique/GestionCompte/Gestionnaire', $liste);
-        return $pdf->download('gestionnaire.pdf');
+    public function exportInfoGestionnaireExcel(){
+        return Excel::download(new GestionnaireExport  , 'gestionnaire-liste.xlsx');
     }
-}
-public function pdfAllGestionnaire(){
-    $gestionnaire = Gestionnaire::all();
-    if (is_null($gestionnaire)) {
-        return $this->handleError('gestionnaire n\'existe pas!');
-    }else{
-        $p= GestionnaireResource::collection( $gestionnaire);
-        $data= collect($p)->toArray();
-        $pdf = Pdf::loadView('pdf/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
-        return $pdf->download('gestionnaire.pdf');
+    public function exportInfoGestionnaireCSV(){
+        return Excel::download(new GestionnaireExport, 'gestionnaire-liste.csv');
     }
-}
+    public function pdfGestionnaire($id){
+        $Gestionnaire = Gestionnaire::find($id);
+        if (is_null($Gestionnaire)) {
+            return $this->handleError('Gestionnaire n\'existe pas!');
+        }else{
+            $data= collect(Gestionnaire::getGestionnaireById($id))->toArray();
+            $liste = [
+                'id' => $data[0]['id'],
+                'nom' => $data[0]['nom'],
+                'prenom' => $data[0]['prenom'],
+                'CIN' => $data[0]['CIN'],
+                'photo' => $data[0]['photo'],
+                'adresse' => $data[0]['adresse'],
+                'numero_telephone' => $data[0]['numero_telephone'],
+                'email' => $data[0]['email'],
+                'created_at' => $data[0]['created_at'],
+                'updated_at' => $data[0]['updated_at'],
+            ];
+            $pdf = Pdf::loadView('pdf/unique/GestionCompte/Gestionnaire', $liste);
+            return $pdf->download('gestionnaire.pdf');
+        }
+    }
+    public function pdfAllGestionnaire(){
+        $gestionnaire = Gestionnaire::all();
+        if (is_null($gestionnaire)) {
+            return $this->handleError('gestionnaire n\'existe pas!');
+        }else{
+            $p= GestionnaireResource::collection( $gestionnaire);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('gestionnaire.pdf');
+        }
+    }
 }

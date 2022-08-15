@@ -4,9 +4,9 @@ namespace App\Exports\GestionCompte;
 
 use App\Models\Responsable_commercial;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Responsable_commercialExport implements FromCollection
-{
+class Responsable_commercialExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -19,6 +19,6 @@ class Responsable_commercialExport implements FromCollection
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Responsable_commercial::getResponsableCommercial());
     }
 }

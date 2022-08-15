@@ -4,8 +4,9 @@ namespace App\Exports\TransportDechet;
 
 use App\Models\Zone_depot;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Zone_depotExport implements FromCollection{
+class Zone_depotExport implements FromCollection,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class Zone_depotExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Zone_depot::getZoneDepot());
     }
 }

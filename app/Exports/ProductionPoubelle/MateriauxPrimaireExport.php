@@ -2,10 +2,11 @@
 
 namespace App\Exports\ProductionPoubelle;
 
-use App\Models\MateriauxPrimaire;
+use App\Models\Materiau_primaire;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class MateriauxPrimaireExport implements FromCollection{
+class MateriauxPrimaireExport implements FromCollection , WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class MateriauxPrimaireExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Materiau_primaire::getMateriauxPrimaire());
     }
 }

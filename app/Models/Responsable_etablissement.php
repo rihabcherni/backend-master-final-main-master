@@ -37,10 +37,11 @@ class Responsable_etablissement extends Authenticatable{
     ];
 
     public static function getResponsableEtablissement(){
-        $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::all());
+        $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at','mot_de_passe','qrcode','QRcode', 'email_verified_at'])->toArray();
+        });
         return $responsableEtablissement;
     }
-
     public static function getResponsableEtablissementById($id){
         $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::where('id',$id)->get());
         return $responsableEtablissement;

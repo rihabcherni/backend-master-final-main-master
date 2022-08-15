@@ -56,7 +56,6 @@ class Client_dechetController extends BaseController{
         }
 
     }
-
     public function exportInfoClientDechetExcel(){
         return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
     }
@@ -71,25 +70,16 @@ class Client_dechetController extends BaseController{
             $data= collect(Client_dechet::getClientDechetById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
-                'poubelle_id_resp' =>   $data[0]['poubelle_id_resp'],
-
-                "etablissement" => $data[0]['etablissement'],
-                "etablissement_id" =>  $data[0]['etablissement_id'],
-                "nom" => $data[0]['nom'],
-                "nom_poubelle_responsable" => $data[0]['nom_poubelle_responsable'],
-                "type" => $data[0]['type'],
-                "Etat" => $data[0]['Etat'],
-                "quantite" => $data[0]['quantite'],
-                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
-                "bloc_poubelle_id_resp" => $data[0]['bloc_poubelle_id_resp'],
-                "bloc_etablissement" => $data[0]['bloc_etablissement'],
-                "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
-
-                "etage" => $data[0]['etage'],
-                "etage_id" => $data[0]['etage_id'],
-                "qrcode" => $data[0]['qrcode'],
-                "created_at" => $data[0]['created_at'],
-                "updated_at" => $data[0]['updated_at'],
+                'nom_entreprise' => $data[0]['nom_entreprise'],
+                'matricule_fiscale' => $data[0]['matricule_fiscale'],
+                'nom' => $data[0]['nom'],
+                'prenom' => $data[0]['prenom'],
+                'numero_fixe' => $data[0]['numero_fixe'],
+                'adresse' => $data[0]['adresse'],
+                'numero_telephone' => $data[0]['numero_telephone'],
+                'email' => $data[0]['email'],
+                'created_at' => $data[0]['created_at'],
+                'updated_at' => $data[0]['updated_at'],
             ];
             $pdf = Pdf::loadView('pdf/unique/GestionCompte/clientDechet', $liste);
             return $pdf->download('client-dechet.pdf');

@@ -4,11 +4,16 @@ namespace App\Exports\GestionDechet;
 
 use App\Models\Dechet;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class DechetExport implements FromCollection{
+class DechetExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Type dechet",
+            "Prix unitaire",
+            "Pourcentage remise",
+            "Photo",
             "Crée le",
             "Modifié le",
         ];
@@ -18,6 +23,6 @@ class DechetExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Dechet::getDechet());
     }
 }

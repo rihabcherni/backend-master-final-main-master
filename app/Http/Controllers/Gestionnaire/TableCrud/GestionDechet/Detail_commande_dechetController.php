@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet;
+
+use App\Exports\GestionDechet\Detail_commande_dechetExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Detail_commande_dechet as Detail_commande_dechetResource;
 use App\Models\Detail_commande_dechet;
@@ -49,55 +51,41 @@ class Detail_commande_dechetController extends BaseController{
         }
     }
 
-    public function exportInfoClientDechetExcel(){
-        return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
+    public function exportInfoDetailCommandeDechetExcel(){
+        return Excel::download(new Detail_commande_dechetExport  , 'Detail-commande-dechet-liste.xlsx');
     }
 
-    public function exportInfoClientDechetCSV(){
-        return Excel::download(new ClientDechetExport, 'client-dechet-liste.csv');
+    public function exportInfoDetailCommandeDechetCSV(){
+        return Excel::download(new Detail_commande_dechetExport, 'Detail-commande-dechet-liste.csv');
     }
 
-    public function pdfClientDechet($id){
-        $client = Client_dechet::find($id);
-        if (is_null($client)) {
-            return $this->handleError('client n\'existe pas!');
+    public function pdfDetailCommandeDechet($id){
+        $detail_commande_dechet = Detail_commande_dechet::find($id);
+        if (is_null($detail_commande_dechet)) {
+            return $this->handleError('detail commande dechet n\'existe pas!');
         }else{
-            $data= collect(Client_dechet::getClientDechetById($id))->toArray();
+            $data= collect(Detail_commande_dechet::getDetailCommandeDechetById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
-                'poubelle_id_resp' =>   $data[0]['poubelle_id_resp'],
-
-                "etablissement" => $data[0]['etablissement'],
-                "etablissement_id" =>  $data[0]['etablissement_id'],
-                "nom" => $data[0]['nom'],
-                "nom_poubelle_responsable" => $data[0]['nom_poubelle_responsable'],
-                "type" => $data[0]['type'],
-                "Etat" => $data[0]['Etat'],
-                "quantite" => $data[0]['quantite'],
-                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
-                "bloc_poubelle_id_resp" => $data[0]['bloc_poubelle_id_resp'],
-                "bloc_etablissement" => $data[0]['bloc_etablissement'],
-                "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
-
-                "etage" => $data[0]['etage'],
-                "etage_id" => $data[0]['etage_id'],
-                "qrcode" => $data[0]['qrcode'],
+                "commande_dechet_id" => $data[0]['commande_dechet_id'],
+                "type"  => $data[0]['type'],
+                "quantite"  => $data[0]['quantite'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/clientDechet', $liste);
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/unique/GestionDechet/detailCommandeDechet', $liste);
+            return $pdf->download('detail-commande-dechet.pdf');
         }
     }
-    public function pdfAllClientDechet(){
-        $client = Client_dechet::all();
-        if (is_null($client)) {
-            return $this->handleError('client dechet n\'existe pas!');
+    public function pdfAllDetailCommandeDechet(){
+        $detail_commande_dechet = Detail_commande_dechet::all();
+        if (is_null($detail_commande_dechet)) {
+            return $this->handleError('detail commande dechet  n\'existe pas!');
         }else{
-            $p= Client_dechetResource::collection( $client);
+            $p= Detail_commande_dechetResource::collection( $detail_commande_dechet);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/table/GestionDechet/detailCommandeDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('detail-commande-dechet.pdf');
         }
     }
 }

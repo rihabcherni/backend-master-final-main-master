@@ -32,8 +32,10 @@ class Depot extends Model
     }
     protected $dates=['deleted_at'];
 
-    public static function getDepot(){
-        $depot = DepotResource::collection(Depot::all());
+    public static function getDepot(){ 
+        $depot = DepotResource::collection(Depot::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $depot;
     }
 

@@ -26,7 +26,9 @@ class Commande_dechet extends Model
         protected $dates=['deleted_at'];
 
     public static function getCommandeDechet(){
-        $commandeDechet = CommandeDechetResource::collection(Commande_dechet::all());
+        $commandeDechet = CommandeDechetResource::collection(Commande_dechet::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at', 'client_dechet'])->toArray();
+        });
         return $commandeDechet;
     }
 

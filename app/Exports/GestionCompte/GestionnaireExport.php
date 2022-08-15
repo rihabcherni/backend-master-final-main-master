@@ -4,14 +4,21 @@ namespace App\Exports\GestionCompte;
 
 use App\Models\Gestionnaire;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class GestionnaireExport implements FromCollection
-{
+class GestionnaireExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
-            "Crée le",
-            "Modifié le",
+            "Nom",
+            "Prenom",
+            "CIN",
+            "Photo",
+            "Adresse",
+            "Numéro télephone",
+            "E-mail",
+            "Cree le",
+            "Modifie le",
         ];
     }
     /**

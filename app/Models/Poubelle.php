@@ -23,7 +23,9 @@ class Poubelle extends Model{
     }
     protected $dates=['deleted_at'];
     public static function getPoubelle(){
-        $poubelle = PoubelleResource::collection(Poubelle::all());
+        $poubelle = PoubelleResource::collection(Poubelle::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $poubelle;
     }
 

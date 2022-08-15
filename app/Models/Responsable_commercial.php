@@ -33,11 +33,13 @@ class Responsable_commercial  extends Authenticatable{
     ];
 
     public static function getResponsableCommercial(){
-        $responsableCommercial = ResponsableCommercialResource::collection(Responsable_commercial::all());
+        $responsableCommercial = ResponsableCommercialResource::collection(Responsable_commercial::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at','mot_de_passe','qrcode','QRcode', 'email_verified_at'])->toArray();
+        });
         return $responsableCommercial;
     }
 
-    public static function getResponsableCommercialById($id){
+    public static function getResponsableCommercialeById($id){
         $responsableCommercial = ResponsableCommercialResource::collection(Responsable_commercial::where('id',$id)->get());
         return $responsableCommercial;
     }

@@ -22,8 +22,10 @@ class Materiau_primaire extends Model
         return $this->belongsTo(Fournisser::class);
     }
     protected $dates=['deleted_at'];
-    public static function getMateriauxPrimaire(){
-        $materiauxPrimaire = MateriauxPrimaireResource::collection(Materiau_primaire::all());
+    public static function getMateriauxPrimaire(){ 
+        $materiauxPrimaire = MateriauxPrimaireResource::collection(Materiau_primaire::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $materiauxPrimaire;
     }
 

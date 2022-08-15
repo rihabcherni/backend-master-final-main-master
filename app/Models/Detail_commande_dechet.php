@@ -21,7 +21,9 @@ class Detail_commande_dechet extends Model
         return $this->belongsTo(Commande_dechet::class);
     }
     public static function getDetailCommandeDechet(){
-        $DetailCommandeDechet = DetailCommandeDechetResource::collection(Detail_commande_dechet::all());
+        $DetailCommandeDechet = DetailCommandeDechetResource::collection(Detail_commande_dechet::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at', 'commande_dechet','dechet'])->toArray();
+        });
         return $DetailCommandeDechet;
     }
 

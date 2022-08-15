@@ -32,7 +32,9 @@ class Gestionnaire extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public static function getGestionnaire(){
-        $Gestionnaire = GestionnaireResource::collection(Gestionnaire::all());
+        $Gestionnaire = GestionnaireResource::collection(Gestionnaire::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at','mot_de_passe','qrcode','QRcode', 'email_verified_at'])->toArray();
+        });
         return $Gestionnaire;
     }
 

@@ -31,7 +31,9 @@ class Reparation_camion extends Model
     protected $dates=['deleted_at'];
 
     public static function getReparationCamion(){
-        $reparationCamion = ReparationCamionResource::collection(Reparation_camion::all());
+        $reparationCamion = ReparationCamionResource::collection(Reparation_camion::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $reparationCamion;
     }
 

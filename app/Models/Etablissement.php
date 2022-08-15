@@ -59,12 +59,14 @@ class Etablissement extends Model{
     }
     protected $dates=['deleted_at'];
     public static function getEtablissement(){
-        $Etablissement = EtablissementResource::collection(Etablissement::all());
-        return $Etablissement;
+        $etablissement = EtablissementResource::collection(Etablissement::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
+        return $etablissement;
     }
 
     public static function getEtablissementById($id){
-        $Etablissement = EtablissementResource::collection(Etablissement::where('id',$id)->get());
-        return $Etablissement;
+        $etablissement = EtablissementResource::collection(Etablissement::where('id',$id)->get());
+        return $etablissement;
     }
 }

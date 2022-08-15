@@ -44,22 +44,12 @@
             }
         </style>
     </head>
-    <body class="page"
-        {{--  @if($type =='plastique')
-            style='background-color: rgb(216, 216, 216);'
-        @elseif($type =='papier')
-            style='background-color: rgb(246, 234, 176);'
-        @elseif($type =='composte')
-            style='background-color: rgb(190, 246, 148);'
-        @elseif($type =='canette')
-            style='background-color: rgb(255, 197, 197);'
-        @endif  --}}
-    >
+    <body class="page">
         <img class="img-logo" src="{{ public_path('images/logo.png') }}" alt="logo" width="50px" height="50px"/>
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Détails poubelle: </h2>
+        <h2 style="text-align: center;">Liste des poubelles: </h2>
         <br/>
         <table>
             <tr>

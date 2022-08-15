@@ -4,14 +4,22 @@ namespace App\Exports\GestionCompte;
 
 use App\Models\Client_dechet;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ClientDechetExport implements FromCollection
-{
+class ClientDechetExport implements FromCollection , WithHeadings {
     public function headings():array{
         return[
             "ID",
-            "Crée le",
-            "Modifié le",
+            "Nom entreprise",
+            "Matricule fiscale",
+            "Nom",
+            "Prenom",
+            "Adresse",
+            "Numero fixe",
+            "Numéro telephone",
+            "E-mail",
+            "Cree le",
+            "Modifie le",
         ];
     }
     /**

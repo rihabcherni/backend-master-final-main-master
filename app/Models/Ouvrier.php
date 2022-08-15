@@ -39,7 +39,9 @@ class Ouvrier extends Authenticatable{
     ];
 
     public static function getOuvrier(){
-        $ouvrier = OuvrierResource::collection(Ouvrier::all());
+        $ouvrier = OuvrierResource::collection(Ouvrier::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at','mot_de_passe','qrcode', 'email_verified_at'])->toArray();
+        });
         return $ouvrier;
     }
 

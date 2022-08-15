@@ -21,8 +21,10 @@ class Bloc_poubelle extends Model{
     }
     protected $dates=['deleted_at'];
     public static function getBlocPoubelle(){
-        $poubelle = BlocPoubelleResource::collection(Bloc_poubelle::all());
-        return $poubelle;
+        $blocPoubelle = BlocPoubelleResource::collection(Bloc_poubelle::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
+        return $blocPoubelle;
     }
 
     public static function getBlocPoubelleById($id){

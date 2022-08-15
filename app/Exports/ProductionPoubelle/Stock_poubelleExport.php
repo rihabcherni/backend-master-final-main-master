@@ -4,8 +4,9 @@ namespace App\Exports\ProductionPoubelle;
 
 use App\Models\Stock_poubelle;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Stock_poubelleExport implements FromCollection{
+class Stock_poubelleExport implements FromCollection , WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class Stock_poubelleExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Stock_poubelle::getStockPoubelle());
     }
 }

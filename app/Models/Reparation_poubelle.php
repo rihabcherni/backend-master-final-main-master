@@ -31,7 +31,9 @@ class Reparation_poubelle extends Model
     protected $dates=['deleted_at'];
 
     public static function getReparationPoubelle(){
-        $reparationPoubelle = ReparationPoubelleResource::collection(Reparation_poubelle::all());
+        $reparationPoubelle = ReparationPoubelleResource::collection(Reparation_poubelle::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $reparationPoubelle;
     }
 

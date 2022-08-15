@@ -4,8 +4,9 @@ namespace App\Exports\GestionPoubelleEtablissements;
 
 use App\Models\Bloc_poubelle;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Bloc_poubelleExport implements FromCollection{
+class Bloc_poubelleExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class Bloc_poubelleExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Bloc_poubelle::getBlocPoubelle());
     }
 }

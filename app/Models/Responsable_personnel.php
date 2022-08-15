@@ -23,11 +23,12 @@ class Responsable_personnel extends Authenticatable{
         'mot_de_passe',
         'remember_token',
     ];
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $casts =['email_verified_at' => 'datetime',];
+
     public static function getResponsablePersonnel(){
-        $responsable_personnel = ResponsablePersonnelResource::collection(Responsable_personnel::all());
+        $responsable_personnel = ResponsablePersonnelResource::collection(Responsable_personnel::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at','mot_de_passe','qrcode','QRcode', 'email_verified_at'])->toArray();
+        });
         return $responsable_personnel;
     }
 

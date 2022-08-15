@@ -27,8 +27,10 @@ class Mecanicien extends Model
     }
     protected $dates=['deleted_at'];
 
-    public static function getMecanicien(){
-        $mecanicien = MecanicienResource::collection(Mecanicien::all());
+    public static function getMecanicien(){ 
+        $mecanicien = MecanicienResource::collection(Mecanicien::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $mecanicien;
     }
 

@@ -30,10 +30,11 @@ class Zone_travail extends Model
     }
     protected $dates=['deleted_at'];
     public static function getZoneTravail(){
-        $zoneTravail = ZoneTravailResource::collection(Zone_travail::all());
+        $zoneTravail = ZoneTravailResource::collection(Zone_travail::all())->map(function ($item, $key) {
+            return collect($item)->except(['deleted_at'])->toArray();
+        });
         return $zoneTravail;
     }
-
     public static function getZoneTravailById($id){
         $zoneTravail = ZoneTravailResource::collection(Zone_travail::where('id',$id)->get());
         return $zoneTravail;

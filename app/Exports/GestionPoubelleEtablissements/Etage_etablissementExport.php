@@ -4,8 +4,9 @@ namespace App\Exports\GestionPoubelleEtablissements;
 
 use App\Models\Etage_etablissement;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Etage_etablissementExport implements FromCollection{
+class Etage_etablissementExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -18,6 +19,6 @@ class Etage_etablissementExport implements FromCollection{
     */
     public function collection()
     {
-        return collect(Gestionnaire::getPoubelle());
+        return collect(Etage_etablissement::getEtageEtablissement());
     }
 }

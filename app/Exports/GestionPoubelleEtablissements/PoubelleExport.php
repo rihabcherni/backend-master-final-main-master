@@ -6,8 +6,7 @@ use App\Models\Poubelle;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PoubelleExport implements FromCollection, WithHeadings
-{
+class PoubelleExport implements FromCollection, WithHeadings{
     public function headings():array{
         return[
             "ID",
