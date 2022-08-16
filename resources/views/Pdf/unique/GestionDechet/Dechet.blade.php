@@ -38,51 +38,32 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
+        <h2 style="text-align: center;">Détails dechet Reschool ecology: {{$type_dechet}}</h2>
         <br/>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
+            <?php $url = 'storage/images/dechet/'.$photo;
                 $path= public_path($url);
                 if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
+                    $path= public_path('storage/images/dechet/default.jpeg');
                 }
             ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
+            <img class="img-container" src="{{ $path }}" alt="dechet"/>
             <table class="table">
                 <tr>
                     <th>Identifiant:</th>
                     <td>{{$id}}</td>
                 </tr>
                 <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
+                    <th>Type dechet:</th>
+                    <td>{{$type_dechet}}</td>
                 </tr>
                 <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
+                    <th>Prix unitaire:</th>
+                    <td>{{$prix_unitaire}} DT</td>
                 </tr>
                 <tr>
-                    <th>Nom: </th>
-                    <td>{{ $nom }}</td>
-                </tr>
-                <tr>
-                    <th>Prénom: </th>
-                    <td>{{ $prenom }}</td>
-                </tr>
-                <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
-                </tr>
-                <tr>
-                    <th>Adresse:</th>
-                    <td>{{ $adresse }}</td>
-                </tr>
-                <tr>
-                    <th>Numéro télephone:</th>
-                    <td>{{ $numero_telephone }}</td>
-                </tr>
-                <tr>
-                    <th>E-mail:</th>
-                    <td>{{ $email }}</td>
+                    <th>Pourcentage remise:</th>
+                    <td>{{$pourcentage_remise}} %</td>
                 </tr>
                 <tr>
                     <th>Date de création:</th>

@@ -10,6 +10,11 @@ class ContactExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Nom",
+            "Prenom",
+            "E-mail",
+            "Numero telephone",
+            "Message",
             "Crée le",
             "Modifié le",
         ];

@@ -104,7 +104,7 @@ class ResponsableCommercialeController extends BaseController{
         }else{
             $p= Responsable_commercialResource::collection( $responsable_commerciale);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/responsableCommerciale', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionCompte/responsableCommerciale', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('responsable-commerciale.pdf');
         }
     }

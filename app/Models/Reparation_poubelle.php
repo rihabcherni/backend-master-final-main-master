@@ -32,7 +32,7 @@ class Reparation_poubelle extends Model
 
     public static function getReparationPoubelle(){
         $reparationPoubelle = ReparationPoubelleResource::collection(Reparation_poubelle::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at', 'poubelle','reparateur_poubelle'])->toArray();
         });
         return $reparationPoubelle;
     }

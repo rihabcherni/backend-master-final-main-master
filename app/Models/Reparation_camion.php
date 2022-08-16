@@ -32,7 +32,7 @@ class Reparation_camion extends Model
 
     public static function getReparationCamion(){
         $reparationCamion = ReparationCamionResource::collection(Reparation_camion::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at','camion','mecanicien'])->toArray();
         });
         return $reparationCamion;
     }

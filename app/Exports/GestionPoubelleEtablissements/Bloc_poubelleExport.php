@@ -10,6 +10,9 @@ class Bloc_poubelleExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Etage",
+            "Bloc etablissement",
+            "Etablissement",
             "Crée le",
             "Modifié le",
         ];

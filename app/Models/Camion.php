@@ -47,7 +47,7 @@ class Camion extends Model{
     protected $dates=['deleted_at'];
     public static function getCamion(){
         $camion = CamionResource::collection(Camion::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at','zone_depot','zone_travail','qrcode'])->toArray();
         });
         return $camion;
     }

@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne;
+
+use App\Exports\GestionPanne\Reparation_poubelleExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPanne\Reparation_poubelle as Reparation_poubelleResource;
 use App\Models\Reparation_poubelle;
@@ -32,62 +34,62 @@ class Reparation_poubelleController extends BaseController{
     public function destroy($id){
         $reparation_poubelle =Reparation_poubelle::find($id);
         if (is_null($reparation_poubelle)) {
-            return $this->handleError('reparation poubelle dechet n\'existe pas!');
+            return $this->handleError('reparation poubelle n\'existe pas!');
         }
         else{
             $reparation_poubelle->delete();
             return $this->handleResponse(new Reparation_poubelleResource($reparation_poubelle), 'reparation poubelle supprimé!');
         }
     }
-    public function exportInfoClientDechetExcel(){
-        return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
+    public function exportInfoReparationPoubelleExcel(){
+        return Excel::download(new Reparation_poubelleExport  , 'reparation-poubelle-liste.xlsx');
     }
 
-    public function exportInfoClientDechetCSV(){
-        return Excel::download(new ClientDechetExport, 'client-dechet-liste.csv');
+    public function exportInfoReparationPoubelleCSV(){
+        return Excel::download(new Reparation_poubelleExport, 'reparation-poubelle-liste.csv');
     }
 
-    public function pdfClientDechet($id){
-        $client = Client_dechet::find($id);
-        if (is_null($client)) {
-            return $this->handleError('client n\'existe pas!');
+    public function pdfReparationPoubelle($id){
+        $reparation_poubelle = Reparation_poubelle::find($id);
+        if (is_null($reparation_poubelle)) {
+            return $this->handleError('reparation poubelle n\'existe pas!');
         }else{
-            $data= collect(Client_dechet::getClientDechetById($id))->toArray();
+            $data= collect(Reparation_poubelle::getReparationPoubelleById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
-                'poubelle_id_resp' =>   $data[0]['poubelle_id_resp'],
-
-                "etablissement" => $data[0]['etablissement'],
-                "etablissement_id" =>  $data[0]['etablissement_id'],
-                "nom" => $data[0]['nom'],
-                "nom_poubelle_responsable" => $data[0]['nom_poubelle_responsable'],
+                "reparateur_cin" => $data[0]['reparateur_cin'],
+                "reparateur_nom_prenom" => $data[0]['reparateur_nom_prenom'],
+                "nom_poubelle" => $data[0]['nom_poubelle'],
                 "type" => $data[0]['type'],
-                "Etat" => $data[0]['Etat'],
-                "quantite" => $data[0]['quantite'],
-                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
-                "bloc_poubelle_id_resp" => $data[0]['bloc_poubelle_id_resp'],
+                "etablissement" => $data[0]['etablissement'],
                 "bloc_etablissement" => $data[0]['bloc_etablissement'],
-                "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
-
                 "etage" => $data[0]['etage'],
-                "etage_id" => $data[0]['etage_id'],
-                "qrcode" => $data[0]['qrcode'],
+                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
+                "poubelle_id" => $data[0]['poubelle_id'],
+                "reparateur_poubelle_id" => $data[0]['reparateur_poubelle_id'],
+
+                "image_panne_poubelle" => $data[0]['image_panne_poubelle'],
+                "description_panne" => $data[0]['description_panne'],
+                "cout" => $data[0]['cout'],
+                "date_debut_reparation" => $data[0]['date_debut_reparation'],
+                "date_fin_reparation" => $data[0]['date_fin_reparation'],
+
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/clientDechet', $liste);
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/unique/GestionPanne/reparationPoubelle', $liste);
+            return $pdf->download('reparation-poubelle.pdf');
         }
     }
-    public function pdfAllClientDechet(){
-        $client = Client_dechet::all();
-        if (is_null($client)) {
-            return $this->handleError('client dechet n\'existe pas!');
+    public function pdfAllReparationPoubelle(){
+        $reparation_poubelle = Reparation_poubelle::all();
+        if (is_null($reparation_poubelle)) {
+            return $this->handleError('reparation poubelle  n\'existe pas!');
         }else{
-            $p= Client_dechetResource::collection( $client);
+            $p= Reparation_poubelleResource::collection( $reparation_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('reparation-poubelle.pdf');
         }
     }
 }

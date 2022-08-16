@@ -28,9 +28,9 @@ class Reparateur_poubelle extends Model
     }
     protected $dates=['deleted_at'];
 
-    public static function getReparateurPoubelle(){ 
+    public static function getReparateurPoubelle(){
         $reparateurPoubelle = ReparateurPoubelleResource::collection(Reparateur_poubelle::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at','mot_de_passe'])->toArray();
         });
         return $reparateurPoubelle;
     }

@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet;
+
+use App\Exports\TransportDechet\CamionExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\TransportDechet\Camion as CamionResource;
 use App\Models\Camion;
@@ -39,55 +41,50 @@ class CamionController extends BaseController{
             return $this->handleResponse(new CamionResource($camion), ' Camion supprimé!');
         }
     }
-    public function exportInfoClientDechetExcel(){
-        return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
+    public function exportInfoCamionExcel(){
+        return Excel::download(new CamionExport  , 'camion-liste.xlsx');
     }
-
-    public function exportInfoClientDechetCSV(){
-        return Excel::download(new ClientDechetExport, 'client-dechet-liste.csv');
+    public function exportInfoCamionCSV(){
+        return Excel::download(new CamionExport, 'camion-liste.csv');
     }
-
-    public function pdfClientDechet($id){
-        $client = Client_dechet::find($id);
-        if (is_null($client)) {
-            return $this->handleError('client n\'existe pas!');
+    public function pdfCamion($id){
+        $camion = Camion::find($id);
+        if (is_null($camion)) {
+            return $this->handleError('Camion n\'existe pas!');
         }else{
-            $data= collect(Client_dechet::getClientDechetById($id))->toArray();
+            $data= collect(Camion::getCamionById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
-                'poubelle_id_resp' =>   $data[0]['poubelle_id_resp'],
-
-                "etablissement" => $data[0]['etablissement'],
-                "etablissement_id" =>  $data[0]['etablissement_id'],
-                "nom" => $data[0]['nom'],
-                "nom_poubelle_responsable" => $data[0]['nom_poubelle_responsable'],
-                "type" => $data[0]['type'],
-                "Etat" => $data[0]['Etat'],
-                "quantite" => $data[0]['quantite'],
-                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
-                "bloc_poubelle_id_resp" => $data[0]['bloc_poubelle_id_resp'],
-                "bloc_etablissement" => $data[0]['bloc_etablissement'],
-                "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
-
-                "etage" => $data[0]['etage'],
-                "etage_id" => $data[0]['etage_id'],
-                "qrcode" => $data[0]['qrcode'],
+                "zone_travail_id" => $data[0]['zone_travail_id'],
+                "zone_depot_id" => $data[0]['zone_depot_id'],
+                "matricule" => $data[0]['matricule'],
+                "heure_sortie" => $data[0]['heure_sortie'],
+                "heure_entree" => $data[0]['heure_entree'],
+                "longitude" => $data[0]['longitude'],
+                "latitude" => $data[0]['latitude'],
+                "volume_maximale_camion" => $data[0]['volume_maximale_camion'],
+                "volume_actuelle_plastique" => $data[0]['volume_actuelle_plastique'],
+                "volume_actuelle_papier" => $data[0]['volume_actuelle_papier'],
+                "volume_actuelle_composte" => $data[0]['volume_actuelle_composte'],
+                "volume_actuelle_canette" => $data[0]['volume_actuelle_canette'],
+                "volume_carburant_consomme" => $data[0]['volume_carburant_consomme'],
+                "Kilometrage" => $data[0]['Kilometrage'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/clientDechet', $liste);
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/unique/TransportDechet/camion', $liste);
+            return $pdf->download('camion.pdf');
         }
     }
-    public function pdfAllClientDechet(){
-        $client = Client_dechet::all();
-        if (is_null($client)) {
-            return $this->handleError('client dechet n\'existe pas!');
+    public function pdfAllCamion(){
+        $camion = Camion::all();
+        if (is_null($camion)) {
+            return $this->handleError('camion n\'existe pas!');
         }else{
-            $p= Client_dechetResource::collection( $client);
+            $p= CamionResource::collection( $camion);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/table/TransportDechet/camion', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('camion.pdf');
         }
     }
 }

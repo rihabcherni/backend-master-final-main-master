@@ -10,6 +10,13 @@ class DepotExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "ID zone depot",
+            "ID camion",
+            "Date depot",
+            "Quantite depose plastique",
+            "Quantite depose papier",
+            "Quantite depose composte",
+            "Quantite depose canette",
             "Crée le",
             "Modifié le",
         ];

@@ -10,15 +10,18 @@ class MecanicienExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Nom",
+            "Prenom",
+            "Carte identité national",
+            "Photo",
+            "Numero telephone",
+            "E-mail",
+            "Adresse",
             "Crée le",
             "Modifié le",
         ];
     }
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
-    {
+    public function collection(){
         return collect(Mecanicien::getMecanicien());
     }
 }

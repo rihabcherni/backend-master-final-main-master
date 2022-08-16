@@ -10,6 +10,11 @@ class Zone_travailExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Region",
+            "Quantite total collecte plastique",
+            "Quantite total collecte composte",
+            "Quantite total collecte papier",
+            "Quantite total collecte canette",
             "Crée le",
             "Modifié le",
         ];

@@ -10,6 +10,11 @@ class Stock_poubelleExport implements FromCollection , WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Type_poubelle",
+            "Quantite disponible",
+            "Pourcentage remise",
+            "Prix unitaire",
+            "Photo",
             "Crée le",
             "Modifié le",
         ];

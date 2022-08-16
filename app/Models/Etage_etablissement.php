@@ -22,9 +22,9 @@ class Etage_etablissement extends Model
         return $this->belongsTo(Bloc_etablissement::class);
     }
     protected $dates=['deleted_at'];
-    public static function getEtageEtablissement(){ 
+    public static function getEtageEtablissement(){
         $etageEtablissement = EtageEtablissementResource::collection(Etage_etablissement::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at','bloc_etablissement_id','bloc_poubelles'])->toArray();
         });
         return $etageEtablissement;
     }

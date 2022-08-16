@@ -26,17 +26,20 @@ class Reparation_poubelle extends JsonResource{
 
        return [
             'id' => $this->id,
-            'reparateur_cin' => $reparateur_cin,
+
+            'reparateur_poubelle_id' => $this->reparateur_poubelle_id,
             'reparateur_nom_prenom' => $reparateur_nom_prenom,
+            'reparateur_cin' => $reparateur_cin,
+
+            'poubelle' => Poubelle::find($this->poubelle_id),
+            'poubelle_id' => $this->poubelle_id,
             'nom_poubelle'=>$nom_poubelle,
             'type'=>$type,
             'etablissement'=>$etablissement->nom_etablissement ,
             'bloc_etablissement'=> $bloc_etabl_nom,
             'etage'=> $etage_nom,
             'bloc_poubelle_id' => $bloc_poubelle->id,
-            'poubelle_id' => $this->poubelle_id,
-            'poubelle' => Poubelle::find($this->poubelle_id),
-            'reparateur_poubelle_id' => $this->reparateur_poubelle_id,
+
             'reparateur_poubelle' => Reparateur_poubelle::find($this->reparateur_poubelle_id),
             'image_panne_poubelle'=> $this->image_panne_poubelle,
             'description_panne' => $this->description_panne,

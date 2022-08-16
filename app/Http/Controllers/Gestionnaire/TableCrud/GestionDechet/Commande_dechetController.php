@@ -66,7 +66,16 @@ class Commande_dechetController extends BaseController{
             $data= collect(Commande_dechet::getCommandeDechetById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
-
+                'type' => $data[0]['type'],
+                'quantite' => $data[0]['quantite'],
+                "matricule_fiscale" => $data[0]['matricule_fiscale'],
+                "entreprise" => $data[0]['entreprise'],
+                "client_dechet_id" => $data[0]['client_dechet_id'],
+                "client_dechet" => $data[0]['client_dechet'],
+                "montant_total" => $data[0]['montant_total'],
+                "date_commande" => $data[0]['date_commande'],
+                "date_livraison" => $data[0]['date_livraison'],
+                "type_paiment" => $data[0]['type_paiment'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
@@ -81,7 +90,7 @@ class Commande_dechetController extends BaseController{
         }else{
             $p= Commande_dechetResource::collection( $Commande_dechet);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionDechet/commandeDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionDechet/commandeDechet', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('commande-dechet.pdf');
         }
     }

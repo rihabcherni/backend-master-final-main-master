@@ -58,34 +58,4 @@ class Detail_commande_dechetController extends BaseController{
     public function exportInfoDetailCommandeDechetCSV(){
         return Excel::download(new Detail_commande_dechetExport, 'Detail-commande-dechet-liste.csv');
     }
-
-    public function pdfDetailCommandeDechet($id){
-        $detail_commande_dechet = Detail_commande_dechet::find($id);
-        if (is_null($detail_commande_dechet)) {
-            return $this->handleError('detail commande dechet n\'existe pas!');
-        }else{
-            $data= collect(Detail_commande_dechet::getDetailCommandeDechetById($id))->toArray();
-            $liste = [
-                'id' => $data[0]['id'],
-                "commande_dechet_id" => $data[0]['commande_dechet_id'],
-                "type"  => $data[0]['type'],
-                "quantite"  => $data[0]['quantite'],
-                "created_at" => $data[0]['created_at'],
-                "updated_at" => $data[0]['updated_at'],
-            ];
-            $pdf = Pdf::loadView('pdf/unique/GestionDechet/detailCommandeDechet', $liste);
-            return $pdf->download('detail-commande-dechet.pdf');
-        }
-    }
-    public function pdfAllDetailCommandeDechet(){
-        $detail_commande_dechet = Detail_commande_dechet::all();
-        if (is_null($detail_commande_dechet)) {
-            return $this->handleError('detail commande dechet  n\'existe pas!');
-        }else{
-            $p= Detail_commande_dechetResource::collection( $detail_commande_dechet);
-            $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionDechet/detailCommandeDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
-            return $pdf->download('detail-commande-dechet.pdf');
-        }
-    }
 }

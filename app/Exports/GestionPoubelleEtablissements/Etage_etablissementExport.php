@@ -10,6 +10,9 @@ class Etage_etablissementExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Etage etablissement",
+            "Bloc etablissement",
+            "Etablissement",
             "Crée le",
             "Modifié le",
         ];

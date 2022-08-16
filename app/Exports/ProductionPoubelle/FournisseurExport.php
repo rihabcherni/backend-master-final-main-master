@@ -10,6 +10,13 @@ class FournisseurExport implements FromCollection , WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Nom",
+            "Prenom",
+            "Carte identite national",
+            "Photo",
+            "Numero telephone",
+            "E-mail",
+            "Adresse",
             "Crée le",
             "Modifié le",
         ];

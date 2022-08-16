@@ -25,7 +25,7 @@ class Bloc_etablissement extends Model
 
     public static function getBlocEtablissement(){
         $blocEtablissement = BlocEtablissementResource::collection(Bloc_etablissement::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at', 'etablissement_id','etage_etablissements'])->toArray();
         });
         return $blocEtablissement;
     }

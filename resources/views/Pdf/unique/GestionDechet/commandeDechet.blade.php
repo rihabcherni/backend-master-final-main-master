@@ -9,12 +9,6 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(186, 41, 205) dashed;
-                width: 180px;
-                height: 180px;
-            }
             .page{
                 padding:20px;
             }
@@ -28,9 +22,6 @@
                 padding:10px;
                 text-align: left;
             }
-            .table{
-                margin:-190px 0 0 210px;
-            }
         </style>
     </head>
     <body class="page"  >
@@ -38,52 +29,67 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
+        <h2 style="text-align: center;">Détails commande dechets numero:{{ $id }}</h2>
         <br/>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
-                $path= public_path($url);
-                if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
-                }
-            ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
-            <table class="table">
+            <table>
                 <tr>
-                    <th>Identifiant:</th>
+                    <th>Numéro commande:</th>
                     <td>{{$id}}</td>
                 </tr>
                 <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
+                    <th>Type dechets:</th>
+                    <td>{{$type}}</td>
                 </tr>
                 <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
+                    <th>Quantité :</th>
+                    <td>{{$quantite}}</td>
                 </tr>
                 <tr>
-                    <th>Nom: </th>
-                    <td>{{ $nom }}</td>
+                    <th>Montant total:</th>
+                    <td>{{$montant_total}}</td>
                 </tr>
                 <tr>
-                    <th>Prénom: </th>
-                    <td>{{ $prenom }}</td>
+                    <th>date commande :</th>
+                    <td>{{$date_commande}}</td>
                 </tr>
                 <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
+                    <th>date livraison :</th>
+                    <td>{{$date_livraison}}</td>
                 </tr>
                 <tr>
-                    <th>Adresse:</th>
-                    <td>{{ $adresse }}</td>
+                    <th>Type paiment :</th>
+                    <td>{{$type_paiment}}</td>
                 </tr>
                 <tr>
-                    <th>Numéro télephone:</th>
-                    <td>{{ $numero_telephone }}</td>
+                    <th rowspan='2'>entreprise :</th>
+                    <td><b>Nom :</b>{{$entreprise}}</td>
+                </tr>
+
+                <tr>
+                    <td><b>Matricule fiscale</b>{{$matricule_fiscale}}</td>
+                </tr>
+
+                <tr>
+                    <th  rowspan='6'>Client dechet:</th>
+                    <td><b>ID: </b>{{$client_dechet_id}}</td>
                 </tr>
                 <tr>
-                    <th>E-mail:</th>
-                    <td>{{ $email }}</td>
+                    <td><b>Nom et prénom :</b>{{$client_dechet->nom.' '.$client_dechet->prenom }}</t</td>
                 </tr>
+                <tr>
+                    <td><b> Numéro télephone :</b>{{$client_dechet->numero_telephone}}</td>
+                </tr>
+                <tr>
+                    <td><b> Numéro fixe :</b>{{$client_dechet->numero_fixe}}</td>
+                </tr>
+                <tr>
+                    <td><b> Adresse :</b>{{$client_dechet->adresse}}</td>
+                </tr>
+                <tr>
+                    <td><b>E-mail :</b>{{$client_dechet->email}}</td>
+                </tr>
+
                 <tr>
                     <th>Date de création:</th>
                     <td>{{$created_at}}</td>

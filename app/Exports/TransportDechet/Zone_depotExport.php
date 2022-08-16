@@ -10,13 +10,20 @@ class Zone_depotExport implements FromCollection,WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "Zone travail",
+            "Adresse",
+            "Longitude",
+            "Latitude",
+            "Quantite depot maximale",
+            "Quantite depot actuelle plastique",
+            "Quantite depot actuelle papier",
+            "Quantite depot actuelle composte",
+            "Quantite depot actuelle canette",
             "Crée le",
             "Modifié le",
         ];
     }
-    /**
-    * @return \Illuminate\Support\Collection
-    */
+
     public function collection()
     {
         return collect(Zone_depot::getZoneDepot());

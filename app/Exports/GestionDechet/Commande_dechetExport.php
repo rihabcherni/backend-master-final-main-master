@@ -10,13 +10,15 @@ class Commande_dechetExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
-            "Matricule fiscale",
-            "Entreprise",
-            "Numero client dechet",
+            "Type dechet",
+            "Quantite",
             "Montant total",
             "Date commande",
             "Date livraison",
             "Type paiment",
+            "Matricule fiscale",
+            "Entreprise",
+            "Numero client dechet",
             "Crée le",
             "Modifié le",
         ];

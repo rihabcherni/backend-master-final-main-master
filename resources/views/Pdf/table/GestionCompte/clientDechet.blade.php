@@ -60,7 +60,7 @@
                 <td>{{ $l['numero_fixe'] }}</td>
                 <td>{{ $l['adresse'] }}</td>
                 <td>{{ $l['numero_telephone'] }}</td>
-                <td>{{ $l['email'] }}</td>
+                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['email'] }}</td>
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
             </tr>

@@ -120,9 +120,7 @@ use App\Models\Gestionnaire;
                     Route::apiResource('detail-commande-dechets', Detail_commande_dechetController::class);
                     Route::get('detail-commande-dechets-excel', [Detail_commande_dechetController::class, 'exportInfoDetailCommandeDechetExcel']);
                     Route::get('detail-commande-dechets-csv', [Detail_commande_dechetController::class, 'exportInfoDetailCommandeDechetCSV']);
-                    Route::get('detail-commande-dechets-pdf/{id}', [Detail_commande_dechetController::class, 'pdfDetailCommandeDechet']);
-                    Route::get('detail-commande-dechets-all-pdf', [Detail_commande_dechetController::class, 'pdfAllDetailCommandeDechet']);
-        /** -------------------------------------------gestion Panne -----------------------------------------*/
+                   /** -------------------------------------------gestion Panne -----------------------------------------*/
             /**                        reparateur poubelle             */
                 Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
                 Route::get('reparateur-poubelle-excel', [Reparateur_poubelleController::class, 'exportInfoReparateurPoubelleExcel']);
@@ -162,16 +160,16 @@ use App\Models\Gestionnaire;
                 Route::get('etablissement-all-pdf', [EtablissementController::class, 'pdfAllEtablissement']);
             /**                bloc   etablissements                      */
                 Route::apiResource('bloc-etablissement', Bloc_etablissementsController::class);
-                Route::get('bloc-etablissement-excel', [Bloc_etablissementsController::class, 'exportInfoBlocetablissementsExcel']);
-                Route::get('bloc-etablissement-csv', [Bloc_etablissementsController::class, 'exportInfoBlocEtablissementsCSV']);
-                Route::get('bloc-etablissement-pdf/{id}', [Bloc_etablissementsController::class, 'pdfBlocEtablissements']);
-                Route::get('bloc-etablissement-all-pdf', [Bloc_etablissementsController::class, 'pdfAllBlocEtablissements']);
+                Route::get('bloc-etablissement-excel', [Bloc_etablissementsController::class, 'exportInfoBlocEtablissementExcel']);
+                Route::get('bloc-etablissement-csv', [Bloc_etablissementsController::class, 'exportInfoBlocEtablissementCSV']);
+                Route::get('bloc-etablissement-pdf/{id}', [Bloc_etablissementsController::class, 'pdfBlocEtablissement']);
+                Route::get('bloc-etablissement-all-pdf', [Bloc_etablissementsController::class, 'pdfAllBlocEtablissement']);
             /**                etage etablissements                      */
                 Route::apiResource('etage-etablissement', Etage_etablissementsControlller::class);
-                Route::get('etage-etablissement-excel', [Etage_etablissementsControlller::class, 'exportInfoEtageEtablissementsExcel']);
-                Route::get('etage-etablissement-csv', [Etage_etablissementsControlller::class, 'exportInfoEtageEtablissementsCSV']);
-                Route::get('etage-etablissement-pdf/{id}', [Etage_etablissementsControlller::class, 'pdfEtageEtablissements']);
-                Route::get('etage-etablissement-all-pdf', [Etage_etablissementsControlller::class, 'pdfAllEtageEtablissements']);
+                Route::get('etage-etablissement-excel', [Etage_etablissementsControlller::class, 'exportInfoEtageEtablissementExcel']);
+                Route::get('etage-etablissement-csv', [Etage_etablissementsControlller::class, 'exportInfoEtageEtablissementCSV']);
+                Route::get('etage-etablissement-pdf/{id}', [Etage_etablissementsControlller::class, 'pdfEtageEtablissement']);
+                Route::get('etage-etablissement-all-pdf', [Etage_etablissementsControlller::class, 'pdfAllEtageEtablissement']);
             /**                  bloc-poubelle                      */
                 Route::apiResource('bloc-poubelle', Bloc_poubelleController::class);
                 Route::get('bloc-poubelle-excel', [Bloc_poubelleController::class, 'exportInfoBlocPoubelleExcel']);

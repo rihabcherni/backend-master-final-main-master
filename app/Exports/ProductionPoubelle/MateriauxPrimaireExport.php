@@ -10,6 +10,13 @@ class MateriauxPrimaireExport implements FromCollection , WithHeadings{
     public function headings():array{
         return[
             "ID",
+            "ID fournisseur",
+            "Carte identite national",
+            "Nom fournisseur",
+            "Nom materiel",
+            "Prix unitaire",
+            "Quantite",
+            "Prix total",
             "Crée le",
             "Modifié le",
         ];

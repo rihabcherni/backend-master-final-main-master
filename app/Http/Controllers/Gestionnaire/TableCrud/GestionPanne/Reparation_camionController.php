@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
+
+use App\Exports\GestionPanne\Reparation_camionExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionPanne\Reparation_camion as Reparation_camionResource;
 use App\Models\Reparation_camion;
@@ -34,62 +34,53 @@ class Reparation_camionController extends BaseController{
     public function destroy($id){
         $reparation_camion =Reparation_camion::find($id);
         if (is_null($reparation_camion)) {
-            return $this->handleError('reparation camion dechet n\'existe pas!');
+            return $this->handleError('reparation camion n\'existe pas!');
         }
         else{
             $reparation_camion->delete();
             return $this->handleResponse(new Reparation_camionResource($reparation_camion), ' Reparation camion supprimé!');
         }
     }
-    public function exportInfoClientDechetExcel(){
-        return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
+    public function exportInfoReparationCamionExcel(){
+        return Excel::download(new Reparation_camionExport  , 'reparation-camion-liste.xlsx');
     }
-
-    public function exportInfoClientDechetCSV(){
-        return Excel::download(new ClientDechetExport, 'client-dechet-liste.csv');
+    public function exportInfoReparationCamionCSV(){
+        return Excel::download(new Reparation_camionExport, 'reparation-camion-liste.csv');
     }
-
-    public function pdfClientDechet($id){
-        $client = Client_dechet::find($id);
-        if (is_null($client)) {
-            return $this->handleError('client n\'existe pas!');
+    public function pdfReparationCamion($id){
+        $reparation_camion = Reparation_camion::find($id);
+        if (is_null($reparation_camion)) {
+            return $this->handleError('reparation camion n\'existe pas!');
         }else{
-            $data= collect(Client_dechet::getClientDechetById($id))->toArray();
+            $data= collect(Reparation_camion::getReparationCamionById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
-                'poubelle_id_resp' =>   $data[0]['poubelle_id_resp'],
-
-                "etablissement" => $data[0]['etablissement'],
-                "etablissement_id" =>  $data[0]['etablissement_id'],
-                "nom" => $data[0]['nom'],
-                "nom_poubelle_responsable" => $data[0]['nom_poubelle_responsable'],
-                "type" => $data[0]['type'],
-                "Etat" => $data[0]['Etat'],
-                "quantite" => $data[0]['quantite'],
-                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
-                "bloc_poubelle_id_resp" => $data[0]['bloc_poubelle_id_resp'],
-                "bloc_etablissement" => $data[0]['bloc_etablissement'],
-                "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
-
-                "etage" => $data[0]['etage'],
-                "etage_id" => $data[0]['etage_id'],
-                "qrcode" => $data[0]['qrcode'],
+                "camion_id" => $data[0]['camion_id'],
+                "matricule" => $data[0]['matricule'],
+                "mecanicien_id" => $data[0]['mecanicien_id'],
+                "mecanicien_CIN" => $data[0]['mecanicien_CIN'],
+                "mecanicien_nom_prenom" => $data[0]['mecanicien_nom_prenom'],
+                "image_panne_camion" => $data[0]['image_panne_camion'],
+                "description_panne" => $data[0]['description_panne'],
+                "cout" => $data[0]['cout'],
+                "date_debut_reparation" => $data[0]['date_debut_reparation'],
+                "date_fin_reparation" => $data[0]['date_fin_reparation'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/clientDechet', $liste);
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/unique/GestionPanne/reparationCamion', $liste);
+            return $pdf->download('reparation-camion.pdf');
         }
     }
-    public function pdfAllClientDechet(){
-        $client = Client_dechet::all();
-        if (is_null($client)) {
-            return $this->handleError('client dechet n\'existe pas!');
+    public function pdfAllReparationCamion(){
+        $reparation_camion = Reparation_camion::all();
+        if (is_null($reparation_camion)) {
+            return $this->handleError('reparation camion n\'existe pas!');
         }else{
-            $p= Client_dechetResource::collection( $client);
+            $p= Reparation_camionResource::collection( $reparation_camion);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
-            return $pdf->download('client-dechet.pdf');
+            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationCamion', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('reparation-camion.pdf');
         }
     }
 }

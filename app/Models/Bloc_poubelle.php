@@ -22,7 +22,7 @@ class Bloc_poubelle extends Model{
     protected $dates=['deleted_at'];
     public static function getBlocPoubelle(){
         $blocPoubelle = BlocPoubelleResource::collection(Bloc_poubelle::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at','poubelle', 'etage_etablissement_id'])->toArray();
         });
         return $blocPoubelle;
     }
