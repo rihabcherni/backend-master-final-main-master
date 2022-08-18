@@ -55,6 +55,9 @@ class CamionController extends BaseController{
             $data= collect(Camion::getCamionById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
+                'zone_travail'=> $data[0]['zone_travail'],
+                'zone_depot'=> $data[0]['zone_depot'],
+                'ouvrier'=> $data[0]['ouvrier'],
                 "zone_travail_id" => $data[0]['zone_travail_id'],
                 "zone_depot_id" => $data[0]['zone_depot_id'],
                 "matricule" => $data[0]['matricule'],

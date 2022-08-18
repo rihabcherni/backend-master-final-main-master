@@ -74,10 +74,19 @@ class EtablissementController extends BaseController{
                 "quantite_papier_mensuel" => $data[0]['quantite_papier_mensuel'],
                 "quantite_composte_mensuel" => $data[0]['quantite_composte_mensuel'],
                 "quantite_canette_mensuel" => $data[0]['quantite_canette_mensuel'],
+
+
+                "bloc_etablissements" => $data[0]['bloc_etablissements'],
+                "etage" => $data[0]['etage'],
+                "bloc_poubelle" => $data[0]['bloc_poubelle'],
+                "camion" => $data[0]['camion'],
+                "details_blocs" => $data[0]['details_blocs'],
+                "responsable_etablissement" => $data[0]['responsable_etablissement'],
+
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/etablissement', $liste);
+            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/etablissement', $liste)->setPaper('a4', 'landscape');
             return $pdf->download('etablissement.pdf');
         }
     }

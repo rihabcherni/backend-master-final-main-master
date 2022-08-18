@@ -9,18 +9,11 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(186, 41, 205) dashed;
-                width: 180px;
-                height: 180px;
-            }
             .page{
                 padding:20px;
             }
             table{
                 border:1px solid;
-                width:480px;
             }
              td , th{
                 border:1px solid;
@@ -28,62 +21,54 @@
                 padding:10px;
                 text-align: left;
             }
-            .table{
-                margin:-190px 0 0 210px;
-            }
         </style>
     </head>
     <body class="page"  >
         <img class="img-logo" src="{{ public_path('images/logo.png') }}" alt="logo" width="50px" height="50px"/>
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
-        <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
-        <br/>
+        <h2 style="text-align: center;">Détails zone de depots numéro: {{ $id }}</h2>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
-                $path= public_path($url);
-                if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
-                }
-            ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
             <table class="table">
                 <tr>
                     <th>Identifiant:</th>
                     <td>{{$id}}</td>
                 </tr>
                 <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
+                    <th>Region:</th>
+                    <td>{{$zone_travail->region}}</td>
                 </tr>
                 <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
+                    <th>adresse:</th>
+                    <td>{{$adresse}}</td>
                 </tr>
                 <tr>
-                    <th>Nom: </th>
-                    <td>{{ $nom }}</td>
+                    <th>Longitude:</th>
+                    <td>{{$longitude}}</td>
                 </tr>
                 <tr>
-                    <th>Prénom: </th>
-                    <td>{{ $prenom }}</td>
+                    <th>Longitude:</th>
+                    <td>{{$longitude}}</td>
                 </tr>
                 <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
+                    <th>Quantité de depot maximale:</th>
+                    <td>{{$quantite_depot_maximale}}</td>
+                </tr>
+
+                <tr>
+                    <th rowspan="4">Quantité depot actuelle:</th>
+                    <td style="color:blue;"><b>Plastique:</b> {{$quantite_depot_actuelle_plastique}} KG</td>
                 </tr>
                 <tr>
-                    <th>Adresse:</th>
-                    <td>{{ $adresse }}</td>
+                    <td style="color:orange;"> <b>Papier:</b> {{$quantite_depot_actuelle_papier}} KG</td>
                 </tr>
                 <tr>
-                    <th>Numéro télephone:</th>
-                    <td>{{ $numero_telephone }}</td>
+                    <td style="color:green;"><b>Composte:</b> {{$quantite_depot_actuelle_composte}} KG</td>
                 </tr>
                 <tr>
-                    <th>E-mail:</th>
-                    <td>{{ $email }}</td>
+                    <td style="color:red;"><b>Canette:</b> {{$quantite_depot_actuelle_canette}} KG</td>
                 </tr>
+
                 <tr>
                     <th>Date de création:</th>
                     <td>{{$created_at}}</td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\GestionPoubelleEtablissements;
 
+use App\Models\Responsable_etablissement;
 use App\Models\Zone_travail;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -38,9 +39,12 @@ class Etablissement extends JsonResource{
             'bloc_poubelle'=>$this->bloc_poubelles,
             'camion'=>$this->camion,
 
+            'responsable_etablissement'=>Responsable_etablissement::where('etablissement_id',$this->id)->get(),
+            'details_blocs'=>Bloc_etablissements::collection($this->bloc_etablissements),
+
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-                         'deleted_at' => $this->deleted_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

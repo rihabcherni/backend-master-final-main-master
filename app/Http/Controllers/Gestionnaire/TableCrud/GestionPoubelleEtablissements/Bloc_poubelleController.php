@@ -48,7 +48,6 @@ class Bloc_poubelleController extends BaseController{
     public function exportInfoBlocPoubelleCSV(){
         return Excel::download(new Bloc_poubelleExport, 'bloc-poubelle-liste.csv');
     }
-
     public function pdfBlocPoubelle($id){
         $bloc_poubelle = Bloc_poubelle::find($id);
         if (is_null($bloc_poubelle)) {
@@ -57,6 +56,7 @@ class Bloc_poubelleController extends BaseController{
             $data= collect(Bloc_poubelle::getBlocPoubelleById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
+                'poubelle' => $data[0]['poubelle'],
                 "etage_etablissement_id" => $data[0]['etage_etablissement_id'],
                 "etage" => $data[0]['etage'],
                 "bloc_etabl" => $data[0]['bloc_etabl'],

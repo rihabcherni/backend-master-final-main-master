@@ -9,27 +9,17 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(186, 41, 205) dashed;
-                width: 180px;
-                height: 180px;
-            }
             .page{
                 padding:20px;
             }
             table{
                 border:1px solid;
-                width:480px;
             }
              td , th{
                 border:1px solid;
                 font-size:14px;
                 padding:10px;
                 text-align: left;
-            }
-            .table{
-                margin:-190px 0 0 210px;
             }
         </style>
     </head>
@@ -38,59 +28,58 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
+        <h2 style="text-align: center;">Détails Matiére primaire: {{ $nom_materiel }}</h2>
         <br/>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
-                $path= public_path($url);
-                if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
-                }
-            ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
-            <table class="table">
+            <table>
                 <tr>
                     <th>Identifiant:</th>
-                    <td>{{$id}}</td>
+                    <td colspan="2">{{$id}}</td>
                 </tr>
                 <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
+                    <th rowspan="4">Détails produits:</th>
+                    <th>Nom produits:</th>
+                    <td>{{$nom_materiel}}</td>
+                </tr>
+
+                <tr>
+                    <th>Prix unitaire:</th>
+                    <td>{{$prix_unitaire}} DT</td>
                 </tr>
                 <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
+                    <th>quantite:</th>
+                    <td>{{$quantite}}</td>
                 </tr>
                 <tr>
-                    <th>Nom: </th>
-                    <td>{{ $nom }}</td>
+                    <th>Prix total:</th>
+                    <td>{{$prix_total}} DT</td>
+                </tr>
+
+                <tr>
+                    <th rowspan="4">Fournisseur:</th>
+                    <th>Id:</th>
+                    <td>{{$fournisseur_id}}</td>
                 </tr>
                 <tr>
-                    <th>Prénom: </th>
-                    <td>{{ $prenom }}</td>
+                    <th>Nom et prénom:</th>
+                    <td>{{$fournisseur_nom}}</td>
                 </tr>
                 <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
+                    <th>Carte identité national:</th>
+                    <td>{{$cin}}</td>
                 </tr>
                 <tr>
-                    <th>Adresse:</th>
-                    <td>{{ $adresse }}</td>
+                    <th>Numéro télophone:</th>
+                    <td>{{$fournisseur_numero_telephone}}</td>
                 </tr>
-                <tr>
-                    <th>Numéro télephone:</th>
-                    <td>{{ $numero_telephone }}</td>
-                </tr>
-                <tr>
-                    <th>E-mail:</th>
-                    <td>{{ $email }}</td>
-                </tr>
+
                 <tr>
                     <th>Date de création:</th>
-                    <td>{{$created_at}}</td>
+                    <td colspan="2">{{$created_at}}</td>
                 </tr>
                 <tr>
                     <th>Date de dernier modification: </th>
-                    <td>{{$updated_at}}</td>
+                    <td colspan="2">{{$updated_at}}</td>
                 </tr>
             </table>
         </div>

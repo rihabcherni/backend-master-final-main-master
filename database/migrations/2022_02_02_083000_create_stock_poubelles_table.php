@@ -8,8 +8,7 @@ class CreateStockPoubellesTable extends Migration{
             $table->id();
             $table->enum('type_poubelle',['plastique', 'composte','papier','canette']);
             $table->integer('quantite_disponible')->default(0);
-            $table->float("pourcentage_remise")->default(0);
-            $table->float("prix_unitaire");
+            $table->string('description');
             $table->string('photo')->nullable();
             $table->timestamps();
             $table->softDeletes();

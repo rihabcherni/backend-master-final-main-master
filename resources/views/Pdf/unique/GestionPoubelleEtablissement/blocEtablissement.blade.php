@@ -9,18 +9,11 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(186, 41, 205) dashed;
-                width: 180px;
-                height: 180px;
-            }
             .page{
                 padding:20px;
             }
             table{
                 border:1px solid;
-                width:480px;
             }
              td , th{
                 border:1px solid;
@@ -38,54 +31,35 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
+        <h2 style="text-align: center;">Détails bloc établissement:</h2>
         <br/>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
-                $path= public_path($url);
-                if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
-                }
-            ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
-            <table class="table">
+            <table>
                 <tr>
                     <th>Identifiant:</th>
                     <td>{{$id}}</td>
                 </tr>
                 <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
+                    <th>Etablissement:</th>
+                    <td>{{$etablissement}}</td>
                 </tr>
                 <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
+                    <th>Nom bloc:</th>
+                    <td>{{$nom_bloc_etablissement}}</td>
                 </tr>
                 <tr>
-                    <th>Nom: </th>
-                    <td>{{ $nom }}</td>
+                    <th>Nombre des etages:</th>
+                    <td>{{$nombre_etage}}</td>
                 </tr>
                 <tr>
-                    <th>Prénom: </th>
-                    <td>{{ $prenom }}</td>
-                </tr>
-                <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
-                </tr>
-                <tr>
-                    <th>Adresse:</th>
-                    <td>{{ $adresse }}</td>
-                </tr>
-                <tr>
-                    <th>Numéro télephone:</th>
-                    <td>{{ $numero_telephone }}</td>
-                </tr>
-                <tr>
-                    <th>E-mail:</th>
-                    <td>{{ $email }}</td>
+                    <th>Liste des etages:</th>
+                    @foreach ($etage_etablissements as $e)
+                      <p>Etage: {{ $e->nom_etage_etablissement}}</p>
+                    @endforeach
                 </tr>
                 <tr>
                     <th>Date de création:</th>
+
                     <td>{{$created_at}}</td>
                 </tr>
                 <tr>
@@ -94,6 +68,5 @@
                 </tr>
             </table>
         </div>
-
     </body>
 </html>

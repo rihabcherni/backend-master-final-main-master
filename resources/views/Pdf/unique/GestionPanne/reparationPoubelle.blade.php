@@ -9,18 +9,11 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(186, 41, 205) dashed;
-                width: 180px;
-                height: 180px;
-            }
             .page{
                 padding:20px;
             }
-            table{
+            .table{
                 border:1px solid;
-                width:480px;
             }
              td , th{
                 border:1px solid;
@@ -28,68 +21,93 @@
                 padding:10px;
                 text-align: left;
             }
-            .table{
-                margin:-190px 0 0 210px;
-            }
         </style>
     </head>
     <body class="page"  >
         <img class="img-logo" src="{{ public_path('images/logo.png') }}" alt="logo" width="50px" height="50px"/>
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
-        <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
-        <br/>
+        <h2 style="text-align: center;">Détails panne poubelle:</h2>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
-                $path= public_path($url);
-                if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
-                }
-            ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
             <table class="table">
                 <tr>
-                    <th>Identifiant:</th>
+                    <th colspan="2">Identifiant:</th>
                     <td>{{$id}}</td>
                 </tr>
                 <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
+                    <th rowspan="5" >Détails panne</th>
+                    <th>Image panne</th>
+                    <td>
+                        <?php $url = 'storage/images/pannePoubelle/'.$image_panne_poubelle;
+                            $path= public_path($url);
+                            if(! file_exists($path) || $image_panne_poubelle === null){
+                                $path= public_path('storage/images/pannePoubelle/default.jpeg');
+                            }
+                        ?>
+                        <img width="100px" height="100px" src="{{ $path }}" alt="panne poubelle"/>
+                    </td>
                 </tr>
                 <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
+                    <th>Description panne</th>
+                    <td>{{$description_panne}}</td>
+                </tr>
+                <tr>
+                    <th>cout</th>
+                    <td>{{$cout}} DT</td>
+                </tr>
+                <tr>
+                    <th>Date debut reparation</th>
+                    <td>{{$date_debut_reparation}}</td>
+                </tr>
+                <tr>
+                    <th>Date fin reparation</th>
+                    <td>{{$date_fin_reparation}}</td>
+                </tr>
+
+                <tr>
+                    <th rowspan="3">Poubelle:</th>
+                    <th>ID: </th>
+                    <td>{{$poubelle_id}}</td>
                 </tr>
                 <tr>
                     <th>Nom: </th>
-                    <td>{{ $nom }}</td>
+                    <td>{{$nom_poubelle}}</td>
                 </tr>
                 <tr>
-                    <th>Prénom: </th>
-                    <td>{{ $prenom }}</td>
+                    <th>Type: </th>
+                    <td>{{$type}}</td>
+                </tr>
+
+
+                <tr>
+                    <th rowspan="5">Reparateur poubelle:</th>
+                    <th>ID: </th>
+                    <td>{{$reparateur_poubelle_id}}</td>
                 </tr>
                 <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
+                    <th>Nom et prénom: </th>
+                    <td>{{$reparateur_nom_prenom}}</td>
+                </tr>
+                <tr>
+                    <th>E-mail: </th>
+                    <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $reparateur_poubelle->email }}</td>
+                </tr>
+                <tr>
+                    <th>Numéro télephone: </th>
+                    <td>{{$reparateur_poubelle->numero_telephone}}</td>
                 </tr>
                 <tr>
                     <th>Adresse:</th>
-                    <td>{{ $adresse }}</td>
+                    <td>{{$reparateur_poubelle->adresse}}</td>
                 </tr>
+            /*****************                         **************************/
                 <tr>
-                    <th>Numéro télephone:</th>
-                    <td>{{ $numero_telephone }}</td>
-                </tr>
-                <tr>
-                    <th>E-mail:</th>
-                    <td>{{ $email }}</td>
-                </tr>
-                <tr>
-                    <th>Date de création:</th>
+                    <th colspan="2">Date de création:</th>
                     <td>{{$created_at}}</td>
                 </tr>
+
                 <tr>
-                    <th>Date de dernier modification: </th>
+                    <th colspan="2">Date de dernier modification: </th>
                     <td>{{$updated_at}}</td>
                 </tr>
             </table>

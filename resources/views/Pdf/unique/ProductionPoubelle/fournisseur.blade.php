@@ -38,27 +38,20 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Détails responsable établissement: {{ $nom }}  {{ $prenom }}</h2>
+        <h2 style="text-align: center;">Détails fournisseur: {{ $nom }}  {{ $prenom }}</h2>
         <br/>
         <div>
-            <?php $url = 'storage/images/responsable_etablissement/'.$photo;
+            <?php $url = 'storage/images/fournisseur/'.$photo;
                 $path= public_path($url);
                 if(! file_exists($path) || $photo === null){
-                    $path= public_path('storage/images/responsable_etablissement/default.jpeg');
+                    $path= public_path('storage/images/fournisseur/default.jpeg');
                 }
             ?>
-            <img class="img-container" src="{{ $path }}" alt="reponsable etablissement"/>
+            <img class="img-container" src="{{ $path }}" alt="fournisseur"/>
             <table class="table">
                 <tr>
                     <th>Identifiant:</th>
                     <td>{{$id}}</td>
-                </tr>
-                <tr>
-                    <th rowspan="2">Etablissement:</th>
-                    <td><b>ID: </b>{{$etablissement_id}}</td>
-                </tr>
-                <tr>
-                    <td><b>Nom: </b>{{$etablissement}}</td>
                 </tr>
                 <tr>
                     <th>Nom: </th>
@@ -69,8 +62,8 @@
                     <td>{{ $prenom }}</td>
                 </tr>
                 <tr>
-                    <th>Numéro fixe:</th>
-                    <td>{{ $numero_fixe }}</td>
+                    <th>CIN:</th>
+                    <td>{{ $CIN }}</td>
                 </tr>
                 <tr>
                     <th>Adresse:</th>

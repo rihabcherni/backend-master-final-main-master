@@ -14,8 +14,7 @@ class Stock_poubelle extends Model
     protected $fillable = [
         'type_poubelle',
         'quantite_disponible',
-        'prix_unitaire',
-        'pourcentage_remise',
+        'description',
         'photo',
     ];
     public function blocPoubelle()
@@ -27,7 +26,7 @@ class Stock_poubelle extends Model
     {
         return $this->hasOne(Rating_poubelle::class);
     }
-    public static function getStockPoubelle(){ 
+    public static function getStockPoubelle(){
         $stockPoubelle = StockPoubelleResource::collection(Stock_poubelle::all())->map(function ($item, $key) {
             return collect($item)->except(['deleted_at'])->toArray();
         });

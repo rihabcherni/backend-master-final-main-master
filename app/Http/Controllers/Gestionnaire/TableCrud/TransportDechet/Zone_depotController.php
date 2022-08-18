@@ -57,6 +57,7 @@ class Zone_depotController extends BaseController{
             $liste = [
                 'id' => $data[0]['id'],
                 "zone_travail_id" => $data[0]['zone_travail_id'],
+                "zone_travail" => $data[0]['zone_travail'],
                 "adresse" => $data[0]['adresse'],
                 "longitude" => $data[0]['longitude'],
                 "latitude" => $data[0]['latitude'],

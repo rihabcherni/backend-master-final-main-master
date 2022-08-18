@@ -19,8 +19,7 @@ class StockPoubelleController extends BaseController{
         $stock_poubelle = new Stock_poubelle;
         $stock_poubelle->type_poubelle = $request->input('type_poubelle');
         $stock_poubelle->quantite_disponible = $request->input('quantite_disponible');
-        $stock_poubelle->pourcentage_remise = $request->input('pourcentage_remise');
-        $stock_poubelle->prix_unitaire = $request->input('prix_unitaire');
+        $stock_poubelle->description = $request->input('description');
         if($request->hasfile('photo'))
         {
             $file = $request->file('photo');
@@ -45,9 +44,7 @@ class StockPoubelleController extends BaseController{
         $stock_poubelle = Stock_poubelle::find($id);
         $stock_poubelle->type_poubelle = $request->input('type_poubelle');
         $stock_poubelle->quantite_disponible = $request->input('quantite_disponible');
-        $stock_poubelle->pourcentage_remise = $request->input('pourcentage_remise');
-        $stock_poubelle->prix_unitaire = $request->input('prix_unitaire');
-
+        $stock_poubelle->description = $request->input('description');
         if($request->hasfile('photo'))
         {
             $destination = 'storage/images/stock_poubelle/'.$stock_poubelle->photo;
@@ -120,8 +117,7 @@ class StockPoubelleController extends BaseController{
                 'id' => $data[0]['id'],
                 "type_poubelle" => $data[0]['type_poubelle'],
                 "quantite_disponible" => $data[0]['quantite_disponible'],
-                "pourcentage_remise" => $data[0]['pourcentage_remise'],
-                "prix_unitaire" => $data[0]['prix_unitaire'],
+                "description" => $data[0]['description'],
                 "photo" => $data[0]['photo'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],

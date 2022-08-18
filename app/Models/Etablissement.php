@@ -60,7 +60,7 @@ class Etablissement extends Model{
     protected $dates=['deleted_at'];
     public static function getEtablissement(){
         $etablissement = EtablissementResource::collection(Etablissement::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at','bloc_etablissements','etage','zone_travail_id','bloc_poubelle','camion'])->toArray();
+            return collect($item)->except(['deleted_at','bloc_etablissements','details_blocs','etage','zone_travail_id','responsable_etablissement','bloc_poubelle','camion'])->toArray();
         });
         return $etablissement;
     }

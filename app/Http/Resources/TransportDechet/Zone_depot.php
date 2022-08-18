@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Resources\TransportDechet;
 
+use App\Models\Zone_travail;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Zone_depot extends JsonResource{
@@ -9,6 +10,7 @@ class Zone_depot extends JsonResource{
       return [
         'id' => $this->id,
         'zone_travail_id'=> $this->zone_travail_id,
+        'zone_travail'=>Zone_travail::find($this->zone_travail_id) ,
         'adresse' => $this->adresse,
         'longitude' => $this->longitude,
         'latitude' => $this->latitude,

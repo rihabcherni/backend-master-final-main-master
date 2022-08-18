@@ -57,6 +57,7 @@ class Reparation_poubelleController extends BaseController{
             $data= collect(Reparation_poubelle::getReparationPoubelleById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
+                'reparateur_poubelle'=> $data[0]['reparateur_poubelle'],
                 "reparateur_cin" => $data[0]['reparateur_cin'],
                 "reparateur_nom_prenom" => $data[0]['reparateur_nom_prenom'],
                 "nom_poubelle" => $data[0]['nom_poubelle'],

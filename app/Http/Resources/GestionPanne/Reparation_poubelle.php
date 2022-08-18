@@ -27,6 +27,7 @@ class Reparation_poubelle extends JsonResource{
        return [
             'id' => $this->id,
 
+            'reparateur_poubelle' => Reparateur_poubelle::find($this->reparateur_poubelle_id),
             'reparateur_poubelle_id' => $this->reparateur_poubelle_id,
             'reparateur_nom_prenom' => $reparateur_nom_prenom,
             'reparateur_cin' => $reparateur_cin,

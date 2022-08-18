@@ -11,9 +11,10 @@ class MateriauxPrimaireExport implements FromCollection , WithHeadings{
         return[
             "ID",
             "ID fournisseur",
-            "Carte identite national",
             "Nom fournisseur",
-            "Nom materiel",
+            "Carte identite national",
+            'Numero telephone',
+            "Matiere primaire",
             "Prix unitaire",
             "Quantite",
             "Prix total",

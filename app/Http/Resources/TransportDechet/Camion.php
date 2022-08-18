@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\TransportDechet;
 
+use App\Models\Ouvrier;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Zone_travail;
 use App\Models\Zone_depot;
@@ -14,6 +15,7 @@ class Camion extends JsonResource{
 
             'zone_travail_id' => $this->zone_travail_id,
             'zone_travail' => Zone_travail::find($this->zone_travail_id),
+            'ouvrier'=>Ouvrier::where('camion_id',$this->id)->get(),
             'zone_depot_id' => $this->zone_depot_id,
             'zone_depot' => Zone_depot::find($this->zone_depot_id),
             'matricule' => $this->matricule,

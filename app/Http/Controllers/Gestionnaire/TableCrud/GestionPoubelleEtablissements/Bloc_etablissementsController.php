@@ -58,6 +58,8 @@ class Bloc_etablissementsController extends BaseController{
             $data= collect(Bloc_etablissement::getBlocEtablissementById($id))->toArray();
             $liste = [
                 'id' => $data[0]['id'],
+                'nombre_etage' => $data[0]['nombre_etage'],
+                'etage_etablissements' => $data[0]['etage_etablissements'],
                 "etablissement"=> $data[0]['etablissement'],
                 "etablissement_id"=> $data[0]['etablissement_id'],
                 "nom_bloc_etablissement"=> $data[0]['nom_bloc_etablissement'],

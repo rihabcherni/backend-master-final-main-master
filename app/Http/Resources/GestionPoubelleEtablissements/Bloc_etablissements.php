@@ -16,6 +16,7 @@ class Bloc_etablissements extends JsonResource{
             'etablissement_id' => $this->etablissement_id,
             'nom_bloc_etablissement' => $this->nom_bloc_etablissement,
             'etage_etablissements' => $this->etage_etablissements,
+            'nombre_etage' => count($this->etage_etablissements),
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
             'deleted_at' => $this->deleted_at,

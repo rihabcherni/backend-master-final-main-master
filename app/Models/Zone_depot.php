@@ -28,9 +28,9 @@ class Zone_depot extends Model
         return $this->hasMany(Camion::class);
     }
     protected $dates=['deleted_at'];
-    public static function getZoneDepot(){ 
+    public static function getZoneDepot(){
         $zone_depot = ZoneDepotResource::collection(Zone_depot::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['deleted_at','zone_travail'])->toArray();
         });
         return $zone_depot;
     }

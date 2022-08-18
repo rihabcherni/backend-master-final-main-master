@@ -60,6 +60,7 @@ class Etage_etablissementsControlller extends BaseController{
                 "bloc_etablissement" => $data[0]['bloc_etablissement'],
                 "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
                 "nom_etage_etablissement" => $data[0]['nom_etage_etablissement'],
+                "bloc_poubelles" => $data[0]['bloc_poubelles'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];

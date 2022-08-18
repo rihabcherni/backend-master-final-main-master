@@ -56,6 +56,10 @@ class DepotController extends BaseController{
             $liste = [
                 'id' => $data[0]['id'],
                 "zone_depot_id"=> $data[0]['zone_depot_id'],
+                "zone_depot"=> $data[0]['zone_depot'],
+                "camion"=> $data[0]['camion'],
+                "ouvrier"=> $data[0]['ouvrier'],
+                "zone_travail"=> $data[0]['zone_travail'],
                 "camion_id"=> $data[0]['camion_id'],
                 "date_depot"=> $data[0]['date_depot'],
                 "quantite_depose_plastique"=> $data[0]['quantite_depose_plastique'],

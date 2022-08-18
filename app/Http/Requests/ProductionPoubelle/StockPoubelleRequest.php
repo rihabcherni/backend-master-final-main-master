@@ -16,16 +16,14 @@ class StockPoubelleRequest extends FormRequest{
             return [
                 'type_poubelle'=>'required',Rule::in(['composte', 'plastique','papier','canette']),
                 'quantite_disponible'=>'required|integer',
-                'pourcentage_remise'=>'required|numeric',
-                'prix_unitaire'=>'required|numeric',
+                'description'=>'required|string',
                 'photo'=> 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
         }else if($this->isMethod('PUT')){
             return [
                 // 'type_poubelle'=>'required',Rule::in(['composte', 'plastique','papier','canette']),
                 // 'quantite_disponible'=>'required|integer',
-                // 'pourcentage_remise'=>'required|numeric',
-                // 'prix_unitaire'=>'required|numeric',
+                // 'description'=>'required|string',
                 // 'photo'=> 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
              ];
         }

@@ -62,6 +62,8 @@ class Reparation_camionController extends BaseController{
                 "mecanicien_nom_prenom" => $data[0]['mecanicien_nom_prenom'],
                 "image_panne_camion" => $data[0]['image_panne_camion'],
                 "description_panne" => $data[0]['description_panne'],
+                "camion" => $data[0]['camion'],
+                "mecanicien" => $data[0]['mecanicien'],
                 "cout" => $data[0]['cout'],
                 "date_debut_reparation" => $data[0]['date_debut_reparation'],
                 "date_fin_reparation" => $data[0]['date_fin_reparation'],
