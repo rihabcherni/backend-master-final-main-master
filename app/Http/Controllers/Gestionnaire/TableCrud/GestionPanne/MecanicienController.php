@@ -64,6 +64,7 @@ class MecanicienController extends BaseController{
                 "numero_telephone" => $data[0]['numero_telephone'],
                 "email" => $data[0]['email'],
                 "adresse" => $data[0]['adresse'],
+                "Liste_camions_repares"=> $data[0]['Liste_camions_repares'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
@@ -78,7 +79,7 @@ class MecanicienController extends BaseController{
         }else{
             $p= MecanicienResource::collection( $mecanicien);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPanne/mecanicien', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionPanne/mecanicien', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('mecanicien.pdf');
         }
     }

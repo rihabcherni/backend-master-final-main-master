@@ -9,13 +9,6 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(198, 106, 210) dashed;
-                width: 180px;
-                height: 180px;
-                margin-left: 20px;
-            }
             .page{
                 padding:20px;
             }
@@ -35,32 +28,27 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des zones de travails Reschool Ecology: </h2>        <br/>
         <table>
             <tr>
                 <th>Id:</th>
-                <th>Nom entreprise:</th>
-                <th>Matricule fiscale: </th>
-                <th>Nom: </th>
-                <th>Prénom: </th>
-                <th>Numéro fixe:</th>
-                <th>Adresse:</th>
-                <th>Numéro télephone:</th>
-                <th>E-mail:</th>
+                <th>region</th>
+                <td style='color:blue; font-weight:bold'>Quantité total collecté plastique</th>
+                <td style='color:green; font-weight:bold'>Quantité total collecté composte</th>
+                <td style='color:orange; font-weight:bold'>Quantité total collecté papier</th>
+                <td style='color:red; font-weight:bold'>Quantité total collecté canette</th>
                 <th>Date de création:</th>
                 <th>Date de dernier modification: </th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td>{{ $l['nom_entreprise'] }}</td>
-                <td>{{ $l['matricule_fiscale'] }}</td>
-                <td>{{ $l['nom'] }}</td>
-                <td>{{ $l['prenom'] }}</td>
-                <td>{{ $l['numero_fixe'] }}</td>
-                <td>{{ $l['adresse'] }}</td>
-                <td>{{ $l['numero_telephone'] }}</td>
-                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['email'] }}</td>
+                <td>{{ $l['region'] }}</td>
+                <td style='color:blue; font-weight:bold'>{{ $l['quantite_total_collecte_plastique'] }}</td>
+                <td style='color:green; font-weight:bold'>{{ $l['quantite_total_collecte_composte'] }}</td>
+                <td style='color:orange; font-weight:bold'>{{ $l['quantite_total_collecte_papier'] }}</td>
+                <td style='color:red; font-weight:bold'>{{ $l['quantite_total_collecte_canette'] }}</td>
+
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
             </tr>

@@ -7,7 +7,7 @@
         <title>Document</title>
         <style>
             .date{
-                margin:-20px 0 0 75%  ;
+                margin:-20px 0 0 80%  ;
             }
             .page{
                 padding:20px;
@@ -27,52 +27,54 @@
         <img class="img-logo" src="{{ public_path('images/logo.png') }}" alt="logo" width="50px" height="50px"/>
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
-        <br/>
         <h2 style="text-align: center;">Détails établissement: {{ $nom_etablissement }}</h2>
-        <br/>
         <div>
             <table>
                 <tr>
-                    <th>Identifiant:</th>
-                    <td colspan="5">{{$id}}</td>
-                </tr>
-                <tr>
-                    <th rowspan="5">Localisation établissement:</th>
-                    <th>Region:</th>
-                    <td colspan="4">{{$region}}</td>
-                </tr>
-                <tr>
-                    <th>Adresse:</th>
-                    <td colspan="4">{{$adresse}}</td>
-                </tr>
-                <tr>
-                    <th>Url map:</th>
-                    <td colspan="4">{{$url_map}}</td>
-                </tr>
-                <tr>
-                    <th>Longitude:</th>
-                    <td colspan="4">{{$longitude}}</td>
-                </tr>
-                <tr>
-                    <th>Latitude:</th>
-                    <td colspan="4">{{$latitude}}</td>
-                </tr>
+                    <th>Détails établissement:</th>
+                    <td colspan="5">
+                        <table>
+                            <tr>
+                                <th>Identifiant:</th>
+                                <th>Niveau:</th>
+                                <th>Type:</th>
+                                <th>Nombre personnes:</th>
+                                <th>Matricule camion affecté:</th>
+                                <th> Date de devenir partenaire de notre organisation
+                            </tr>
+                            <tr>
+                                <td>{{$id}}</td>
+                                <td>{{$niveau_etablissement}}</td>
+                                <td>{{$type_etablissement}}</td>
+                                <td>{{$nbr_personnes}}</td>
+                                <td>{{$camion->matricule}}</td>
+                                <td>{{$created_at}}</td>
 
-
-                <tr>
-                    <th rowspan="3">Détails établissement:</th>
-                    <th>Niveau:</th>
-                    <td colspan="4">{{$niveau_etablissement}}</td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
                 <tr>
-                    <th>Type:</th>
-                    <td colspan="4">{{$type_etablissement}}</td>
+                    <th>Localisation établissement:</th>
+                    <td colspan="5">
+                        <table>
+                            <tr>
+                                <th>Region:</th>
+                                <th>Adresse:</th>
+                                <th>Url map:</th>
+                                <th>Longitude:</th>
+                                <th>Latitude:</th>
+                            </tr>
+                            <tr>
+                                <td>{{$region}}</td>
+                                <td>{{$adresse}}</td>
+                                <td>{{$url_map}}</td>
+                                <td>{{$longitude}}</td>
+                                <td>{{$latitude}}</td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
-                <tr>
-                    <th>Nombre personnes:</th>
-                    <td colspan="4">{{$nbr_personnes}}</td>
-                </tr>
-
 
                 <tr>
                     <th rowspan="2">Quantités déchets:</th>
@@ -90,6 +92,29 @@
                     <td style="color:green;"><b>Composte:</b>{{$quantite_composte_mensuel}}</td>
                     <td style="color:red;"><b>Canette:</b>{{$quantite_canette_mensuel}}</td>
                 </tr>
+                <tr>
+                    <th>Détails blocs etablissement:</th>
+                    <td colspan="5">
+                        <table style="width: 800px">
+                            <tr>
+                                <th>Nom Bloc:</th>
+                                @for ($i=0; $i<count($details_blocs);$i++)
+                                    <td>Bloc: {{$details_blocs[$i]->nom_bloc_etablissement}}</td>
+                                @endfor
+                             </tr>
+                            <tr>
+                                <th>Liste des etages:</th>
+                                @for ($i=0; $i<count($details_blocs);$i++)
+                                    <td>
+                                        @foreach ($details_blocs[$i]->etage_etablissements as $etage)
+                                            {{ $etage->nom_etage_etablissement }}<br/>
+                                        @endforeach
+                                    </td>
+                                @endfor
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
             <br/>
             <table>
@@ -99,6 +124,7 @@
                     <th>E-mail</th>
                     <th>Nom et prénom:</th>
                     <th>Numéro télephone</th>
+                    <th>Adresse:</th>
                         @foreach ($responsable_etablissement as $responsable)
                         <tr>
                             <td>
@@ -113,41 +139,11 @@
                             <td  style="color:blue; text-decoration:underline;"> {{ $responsable->email}}</td>
                             <td> {{ $responsable->nom}} {{ $responsable->prenom}}</td>
                             <td> {{ $responsable->numero_telephone}}</td>
+                            <td> {{ $responsable->adresse}}</td>
                         </tr>
                         @endforeach
                 </tr>
-                <tr>
-                    <th rowspan="2">camion:</th>
-                    <th>Numéro:</th>
-                    <td colspan="3">{{$camion->id}}</td>
-                </tr>
-                <tr>
-                    <th>Matricule:</th>
-                    <td colspan="3">{{$camion->matricule}}</td>
-                </tr>
-                <tr>
-                    <th rowspan={{ count($details_blocs)+1 }}>Détails blocs etablissement:</th>
-                    <th>Nom Bloc:</th>
-                    <th  colspan="3">Liste des etages:</th>
-                </tr>
-                    @for ($i=0; $i<count($details_blocs);$i++)
-                        <tr>
-                            <td>Bloc: {{$details_blocs[$i]->nom_bloc_etablissement}}</td>
-                            <td  colspan="3">
-                                @foreach ($details_blocs[$i]->etage_etablissements as $etage)
-                                Etage: {{ $etage->nom_etage_etablissement }}<br/>
-                                @endforeach
-                            </td>
-                        </tr>
-                    @endfor
-                <tr>
-                    <th>Date de création:</th>
-                    <td colspan="5">{{$created_at}}</td>
-                </tr>
-                <tr>
-                    <th>Date de dernier modification: </th>
-                    <td colspan="5">{{$updated_at}}</td>
-                </tr>
+
             </table>
         </div>
 

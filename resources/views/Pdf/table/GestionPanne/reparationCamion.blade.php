@@ -9,13 +9,6 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(198, 106, 210) dashed;
-                width: 180px;
-                height: 180px;
-                margin-left: 20px;
-            }
             .page{
                 padding:20px;
             }
@@ -35,32 +28,64 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des pannes camions: </h2>        <br/>
         <table>
             <tr>
-                <th>Id:</th>
-                <th>Nom entreprise:</th>
-                <th>Matricule fiscale: </th>
-                <th>Nom: </th>
-                <th>Prénom: </th>
-                <th>Numéro fixe:</th>
+                <th rowspan="2">Id:</th>
+                <th colspan="5">Détails panne camion:</th>
+                <th colspan="2">Camion:</th>
+                <th colspan="6">Mecanicien:</th>
+                <th rowspan="2">Date de création:</th>
+                <th rowspan="2">Date de dernier modification: </th>
+            </tr>
+            <tr>
+                <th>Image:</th>
+                <th>Description:</th>
+                <th>Cout:</th>
+                <th>Debut reparation:</th>
+                <th>Fin reparation:</th>
+                <th>N°:</th>
+                <th>Matricule:</th>
+                <th>N°:</th>
+                <th>Photo:</th>
+                <th>Nom et prénom:</th>
                 <th>Adresse:</th>
-                <th>Numéro télephone:</th>
+                <th>N° télephone:</th>
                 <th>E-mail:</th>
-                <th>Date de création:</th>
-                <th>Date de dernier modification: </th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td>{{ $l['nom_entreprise'] }}</td>
-                <td>{{ $l['matricule_fiscale'] }}</td>
-                <td>{{ $l['nom'] }}</td>
-                <td>{{ $l['prenom'] }}</td>
-                <td>{{ $l['numero_fixe'] }}</td>
-                <td>{{ $l['adresse'] }}</td>
-                <td>{{ $l['numero_telephone'] }}</td>
-                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['email'] }}</td>
+                <td>
+                    <?php $url = 'storage/images/panneCamion/'.$l['image_panne_camion'];
+                    $path= public_path($url);
+                    if(! file_exists($path) || $l['image_panne_camion'] === null){
+                        $path= public_path('storage/images/panneCamion/default.jpeg');
+                    }
+                    ?>
+                    <img width="100px" height="100px" src="{{$path }}" alt="panne camion "/>
+                </td>
+                <td> {{ $l['description_panne'] }}</td>
+                <td> {{ $l['cout'] }} DT</td>
+                <td> {{ $l['date_debut_reparation'] }}</td>
+                <td> {{ $l['date_fin_reparation'] }}</td>
+
+                <td>{{ $l['camion']->id }}</td>
+                <td>{{ $l['camion']->matricule }}</td>
+                <td>{{ $l['mecanicien']->id }}</td>
+                <td>
+                    <?php $url = 'storage/images/mecanicien/'.$l['mecanicien']->photo;
+                    $path= public_path($url);
+                    if(! file_exists($path) || $l['mecanicien']->photo === null){
+                        $path= public_path('storage/images/mecanicien/default.jpeg');
+                    }
+                    ?>
+                    <img width="50px" height="50px" src="{{$path }}" alt="mecanicien "/>
+                </td>
+                <td>{{ $l['mecanicien']->nom.' '.$l['mecanicien']->prenom }}</td>
+                <td>{{ $l['mecanicien']->adresse }}</td>
+                <td>{{ $l['mecanicien']->numero_telephone }}</td>
+                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['mecanicien']->email }}</td>
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
             </tr>

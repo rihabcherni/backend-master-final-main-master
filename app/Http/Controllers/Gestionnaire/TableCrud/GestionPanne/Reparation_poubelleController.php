@@ -89,7 +89,7 @@ class Reparation_poubelleController extends BaseController{
         }else{
             $p= Reparation_poubelleResource::collection( $reparation_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('reparation-poubelle.pdf');
         }
     }

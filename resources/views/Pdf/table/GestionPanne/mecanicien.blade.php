@@ -46,6 +46,7 @@
                 <th>Adresse</th>
                 <th>Numéro télephone</th>
                 <th>E-mail</th>
+                <th>Liste camions réparés:</th>
                 <th>Date de création</th>
                 <th>Date de dernier modification</th>
             </tr>
@@ -68,6 +69,15 @@
                 <td> {{ $l['adresse'] }}</td>
                 <td> {{ $l['numero_telephone'] }}</td>
                 <td style='color:blue; font-weight:bold;text-decoration:underline;'> {{ $l['email'] }}</td>
+                <td>
+                    @if( $l['Liste_camions_repares']!== null)
+                        @if(count( $l['Liste_camions_repares'])!== 0)
+                            @foreach ( $l['Liste_camions_repares'] as $panne)
+                                <p>{{ $panne['matricule'] }}</p>
+                            @endforeach
+                        @endif
+                    @endif
+                </td>
                 <td> {{ $l['created_at'] }}</td>
                 <td> {{ $l['updated_at'] }}</td>
             </tr>

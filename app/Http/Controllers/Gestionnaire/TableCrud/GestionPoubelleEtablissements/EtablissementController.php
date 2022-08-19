@@ -97,7 +97,7 @@ class EtablissementController extends BaseController{
         }else{
             $p= EtablissementResource::collection( $etablissement);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/etablissement', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/etablissement', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('etablissement.pdf');
         }
     }

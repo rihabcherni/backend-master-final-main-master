@@ -30,7 +30,7 @@ class Reparateur_poubelle extends Model
 
     public static function getReparateurPoubelle(){
         $reparateurPoubelle = ReparateurPoubelleResource::collection(Reparateur_poubelle::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at','mot_de_passe'])->toArray();
+            return collect($item)->except(['deleted_at','Liste_poubelles_repares','mot_de_passe'])->toArray();
         });
         return $reparateurPoubelle;
     }

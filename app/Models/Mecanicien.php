@@ -29,7 +29,7 @@ class Mecanicien extends Model
 
     public static function getMecanicien(){
         $mecanicien = MecanicienResource::collection(Mecanicien::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at','mot_de_passe'])->toArray();
+            return collect($item)->except(['deleted_at','mot_de_passe','Liste_camions_repares'])->toArray();
         });
         return $mecanicien;
     }

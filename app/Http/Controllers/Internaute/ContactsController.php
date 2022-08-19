@@ -65,7 +65,7 @@ class ContactsController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionContact/Contact', $liste);
+            $pdf = Pdf::loadView('pdf/unique/contact', $liste);
             return $pdf->download('contact.pdf');
         }
     }
@@ -74,9 +74,9 @@ class ContactsController extends BaseController{
         if (is_null($contact)) {
             return $this->handleError('Contact n\'existe pas!');
         }else{
-            $p= ContactResource::collection( $contact);
+            $p= ContactResources::collection( $contact);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionContact/Contact', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/Contact', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('contact.pdf');
         }
     }

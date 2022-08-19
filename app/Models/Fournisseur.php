@@ -21,9 +21,9 @@ class Fournisseur extends Model{
         return $this->belongsTo(Materiau_primaire::class);
     }
     protected $dates=['deleted_at'];
-    public static function getFournisseur(){ 
+    public static function getFournisseur(){
         $fournisseur = FournisseurResource::collection(Fournisseur::all())->map(function ($item, $key) {
-            return collect($item)->except(['deleted_at'])->toArray();
+            return collect($item)->except(['Liste_matieres','deleted_at'])->toArray();
         });
         return $fournisseur;
     }

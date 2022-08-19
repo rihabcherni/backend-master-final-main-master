@@ -64,6 +64,7 @@ class Reparateur_poubelleController extends BaseController{
                 "numero_telephone" => $data[0]['numero_telephone'],
                 "email" => $data[0]['email'],
                 "adresse" => $data[0]['adresse'],
+                "Liste_poubelles_repares"=> $data[0]['Liste_poubelles_repares'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
@@ -78,7 +79,7 @@ class Reparateur_poubelleController extends BaseController{
         }else{
             $p= Reparateur_poubelleResource::collection( $reparateur_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparateurPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparateurPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('reparateur-poubelle.pdf');
         }
     }

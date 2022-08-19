@@ -86,6 +86,30 @@
                     <td>{{$updated_at}}</td>
                 </tr>
             </table>
+
+            <br/>
+
+            @if (count($Liste_matieres)!==0)
+                <table style="margin:10px auto;">
+                    <th colspan='5' style='text-align:center; color:green; font-size:18px;'>Liste des matieres primaires fournie par ce fournisseur:</th>
+                    <tr>
+                        <th>N° matiere:</th>
+                        <th>Nom:</th>
+                        <th>Prix unitaire:</th>
+                        <th>Quantité:</th>
+                        <th>Prix total:</th>
+                    </tr>
+                    @foreach ($Liste_matieres as $matiere)
+                    <tr>
+                        <td>{{ $matiere['id'] }}</td>
+                        <td>{{ $matiere['nom_materiel']}}</td>
+                        <td>{{ $matiere['prix_unitaire']}} DT</td>
+                        <td>{{ $matiere['quantite']}}</td>
+                        <td>{{ $matiere['prix_total']}} DT</td>
+                    </tr>
+                    @endforeach
+                </table>
+            @endif
         </div>
 
     </body>

@@ -21,7 +21,6 @@
             }
             table{
                 border:1px solid;
-                margin: 0 auto;
             }
              td , th{
                 border:1px solid;
@@ -36,26 +35,26 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste blocs eteblissements : </h2>        <br/>
+        <h2 style="text-align: center;">Liste des messages Reschool Ecology: </h2>        <br/>
         <table>
             <tr>
                 <th>Id:</th>
-                <th>Nom etblissement:</th>
-                <th style="color: red">Nom bloc etblissement:</th>
-                <th>Etage:</th>
+                <th>Nom: </th>
+                <th>Prénom: </th>
+                <th>message:</th>
+                <th>Numéro télephone:</th>
+                <th>E-mail:</th>
                 <th>Date de création:</th>
                 <th>Date de dernier modification: </th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td>{{ $l['etablissement'] }}</td>
-                <td style="color: red">{{ $l['nom_bloc_etablissement'] }}</td>
-                <td>
-                   @foreach($l['etage_etablissements'] as $etage)
-                   Etage: {{ $etage->nom_etage_etablissement }}<br/>
-                   @endforeach
-                </td>
+                <td>{{ $l['nom'] }}</td>
+                <td>{{ $l['prenom'] }}</td>
+                <td>{{ $l['message'] }}</td>
+                <td>{{ $l['numero_telephone'] }}</td>
+                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['email'] }}</td>
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
             </tr>

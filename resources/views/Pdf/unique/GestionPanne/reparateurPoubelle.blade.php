@@ -87,6 +87,39 @@
                 </tr>
             </table>
         </div>
-
+        <br/>
+        @if (count($Liste_poubelles_repares)!==0)
+            <table>
+                <th colspan='7' style='text-align:center; color:green; font-size:18px;'>Liste des poubelle réparés par ce reparateur poubelle:</th>
+                <tr>
+                    <th>N° panne:</th>
+                    <th>Nom poubelle:</th>
+                    <th>Image panne:</th>
+                    <th>Description panne:</th>
+                    <th>Cout:</th>
+                    <th>Date debut reparation:</th>
+                    <th>Date fin reparation:</th>
+                </tr>
+                @foreach ($Liste_poubelles_repares as $panne)
+                <tr>
+                    <td>{{ $panne['id'] }}</td>
+                    <td>{{ $panne['nom_poubelle']}}</td>
+                    <td>
+                        <?php $url = 'storage/images/pannePoubelle/'.$panne['image_panne_poubelle'];
+                        $path= public_path($url);
+                        if(! file_exists($path) ||  $panne['image_panne_poubelle'] === null){
+                            $path= public_path('storage/images/pannePoubelle/default.jpeg');
+                        }
+                        ?>
+                        <img  style='border-radius: 20px; width: 120px; height: 120px;' src="{{$path }}" alt="panne poubelle"/>
+                    </td>
+                    <td>{{ $panne['description_panne'] }}</td>
+                    <td>{{ $panne['cout'] }} DT</td>
+                    <td>{{ $panne['date_debut_reparation'] }}</td>
+                    <td>{{ $panne['date_fin_reparation'] }}</td>
+                </tr>
+                @endforeach
+            </table>
+        @endif
     </body>
 </html>

@@ -81,7 +81,7 @@ class Reparation_camionController extends BaseController{
         }else{
             $p= Reparation_camionResource::collection( $reparation_camion);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationCamion', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationCamion', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('reparation-camion.pdf');
         }
     }

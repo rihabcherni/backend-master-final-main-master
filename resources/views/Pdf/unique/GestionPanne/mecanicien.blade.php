@@ -77,6 +77,7 @@
                     <th>E-mail:</th>
                     <td style='color:blue; font-weight:bold;text-decoration:underline;'> {{ $email }}</td>
                 </tr>
+
                 <tr>
                     <th>Date de création:</th>
                     <td>{{$created_at}}</td>
@@ -86,6 +87,42 @@
                     <td>{{$updated_at}}</td>
                 </tr>
             </table>
+            <br/>
+            @if (count($Liste_camions_repares)!==0)
+                <table>
+                    <th colspan='8' style='text-align:center; color:green; font-size:18px;'>Liste des camions réparés par ce mécanicien:</th>
+                    <tr>
+                        <th>N° panne:</th>
+                        <th>N° camion:</th>
+                        <th>Matricule:</th>
+                        <th>Image panne:</th>
+                        <th>Description panne:</th>
+                        <th>Cout:</th>
+                        <th>Date debut reparation:</th>
+                        <th>Date fin reparation:</th>
+                    </tr>
+                    @foreach ($Liste_camions_repares as $panne)
+                    <tr>
+                        <td>{{ $panne['id'] }}</td>
+                        <td>{{ $panne['id_camion'] }}</td>
+                        <td>{{ $panne['matricule']}}</td>
+                        <td>
+                            <?php $url = 'storage/images/panneCamion/'.$panne['image_panne_camion'];
+                            $path= public_path($url);
+                            if(! file_exists($path) ||  $panne['image_panne_camion'] === null){
+                                $path= public_path('storage/images/panneCamion/default.jpeg');
+                            }
+                            ?>
+                            <img  style='border-radius: 20px; width: 120px; height: 120px;' src="{{$path }}" alt="panne camion"/>
+                        </td>
+                        <td>{{ $panne['description_panne'] }}</td>
+                        <td>{{ $panne['cout'] }} DT</td>
+                        <td>{{ $panne['date_debut_reparation'] }}</td>
+                        <td>{{ $panne['date_fin_reparation'] }}</td>
+                    </tr>
+                    @endforeach
+                </table>
+            @endif
         </div>
 
     </body>

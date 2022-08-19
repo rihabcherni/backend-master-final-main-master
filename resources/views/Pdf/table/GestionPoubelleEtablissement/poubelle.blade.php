@@ -54,27 +54,27 @@
         <table>
             <tr>
                 <th colspan="3">Reschool</th>
-                <th colspan="3">etablissement</th>
+                <th colspan="3">Etablissement</th>
                 <th colspan="3">Détails poubelle</th>
                 <th colspan="3">Détails emplacement poubelle</th>
                 <th colspan="2">Date</th>
             </tr>
             <tr>
                 <th>N°</th>
-                <th>nom</th>
-                <th>N°  bloc poubelle</th>
+                <th>Nom</th>
+                <th>N° bloc poubelle</th>
 
                 <th>N°</th>
-                <th>nom</th>
+                <th>Nom</th>
                 <th>N°  bloc poubelle</th>
 
                 <th>Type</th>
                 <th>Etat</th>
                 <th>Quantité</th>
 
-                <th>etablissement</th>
+                <th>Etablissement</th>
                 <th>Bloc etablissement</th>
-                <th>etage</th>
+                <th>Etage</th>
                 <th>Crée le</th>
                 <th>Modifié le</th>
             </tr>
@@ -89,8 +89,8 @@
                 <td> {{ $l['bloc_poubelle_id_resp'] }}</td>
 
                 <td> {{ $l['type'] }}</td>
-                <td> {{ $l['Etat'] }}</td>
-                <td> {{ $l['quantite'] }}</td>
+                <td> {{ $l['Etat'] }}%</td>
+                <td> {{ $l['quantite'] }}KG</td>
 
                 <td> {{ $l['etablissement'] }}</td>
                 <td> {{ $l['bloc_etablissement'] }}</td>

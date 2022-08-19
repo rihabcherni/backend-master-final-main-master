@@ -7,7 +7,7 @@
         <title>Document</title>
         <style>
             .date{
-                margin:-20px 0 0 75%  ;
+                margin:-20px 0 0 90%  ;
             }
             .img-container{
                 border-radius: 20px;
@@ -54,13 +54,14 @@
             <tr>
                 <td> {{ $l['id'] }}</td>
                 <td>
-                    <?php $url = 'storage/images/Gestionnaire/'.$l['photo'];
+                    <?php
+                    $url = 'storage/images/responsable_etablissement/'.$l['photo'];
                     $path= public_path($url);
                     if(! file_exists($path) || $l['photo'] === null){
-                        $path= public_path('storage/images/Gestionnaire/default.jpeg');
+                        $path= public_path('storage/images/responsable_etablissement/default.jpeg');
                     }
                     ?>
-                    <img class="img-container" src="{{$path }}" alt="gestionnaire"/>
+                    <img class="img-container" src="{{$path}}" alt="responsable etablissement"/>
                 </td>
                 <td> {{ $l['nom'] }}</td>
                 <td> {{ $l['prenom'] }}</td>

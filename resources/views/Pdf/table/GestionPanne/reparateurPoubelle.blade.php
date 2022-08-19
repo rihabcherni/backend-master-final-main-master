@@ -7,7 +7,7 @@
         <title>Document</title>
         <style>
             .date{
-                margin:-20px 0 0 75%  ;
+                margin:-20px 0 0 90%  ;
             }
             .img-container{
                 border-radius: 20px;
@@ -34,7 +34,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des gestionnaires Reschool Ecology: </h2>
+        <h2 style="text-align: center;">Liste des réparateurs poubelles de Reschool Ecology: </h2>
         <br/>
         <table>
             <tr>
@@ -42,24 +42,25 @@
                 <th>Photo</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Carte identité national</th>
+                <th>CIN</th>
                 <th>Adresse</th>
                 <th>Numéro télephone</th>
                 <th>E-mail</th>
-                <th>Date de création</th>
-                <th>Date de dernier modification</th>
+                <th colspan="2">Liste poubelles réparés:</th>
+                <th>Crée le:</th>
+                <th>Modifié le:</th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
                 <td>
-                    <?php $url = 'storage/images/Gestionnaire/'.$l['photo'];
+                    <?php $url = 'storage/images/reparateur_poubelle/'.$l['photo'];
                     $path= public_path($url);
                     if(! file_exists($path) || $l['photo'] === null){
-                        $path= public_path('storage/images/Gestionnaire/default.jpeg');
+                        $path= public_path('storage/images/reparateur_poubelle/default.jpeg');
                     }
                     ?>
-                    <img class="img-container" src="{{$path }}" alt="gestionnaire"/>
+                    <img class="img-container" src="{{$path }}" alt="reparateur poubelle"/>
                 </td>
                 <td> {{ $l['nom'] }}</td>
                 <td> {{ $l['prenom'] }}</td>
@@ -67,8 +68,29 @@
                 <td> {{ $l['adresse'] }}</td>
                 <td> {{ $l['numero_telephone'] }}</td>
                 <td style='color:blue; font-weight:bold;text-decoration:underline;'> {{ $l['email'] }}</td>
+                <td colspan="2">
+                    @if( $l['Liste_poubelles_repares']!== null)
+                        @if(count( $l['Liste_poubelles_repares'])!== 0)
+                            @foreach ( $l['Liste_poubelles_repares'] as $panne)
+                              <table style="margin-bottom: 5px">
+                                    @if( $panne['type']=== "plastique")
+                                        <td style="width:60px ;background-color:blue; color:white;font-weight:bold"><p style="margin:15% 0;">{{ $panne['type']}}</p></td>
+                                    @elseif( $panne['type']=== "papier")
+                                        <td style="width:60px ;background-color:orange; color:white;font-weight:bold"><p style="margin:15% 0;">{{ $panne['type']}}</p></td>
+                                    @elseif( $panne['type']=== "composte")
+                                        <td style="width:60px ;background-color:green; color:white;font-weight:bold"><p style="margin:15% 0;">{{ $panne['type']}}</p></td>
+                                    @elseif( $panne['type']=== "canette")
+                                        <td style="width:60px ;background-color:red; color:white;font-weight:bold"><p style="margin:15% 0;">{{ $panne['type']}}</p></td>
+                                    @endif
+                                    <td>{{ $panne['nom_poubelle']}}</td>
+                               </table>
+                            @endforeach
+                        @endif
+                    @endif
+                </td>
                 <td> {{ $l['created_at'] }}</td>
                 <td> {{ $l['updated_at'] }}</td>
+
             </tr>
             @endforeach
         </table>

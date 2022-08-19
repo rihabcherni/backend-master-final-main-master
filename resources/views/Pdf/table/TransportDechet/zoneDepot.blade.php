@@ -9,13 +9,6 @@
             .date{
                 margin:-20px 0 0 75%  ;
             }
-            .img-container{
-                border-radius: 20px;
-                border:2px rgb(198, 106, 210) dashed;
-                width: 180px;
-                height: 180px;
-                margin-left: 20px;
-            }
             .page{
                 padding:20px;
             }
@@ -35,32 +28,37 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des zones de depots Reschool Ecology: </h2>        <br/>
         <table>
             <tr>
-                <th>Id:</th>
-                <th>Nom entreprise:</th>
-                <th>Matricule fiscale: </th>
-                <th>Nom: </th>
-                <th>Prénom: </th>
-                <th>Numéro fixe:</th>
-                <th>Adresse:</th>
-                <th>Numéro télephone:</th>
-                <th>E-mail:</th>
-                <th>Date de création:</th>
-                <th>Date de dernier modification: </th>
+                <th rowspan="2">Id:</th>
+                <th rowspan="2">Region travail:</th>
+                <th rowspan="2">Adresse:</th>
+                <th rowspan="2">Longitude:</th>
+                <th rowspan="2">Latitude:</th>
+                <th rowspan="2">Quantite depot maximale:</th>
+                <th colspan="4">Quantite depot actuelle:</th>
+                <th rowspan="2">Date de création:</th>
+                <th rowspan="2">Date de dernier modification: </th>
+            </tr>
+            <tr>
+                <th style="background-color: blue; color: white">Plastique:</th>
+                <th style="background-color: orange; color: white">Papier:</th>
+                <th style="background-color: green; color: white">Composte:</th>
+                <th style="background-color: red; color: white">Canette:</th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td>{{ $l['nom_entreprise'] }}</td>
-                <td>{{ $l['matricule_fiscale'] }}</td>
-                <td>{{ $l['nom'] }}</td>
-                <td>{{ $l['prenom'] }}</td>
-                <td>{{ $l['numero_fixe'] }}</td>
-                <td>{{ $l['adresse'] }}</td>
-                <td>{{ $l['numero_telephone'] }}</td>
-                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['email'] }}</td>
+                <td> {{ $l['zone_travail']->region }}</td>
+                <td> {{ $l['adresse'] }}</td>
+                <td> {{ $l['longitude'] }}</td>
+                <td> {{ $l['latitude'] }}</td>
+                <td> {{ $l['quantite_depot_maximale'] }} KG</td>
+                <td style="color: blue"> {{ $l['quantite_depot_actuelle_plastique'] }} KG</td>
+                <td style="color: orange"> {{ $l['quantite_depot_actuelle_papier'] }} KG</td>
+                <td style="color: green"> {{ $l['quantite_depot_actuelle_composte'] }} KG</td>
+                <td style="color: red"> {{ $l['quantite_depot_actuelle_canette'] }} KG</td>
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
             </tr>

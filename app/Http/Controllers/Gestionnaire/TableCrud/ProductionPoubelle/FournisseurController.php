@@ -62,6 +62,7 @@ class FournisseurController extends BaseController{
                 "numero_telephone"=> $data[0]['numero_telephone'],
                 "email"=> $data[0]['email'],
                 "adresse"=> $data[0]['adresse'],
+                "Liste_matieres"=> $data[0]['Liste_matieres'],
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];

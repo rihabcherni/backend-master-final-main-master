@@ -5,8 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Contact extends JsonResource{
-    public function toArray($request)
-    {
+    public function toArray($request){
         return [
             'id' => $this->id,
             'nom' => $this->nom,
@@ -17,7 +16,8 @@ class Contact extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-             'deleted_at' => $this->deleted_at,
+            'deleted_at' => $this->deleted_at,
 
-        ];    }
+        ];
+    }
 }
