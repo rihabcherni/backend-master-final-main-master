@@ -18,7 +18,7 @@ class Contact extends Model
         'message'
         ];
     protected $dates=['deleted_at'];
-    public static function getContact(){ 
+    public static function getContact(){
         $contact = ContactResource::collection(Contact::all())->map(function ($item, $key) {
             return collect($item)->except(['deleted_at'])->toArray();
         });
@@ -27,6 +27,10 @@ class Contact extends Model
 
     public static function getContactById($id){
         $contact = ContactResource::collection(Contact::where('id',$id)->get());
+        return $contact;
+    }
+    public static function getContactByByIdTrashed($id){
+        $contact = ContactResource::collection(Contact::withTrashed()->where('id' ,  $id )->get());
         return $contact;
     }
 }

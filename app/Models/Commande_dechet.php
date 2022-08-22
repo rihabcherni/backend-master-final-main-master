@@ -36,4 +36,8 @@ class Commande_dechet extends Model
         $commandeDechet = CommandeDechetResource::collection(Commande_dechet::where('id',$id)->get());
         return $commandeDechet;
     }
+    public static function  getCommandeDechetByIdTrashed($id){
+        $commandeDechet = CommandeDechetResource::collection(Commande_dechet::withTrashed()->where('id' ,  $id )->get());
+        return $commandeDechet;
+    }
 }

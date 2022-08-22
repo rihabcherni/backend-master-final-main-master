@@ -45,4 +45,8 @@ class Client_dechet  extends Authenticatable{
         $client = ClientDechetResource::collection(Client_dechet::where('id',$id)->get());
         return $client;
     }
+    public static function  getClientDechetByIdTrashed($id){
+        $client = ClientDechetResource::collection(Client_dechet::withTrashed()->where('id' ,  $id )->get());
+        return $client;
+    }
 }

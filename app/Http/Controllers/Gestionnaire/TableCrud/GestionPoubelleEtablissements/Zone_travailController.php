@@ -66,7 +66,7 @@ class Zone_travailController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/zoneTravail', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPoubelleEtablissement/zoneTravail', $liste);
             return $pdf->download('zone-travail.pdf');
         }
     }
@@ -77,7 +77,7 @@ class Zone_travailController extends BaseController{
         }else{
             $p= Zone_travailResource::collection( $zone_travail);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/zoneTravail', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPoubelleEtablissement/zoneTravail', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('zone-travail.pdf');
         }
     }

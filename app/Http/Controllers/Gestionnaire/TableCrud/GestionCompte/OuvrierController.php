@@ -101,7 +101,7 @@ class OuvrierController extends BaseController{
                 'created_at' => $data[0]['created_at'],
                 'updated_at' => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/ouvrier', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/ouvrier', $liste);
             return $pdf->download('ouvrier.pdf');
         }
     }
@@ -112,7 +112,7 @@ class OuvrierController extends BaseController{
         }else{
             $p= OuvrierResource::collection( $ouvrier);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/ouvrier', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/ouvrier', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('ouvrier.pdf');
         }
     }

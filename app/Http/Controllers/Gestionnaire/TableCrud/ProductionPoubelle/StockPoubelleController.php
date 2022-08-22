@@ -122,7 +122,7 @@ class StockPoubelleController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/ProductionPoubelle/stockPoubelle', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/ProductionPoubelle/stockPoubelle', $liste);
             return $pdf->download('stock-poubelle.pdf');
         }
     }
@@ -133,7 +133,7 @@ class StockPoubelleController extends BaseController{
         }else{
             $p= Stock_poubelleResource::collection( $stock_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/ProductionPoubelle/stockPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/ProductionPoubelle/stockPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('stock-poubelle.pdf');
         }
     }

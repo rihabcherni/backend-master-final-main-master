@@ -36,4 +36,8 @@ class Responsable_personnel extends Authenticatable{
         $responsable_personnel = ResponsablePersonnelResource::collection(Responsable_personnel::where('id',$id)->get());
         return $responsable_personnel;
     }
+    public static function getResponsablePersonnelByIdTrashed($id){
+        $responsable_personnel = ResponsablePersonnelResource::collection(Responsable_personnel::withTrashed()->where('id',$id )->get());
+        return $responsable_personnel;
+    }
 }

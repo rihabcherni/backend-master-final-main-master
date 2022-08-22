@@ -64,7 +64,7 @@ class Bloc_poubelleController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/blocPoubelle', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPoubelleEtablissement/blocPoubelle', $liste);
             return $pdf->download('bloc-poubelle.pdf');
         }
     }
@@ -75,7 +75,7 @@ class Bloc_poubelleController extends BaseController{
         }else{
             $p= Bloc_poubelleResource::collection( $bloc_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/blocPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPoubelleEtablissement/blocPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('bloc-poubelle.pdf');
         }
     }

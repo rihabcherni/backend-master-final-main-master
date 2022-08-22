@@ -7,16 +7,17 @@
         <title>Document</title>
         <style>
             .date{
-                margin:-20px 0 0 75%  ;
+                margin:-20px 0 0 90%  ;
             }
             .img-container{
                 border-radius: 20px;
-                width: 50px;
-                height: 50px;
+                width: 30px;
+                height: 30px;
             }
             .page{
                 padding:20px;
             }
+
             table{
                 border:1px solid;
             }
@@ -33,7 +34,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des responsables personnels Reschool Ecology: </h2>
+        <h2 style="text-align: center;">Liste des responsables établissements : </h2>
         <br/>
         <table>
             <tr>
@@ -41,31 +42,39 @@
                 <th>Photo</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Carte identité national</th>
+                <th>Numéro fixe</th>
                 <th>Numéro télephone</th>
+                <th>Adresse</th>
                 <th>E-mail</th>
+                <th colspan="2">Etablissement</th>
                 <th>Date de création</th>
                 <th>Date de dernier modification</th>
+                <th style='background-color:red; color:white;'>Date de suppression</th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
                 <td>
-                    <?php $url = 'storage/images/Gestionnaire/'.$l['photo'];
+                    <?php
+                    $url = 'storage/trashImages/responsable_etablissement/'.$l['photo'];
                     $path= public_path($url);
                     if(! file_exists($path) || $l['photo'] === null){
-                        $path= public_path('storage/images/Gestionnaire/default.jpeg');
+                        $path= public_path('storage/trashImages/responsable_etablissement/default.jpeg');
                     }
                     ?>
-                    <img class="img-container" src="{{$path }}" alt="gestionnaire"/>
+                    <img class="img-container" src="{{$path}}" alt="responsable etablissement"/>
                 </td>
                 <td> {{ $l['nom'] }}</td>
                 <td> {{ $l['prenom'] }}</td>
-                <td> {{ $l['CIN'] }}</td>
+                <td> {{ $l['numero_fixe'] }}</td>
                 <td> {{ $l['numero_telephone'] }}</td>
+                <td> {{ $l['adresse'] }}</td>
                 <td style='color:blue; font-weight:bold;text-decoration:underline;'> {{ $l['email'] }}</td>
+                <td> {{ $l['etablissement_id'] }}</td>
+                <td> {{ $l['etablissement'] }}</td>
                 <td> {{ $l['created_at'] }}</td>
                 <td> {{ $l['updated_at'] }}</td>
+                <td style='color:red; font-weight:bold;'> {{ $l['deleted_at'] }}</td>
             </tr>
             @endforeach
         </table>

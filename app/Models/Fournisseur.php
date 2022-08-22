@@ -32,4 +32,8 @@ class Fournisseur extends Model{
         $fournisseur = FournisseurResource::collection(Fournisseur::where('id',$id)->get());
         return $fournisseur;
     }
+    public static function getFournisseurByIdTrashed($id){
+        $fournisseur = FournisseurResource::collection(Fournisseur::withTrashed()->where('id',$id )->get());
+        return $fournisseur;
+    }
 }

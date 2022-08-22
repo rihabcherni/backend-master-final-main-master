@@ -93,7 +93,7 @@ class ResponsablePersonnelController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/responsablePersonnel', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/responsablePersonnel', $liste);
             return $pdf->download('responsable-personnele.pdf');
         }
     }
@@ -104,7 +104,7 @@ class ResponsablePersonnelController extends BaseController{
         }else{
             $p= Responsable_personnelResource::collection( $responsable_personnele);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/responsablePersonnel', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/responsablePersonnel', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('responsable-personnele.pdf');
         }
     }

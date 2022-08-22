@@ -69,7 +69,7 @@ class Zone_depotController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/TransportDechet/zoneDepot', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/TransportDechet/zoneDepot', $liste);
             return $pdf->download('zone-depot.pdf');
         }
     }
@@ -80,7 +80,7 @@ class Zone_depotController extends BaseController{
         }else{
             $p= Zone_depotResource::collection( $zone_depot);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/TransportDechet/zoneDepot', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/TransportDechet/zoneDepot', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('zone-depot.pdf');
         }
     }

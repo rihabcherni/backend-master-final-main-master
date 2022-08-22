@@ -66,7 +66,7 @@ class Bloc_etablissementsController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/BlocEtablissement', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPoubelleEtablissement/BlocEtablissement', $liste);
             return $pdf->download('bloc-etablissement.pdf');
         }
     }
@@ -77,7 +77,7 @@ class Bloc_etablissementsController extends BaseController{
         }else{
             $p= Bloc_etablissementsResource::collection( $bloc_etablissement);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/BlocEtablissement', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPoubelleEtablissement/BlocEtablissement', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('bloc-etablissement.pdf');
         }
     }

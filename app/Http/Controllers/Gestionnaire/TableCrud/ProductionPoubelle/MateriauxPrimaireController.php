@@ -67,7 +67,7 @@ class MateriauxPrimaireController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/ProductionPoubelle/materiauxPrimaires', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/ProductionPoubelle/materiauxPrimaires', $liste);
             return $pdf->download('materiaux-primaire.pdf');
         }
     }
@@ -78,7 +78,7 @@ class MateriauxPrimaireController extends BaseController{
         }else{
             $p= MateriauxPrimaireResource::collection( $materiauxPrimaire);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/ProductionPoubelle/materiauxPrimaires', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/ProductionPoubelle/materiauxPrimaires', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('materiaux-primaire.pdf');
         }
     }

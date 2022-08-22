@@ -96,7 +96,7 @@ class ResponsableEtablissementController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/responsableEtablissement', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/responsableEtablissement', $liste);
             return $pdf->download('responsable-etablissement.pdf');
         }
     }
@@ -107,7 +107,7 @@ class ResponsableEtablissementController extends BaseController{
         }else{
             $p= Responsable_etablissementResource::collection( $responsable_etablissement);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/responsableEtablissement', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/responsableEtablissement', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('responsable-etablissement.pdf');
         }
     }

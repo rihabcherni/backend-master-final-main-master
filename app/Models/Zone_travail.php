@@ -39,4 +39,8 @@ class Zone_travail extends Model
         $zoneTravail = ZoneTravailResource::collection(Zone_travail::where('id',$id)->get());
         return $zoneTravail;
     }
+    public static function getZoneTravailByIdTrashed($id){
+        $zoneTravail = ZoneTravailResource::collection(Zone_travail::withTrashed()->where('id',$id )->get());
+        return $zoneTravail;
+    }
 }

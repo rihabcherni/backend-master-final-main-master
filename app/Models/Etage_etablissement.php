@@ -33,4 +33,8 @@ class Etage_etablissement extends Model
         $etageEtablissement = EtageEtablissementResource::collection(Etage_etablissement::where('id',$id)->get());
         return $etageEtablissement;
     }
+    public static function getEtageEtablissementByIdTrashed($id){
+        $etageEtablissement = EtageEtablissementResource::collection(Etage_etablissement::withTrashed()->where('id',$id )->get());
+        return $etageEtablissement;
+    }
 }

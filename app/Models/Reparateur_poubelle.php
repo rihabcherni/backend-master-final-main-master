@@ -39,4 +39,8 @@ class Reparateur_poubelle extends Model
         $reparateurPoubelle = ReparateurPoubelleResource::collection(Reparateur_poubelle::where('id',$id)->get());
         return $reparateurPoubelle;
     }
+    public static function getReparateurPoubelleByIdTrashed($id){
+        $reparateurPoubelle = ReparateurPoubelleResource::collection(Reparateur_poubelle::withTrashed()->where('id',$id )->get());
+        return $reparateurPoubelle;
+    }
 }

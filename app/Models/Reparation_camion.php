@@ -41,4 +41,8 @@ class Reparation_camion extends Model
         $reparationCamion = ReparationCamionResource::collection(Reparation_camion::where('id',$id)->get());
         return $reparationCamion;
     }
+    public static function getReparationCamionByIdTrashed($id){
+        $reparationCamion = ReparationCamionResource::collection(Reparation_camion::withTrashed()->where('id',$id )->get());
+        return $reparationCamion;
+    }
 }

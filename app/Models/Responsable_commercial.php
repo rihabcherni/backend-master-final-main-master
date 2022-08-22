@@ -43,4 +43,8 @@ class Responsable_commercial  extends Authenticatable{
         $responsableCommercial = ResponsableCommercialResource::collection(Responsable_commercial::where('id',$id)->get());
         return $responsableCommercial;
     }
+    public static function getResponsableCommercialeByIdTrashed($id){
+        $responsableCommercial = ResponsableCommercialResource::collection(Responsable_commercial::withTrashed()->where('id',$id )->get());
+        return $responsableCommercial;
+    }
 }

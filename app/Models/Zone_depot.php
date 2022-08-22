@@ -39,4 +39,8 @@ class Zone_depot extends Model
         $zone_depot = ZoneDepotResource::collection(Zone_depot::where('id',$id)->get());
         return $zone_depot;
     }
+    public static function getZoneDepotByIdTrashed($id){
+        $zone_depot = ZoneDepotResource::collection(Zone_depot::withTrashed()->where('id',$id )->get());
+        return $zone_depot;
+    }
 }

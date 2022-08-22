@@ -113,7 +113,7 @@ class DechetController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionDechet/Dechet', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionDechet/Dechet', $liste);
             return $pdf->download('dechet.pdf');
         }
     }
@@ -124,7 +124,7 @@ class DechetController extends BaseController{
         }else{
             $p= DechetResource::collection( $dechet);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionDechet/Dechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionDechet/Dechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('dechet.pdf');
         }
     }

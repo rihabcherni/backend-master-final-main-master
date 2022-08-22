@@ -66,7 +66,7 @@ class FournisseurController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/ProductionPoubelle/fournisseur', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/ProductionPoubelle/fournisseur', $liste);
             return $pdf->download('fournisseur.pdf');
         }
     }
@@ -77,7 +77,7 @@ class FournisseurController extends BaseController{
         }else{
             $p= FournisseurResource::collection( $fournisseur);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/ProductionPoubelle/fournisseur', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/ProductionPoubelle/fournisseur', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('fournisseur.pdf');
         }
     }

@@ -64,7 +64,7 @@ class Etage_etablissementsControlller extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/etageEtablissement', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPoubelleEtablissement/etageEtablissement', $liste);
             return $pdf->download('etage-etablissement.pdf');
         }
     }
@@ -75,7 +75,7 @@ class Etage_etablissementsControlller extends BaseController{
         }else{
             $p= Etage_etablissementsResource::collection( $etage_etablissement);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/etageEtablissement', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPoubelleEtablissement/etageEtablissement', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('etage-etablissement.pdf');
         }
     }

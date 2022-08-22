@@ -11,6 +11,8 @@ use App\Http\Controllers\Globale\LoginController;
 use App\Http\Requests\GestionCompte\GestionnaireRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\File;
+
 class GestionnaireController extends BaseController{
     public function index(){
         $gestionnaire = Gestionnaire::all();
@@ -66,11 +68,10 @@ class GestionnaireController extends BaseController{
             $gestionnaire->delete();
             return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé!');
         } else{
-            if($gestionnaire->photo){
-                $destinationPath = 'storage/TrashImages/gestionnaire';
-                $profileImage = date('YmdHis') . "." . $gestionnaire->photo->getClientOriginalExtension();
-                $gestionnaire->photo->move($destinationPath, $profileImage);
-                unlink(public_path('storage\images\gestionnaire\\').$gestionnaire->photo );
+            if(File::exists(('storage\images\gestionnaire\\').$gestionnaire->photo)){
+                File::copy(public_path('storage\images\Gestionnaire\\').$gestionnaire->photo,
+                public_path('storage\trashImages\gestionnaire\\').$gestionnaire->photo);
+                unlink(public_path('storage\images\Gestionnaire\\').$gestionnaire->photo );
             }
             $gestionnaire->delete();
             return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé!');
@@ -78,25 +79,63 @@ class GestionnaireController extends BaseController{
     }
     public function hdelete( $id) {
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
-        $gestionnaire->forceDelete();
-        return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé  avec force!');
+        if (is_null($gestionnaire)) {
+            return $this->handleError('gestionnaire n\'existe pas!');
+        }elseif($gestionnaire->photo ==="default.jpeg" || $gestionnaire->photo === NULL){
+            $gestionnaire->forceDelete();
+            return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé!');
+        } else{
+            if(File::exists(('storage\trashImages\gestionnaire\\').$gestionnaire->photo)){
+                unlink(public_path('storage\trashImages\gestionnaire\\').$gestionnaire->photo );
+            }
+            $gestionnaire->forceDelete();
+            return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé definitivement!');
+        }
     }
     public function hdeleteAll( ) {
         $gestionnaires = Gestionnaire::onlyTrashed()->get();
         foreach($gestionnaires as $gestionnaire){
-            $gestionnaire->forceDelete();
+            if($gestionnaire->photo ==="default.jpeg" || $gestionnaire->photo === NULL){
+                $gestionnaire->forceDelete();
+            } else{
+                if(File::exists(('storage\trashImages\gestionnaire\\').$gestionnaire->photo)){
+                    unlink(public_path('storage\trashImages\gestionnaire\\').$gestionnaire->photo );
+                }
+                $gestionnaire->forceDelete();
+            }
         }
         return $this->handleResponse(GestionnaireResource::collection($gestionnaires), 'tous gestionnaires supprimés définitivement');
     }
     public function restore( $id) {
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
-        $gestionnaire->restore();
-        return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé avec retour!');
+        if (is_null($gestionnaire)) {
+            return $this->handleError('gestionnaire n\'existe pas!');
+        }elseif($gestionnaire->photo ==="default.jpeg" || $gestionnaire->photo === NULL){
+            $gestionnaire->restore();
+            return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé!');
+        } else{
+            if(File::exists(('storage\trashImages\gestionnaire\\').$gestionnaire->photo)){
+                File::copy(public_path('storage\trashImages\Gestionnaire\\').$gestionnaire->photo,
+                public_path('storage\images\gestionnaire\\').$gestionnaire->photo);
+                unlink(public_path('storage\trashImages\Gestionnaire\\').$gestionnaire->photo );
+            }
+            $gestionnaire->restore();
+            return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé avec retour!');
+        }
     }
     public function restoreAll(){
         $gestionnaires= Gestionnaire::onlyTrashed()->get();
         foreach($gestionnaires as $gestionnaire){
-            $gestionnaire->restore();
+            if($gestionnaire->photo ==="default.jpeg" || $gestionnaire->photo === NULL){
+                $gestionnaire->restore();
+            } else{
+                if(File::exists(('storage\trashImages\gestionnaire\\').$gestionnaire->photo)){
+                    File::copy(public_path('storage\trashImages\Gestionnaire\\').$gestionnaire->photo,
+                    public_path('storage\images\gestionnaire\\').$gestionnaire->photo);
+                    unlink(public_path('storage\trashImages\Gestionnaire\\').$gestionnaire->photo );
+                }
+                $gestionnaire->restore();
+            }
         }
         return $this->handleResponse(GestionnaireResource::collection($gestionnaires), 'tous gestionnaires trashed');
     }
@@ -128,7 +167,7 @@ class GestionnaireController extends BaseController{
                 'created_at' => $data[0]['created_at'],
                 'updated_at' => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/Gestionnaire', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/Gestionnaire', $liste);
             return $pdf->download('gestionnaire.pdf');
         }
     }
@@ -139,7 +178,7 @@ class GestionnaireController extends BaseController{
         }else{
             $p= GestionnaireResource::collection( $gestionnaire);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('gestionnaire.pdf');
         }
     }
@@ -150,7 +189,7 @@ class GestionnaireController extends BaseController{
         }else{
             $p= GestionnaireResource::collection( $gestionnaire);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('gestionnaire.pdf');
         }
     }
@@ -173,7 +212,7 @@ class GestionnaireController extends BaseController{
                     'updated_at' => $data[0]['updated_at'],
                     'deleted_at' => $data[0]['deleted_at'],
                 ];
-                $pdf = Pdf::loadView('pdf/unique/GestionCompte/Gestionnaire', $liste);
+                $pdf = Pdf::loadView('pdf/Delete/unique/GestionCompte/Gestionnaire', $liste);
                 return $pdf->download('gestionnaire.pdf');
             }
         }

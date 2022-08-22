@@ -70,7 +70,7 @@ class Reparation_camionController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPanne/reparationCamion', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPanne/reparationCamion', $liste);
             return $pdf->download('reparation-camion.pdf');
         }
     }
@@ -81,7 +81,7 @@ class Reparation_camionController extends BaseController{
         }else{
             $p= Reparation_camionResource::collection( $reparation_camion);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationCamion', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPanne/reparationCamion', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('reparation-camion.pdf');
         }
     }

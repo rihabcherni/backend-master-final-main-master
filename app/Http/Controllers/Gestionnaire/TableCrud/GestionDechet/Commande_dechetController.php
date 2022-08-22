@@ -79,7 +79,7 @@ class Commande_dechetController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionDechet/commandeDechet', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionDechet/commandeDechet', $liste);
             return $pdf->download('commande-dechet.pdf');
         }
     }
@@ -90,7 +90,7 @@ class Commande_dechetController extends BaseController{
         }else{
             $p= Commande_dechetResource::collection( $Commande_dechet);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionDechet/commandeDechet', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionDechet/commandeDechet', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('commande-dechet.pdf');
         }
     }

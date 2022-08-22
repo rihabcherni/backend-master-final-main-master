@@ -37,4 +37,8 @@ class Stock_poubelle extends Model
         $stockPoubelle = StockPoubelleResource::collection(Stock_poubelle::where('id',$id)->get());
         return $stockPoubelle;
     }
+    public static function getStockPoubelleByIdTrashed($id){
+        $stockPoubelle = StockPoubelleResource::collection(Stock_poubelle::withTrashed()->where('id',$id )->get());
+        return $stockPoubelle;
+    }
 }

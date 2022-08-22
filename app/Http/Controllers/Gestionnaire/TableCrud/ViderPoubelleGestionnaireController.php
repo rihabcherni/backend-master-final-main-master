@@ -39,7 +39,7 @@ class ViderPoubelleGestionnaireController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/viderPoubelle', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/viderPoubelle', $liste);
             return $pdf->download('historique-vider-poubelle.pdf');
         }
     }
@@ -50,7 +50,7 @@ class ViderPoubelleGestionnaireController extends BaseController{
         }else{
             $p= ViderPoubelle::collection( $viderPoubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/viderPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/viderPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('historique-vider-poubelle.pdf');
         }
     }

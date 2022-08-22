@@ -28,8 +28,12 @@ class Bloc_poubelle extends Model{
     }
 
     public static function getBlocPoubelleById($id){
-        $poubelle = BlocPoubelleResource::collection(Bloc_poubelle::where('id',$id)->get());
-        return $poubelle;
+        $blocPoubelle = BlocPoubelleResource::collection(Bloc_poubelle::where('id',$id)->get());
+        return $blocPoubelle;
+    }
+    public static function getBlocPoubelleByIdTrashed($id){
+        $blocPoubelle = BlocPoubelleResource::collection(Bloc_poubelle::withTrashed()->where('id' ,  $id )->get());
+        return $blocPoubelle;
     }
 }
 

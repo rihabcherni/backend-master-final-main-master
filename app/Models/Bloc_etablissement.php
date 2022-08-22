@@ -34,4 +34,8 @@ class Bloc_etablissement extends Model
         $blocEtablissement = BlocEtablissementResource::collection(Bloc_etablissement::where('id',$id)->get());
         return $blocEtablissement;
     }
+    public static function getBlocEtablissementByIdTrashed($id){
+        $blocEtablissement = BlocEtablissementResource::collection(Bloc_etablissement::withTrashed()->where('id' ,  $id )->get());
+        return $blocEtablissement;
+    }
 }

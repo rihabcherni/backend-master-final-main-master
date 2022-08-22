@@ -78,7 +78,7 @@ class Reparation_poubelleController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPanne/reparationPoubelle', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPanne/reparationPoubelle', $liste);
             return $pdf->download('reparation-poubelle.pdf');
         }
     }
@@ -89,7 +89,7 @@ class Reparation_poubelleController extends BaseController{
         }else{
             $p= Reparation_poubelleResource::collection( $reparation_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPanne/reparationPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPanne/reparationPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('reparation-poubelle.pdf');
         }
     }

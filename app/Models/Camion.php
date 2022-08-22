@@ -56,6 +56,10 @@ class Camion extends Model{
         $camion = CamionResource::collection(Camion::where('id',$id)->get());
         return $camion;
     }
+    public static function getCamionByIdTrashed($id){
+        $camion = CamionResource::collection(Camion::withTrashed()->where('id' ,  $id )->get());
+        return $camion;
+    }
 
 }
 

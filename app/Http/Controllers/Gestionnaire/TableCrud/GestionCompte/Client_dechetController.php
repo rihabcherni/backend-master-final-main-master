@@ -54,7 +54,42 @@ class Client_dechetController extends BaseController{
             $client->delete();
             return $this->handleResponse(new Client_dechetResource($client), 'Client supprimé!');
         }
-
+    }
+    public function hdelete( $id) {
+        $client = Client_dechet::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($client)) {
+            return $this->handleError('client n\'existe pas!');
+        }else{
+            $client->forceDelete();
+            return $this->handleResponse(new Client_dechetResource($client), 'client supprimé definitivement!');
+        }
+    }
+    public function hdeleteAll( ) {
+        $clients = Client_dechet::onlyTrashed()->get();
+        foreach($clients as $client){
+            $client->forceDelete();
+        }
+        return $this->handleResponse(Client_dechetResource::collection($clients), 'tous clients déchets supprimés définitivement');
+    }
+    public function restore( $id) {
+        $client = Client_dechet::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($client)) {
+            return $this->handleError('client n\'existe pas!');
+        } else{
+            $client->restore();
+            return $this->handleResponse(new Client_dechetResource($client), 'client supprimé avec retour!');
+        }
+    }
+    public function restoreAll(){
+        $clients= Client_dechet::onlyTrashed()->get();
+        foreach($clients as $client){
+            $client->restore();
+        }
+        return $this->handleResponse(Client_dechetResource::collection($clients), 'tous clients dechets restore');
+    }
+    public function clienttrash(){
+        $client = Client_dechet::onlyTrashed()->get();
+        return $this->handleResponse(Client_dechetResource::collection($client), 'affichage des clients dechets supprimés');
     }
     public function exportInfoClientDechetExcel(){
         return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
@@ -81,7 +116,7 @@ class Client_dechetController extends BaseController{
                 'created_at' => $data[0]['created_at'],
                 'updated_at' => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionCompte/clientDechet', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/clientDechet', $liste);
             return $pdf->download('client-dechet.pdf');
         }
     }
@@ -92,8 +127,43 @@ class Client_dechetController extends BaseController{
         }else{
             $p= Client_dechetResource::collection( $client);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('client-dechet.pdf');
         }
     }
+    public function pdfAllClientDechetTrashed(){
+        $client = Client_dechet::onlyTrashed()->get();
+        if (is_null($client)) {
+            return $this->handleError('client dechet n\'existe pas!');
+        }else{
+            $p= Client_dechetResource::collection( $client);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('client-dechet-supprimes.pdf');
+        }
+    }
+    public function pdfClientDechetTrashed( $id) {
+        $client = Client_dechet::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($client)) {
+            return $this->handleError('Client dechet n\'existe pas!');
+        }else{
+            $data= collect(Client_dechet::getClientDechetByIdTrashed($id))->toArray();
+            $liste = [
+                'id' => $data[0]['id'],
+                'nom_entreprise' => $data[0]['nom_entreprise'],
+                'matricule_fiscale' => $data[0]['matricule_fiscale'],
+                'nom' => $data[0]['nom'],
+                'prenom' => $data[0]['prenom'],
+                'numero_fixe' => $data[0]['numero_fixe'],
+                'adresse' => $data[0]['adresse'],
+                'numero_telephone' => $data[0]['numero_telephone'],
+                'email' => $data[0]['email'],
+                'created_at' => $data[0]['created_at'],
+                'updated_at' => $data[0]['updated_at'],
+                'deleted_at' => $data[0]['deleted_at'],
+            ];
+            $pdf = Pdf::loadView('pdf/Delete/unique/GestionCompte/clientDechet', $liste);
+            return $pdf->download('client-dechet-supprime.pdf');
+            }
+        }
 }

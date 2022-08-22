@@ -46,6 +46,10 @@ class Responsable_etablissement extends Authenticatable{
         $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::where('id',$id)->get());
         return $responsableEtablissement;
     }
+    public static function getResponsableEtablissementByIdTrashed($id){
+        $responsableEtablissement = ResponsableEtablissementResource::collection(Responsable_etablissement::withTrashed()->where('id',$id )->get());
+        return $responsableEtablissement;
+    }
 }
 
 

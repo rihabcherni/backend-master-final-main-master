@@ -43,4 +43,8 @@ class Depot extends Model
         $depot = DepotResource::collection(Depot::where('id',$id)->get());
         return $depot;
     }
+    public static function getDepotByIdTrashed($id){
+        $depot = DepotResource::collection(Depot::withTrashed()->where('id',$id )->get());
+        return $depot;
+    }
 }

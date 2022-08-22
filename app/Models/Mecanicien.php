@@ -38,4 +38,8 @@ class Mecanicien extends Model
         $mecanicien = MecanicienResource::collection(Mecanicien::where('id',$id)->get());
         return $mecanicien;
     }
+    public static function getMecanicienByIdTrashed($id){
+        $mecanicien = MecanicienResource::collection(Mecanicien::withTrashed()->where('id',$id )->get());
+        return $mecanicien;
+    }
 }

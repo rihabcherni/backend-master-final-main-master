@@ -31,4 +31,8 @@ class Detail_commande_dechet extends Model
         $DetailCommandeDechet = DetailCommandeDechetResource::collection(Detail_commande_dechet::where('id',$id)->get());
         return $DetailCommandeDechet;
     }
+    public static function getDetailCommandeDechetByIdTrashed($id){
+        $DetailCommandeDechet = DetailCommandeDechetResource::collection(Detail_commande_dechet::withTrashed()->where('id',$id )->get());
+        return $DetailCommandeDechet;
+    }
 }

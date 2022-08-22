@@ -49,4 +49,8 @@ class Ouvrier extends Authenticatable{
         $ouvrier = OuvrierResource::collection(Ouvrier::where('id',$id)->get());
         return $ouvrier;
     }
+    public static function getOuvrierByIdTrashed($id){
+        $ouvrier = OuvrierResource::collection(Ouvrier::withTrashed()->where('id',$id )->get());
+        return $ouvrier;
+    }
 }

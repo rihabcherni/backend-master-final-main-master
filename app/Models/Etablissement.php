@@ -69,4 +69,8 @@ class Etablissement extends Model{
         $etablissement = EtablissementResource::collection(Etablissement::where('id',$id)->get());
         return $etablissement;
     }
+    public static function getEtablissementByIdTrashed($id){
+        $etablissement = EtablissementResource::collection(Etablissement::withTrashed()->where('id',$id )->get());
+        return $etablissement;
+    }
 }

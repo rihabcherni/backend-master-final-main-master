@@ -86,7 +86,7 @@ class EtablissementController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/unique/GestionPoubelleEtablissement/etablissement', $liste)->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPoubelleEtablissement/etablissement', $liste)->setPaper('a4', 'landscape');
             return $pdf->download('etablissement.pdf');
         }
     }
@@ -97,7 +97,7 @@ class EtablissementController extends BaseController{
         }else{
             $p= EtablissementResource::collection( $etablissement);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/table/GestionPoubelleEtablissement/etablissement', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPoubelleEtablissement/etablissement', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('etablissement.pdf');
         }
     }

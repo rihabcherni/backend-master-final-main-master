@@ -33,5 +33,9 @@ class Poubelle extends Model{
         $poubelle = PoubelleResource::collection(Poubelle::where('id',$id)->get());
         return $poubelle;
     }
+    public static function getPoubelleByIdTrashed($id){
+        $poubelle = PoubelleResource::collection(Poubelle::withTrashed()->where('id',$id )->get());
+        return $poubelle;
+    }
 }
 

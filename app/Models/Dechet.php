@@ -38,4 +38,8 @@ class Dechet extends Model
         $dechet = DechetResource::collection(Dechet::where('id',$id)->get());
         return $dechet;
     }
+    public static function getDechetByIdTrashed($id){
+        $dechet = DechetResource::collection(Dechet::withTrashed()->where('id' ,  $id )->get());
+        return $dechet;
+    }
 }

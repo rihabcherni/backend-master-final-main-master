@@ -11,13 +11,12 @@
             }
             .img-container{
                 border-radius: 20px;
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
             }
             .page{
                 padding:20px;
             }
-
             table{
                 border:1px solid;
             }
@@ -34,7 +33,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des responsables commerciale Reschool Ecology: </h2>
+        <h2 style="text-align: center;">Liste des ouvriers Reschool Ecology: </h2>
         <br/>
         <table>
             <tr>
@@ -42,31 +41,40 @@
                 <th>Photo</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Carte identité national</th>
+                <th>Carte identité</th>
+                <th>Adresse</th>
                 <th>Numéro télephone</th>
                 <th>E-mail</th>
+                <th>poste</th>
+                <th colspan="2">camion</th>
                 <th>Date de création</th>
-                <th>Date de dernier modification</th>
+                <th>Date de modification</th>
+                <th style='background-color:red; color:white;'>Date de suppression</th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
                 <td>
-                    <?php $url = 'storage/images/Gestionnaire/'.$l['photo'];
+                    <?php $url = 'storage/trashImages/ouvrier/'.$l['photo'];
                     $path= public_path($url);
                     if(! file_exists($path) || $l['photo'] === null){
-                        $path= public_path('storage/images/Gestionnaire/default.jpeg');
+                        $path= public_path('storage/trashImages/ouvrier/default.jpeg');
                     }
                     ?>
-                    <img class="img-container" src="{{$path }}" alt="gestionnaire"/>
+                    <img class="img-container" src="{{$path }}" alt="ouvrier"/>
                 </td>
                 <td> {{ $l['nom'] }}</td>
                 <td> {{ $l['prenom'] }}</td>
                 <td> {{ $l['CIN'] }}</td>
+                <td> {{ $l['adresse'] }}</td>
                 <td> {{ $l['numero_telephone'] }}</td>
                 <td style='color:blue; font-weight:bold;text-decoration:underline;'> {{ $l['email'] }}</td>
+                <td> {{ $l['poste'] }}</td>
+                <td> {{ $l['camion_id'] }}</td>
+                <td> {{ $l['matricule'] }}</td>
                 <td> {{ $l['created_at'] }}</td>
                 <td> {{ $l['updated_at'] }}</td>
+                <td style='color:red; font-weight:bold;'> {{ $l['deleted_at'] }}</td>
             </tr>
             @endforeach
         </table>
