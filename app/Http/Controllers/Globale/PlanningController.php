@@ -5,8 +5,10 @@ use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Controllers\ResponsableEtablissement\CrudResponsable\PoubelleController;
 use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissement\GlobaleStatistiqueController;
 use App\Models\Planning;
+use App\Models\Etablissement;
+use App\Models\Reparation_poubelle;
+use App\Models\Reparation_camion;
 use Carbon\Carbon;
-use App\Http\Resources\GestionPoubelleEtablissements\Planning as Ressource_Planning;
 
 class PlanningController extends BaseController{
     function cmp($a, $b) {
@@ -33,16 +35,18 @@ class PlanningController extends BaseController{
     }
 
     public function planningResponsable(){
+        $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;
+        $etablissement= Etablissement::find($etab_id)->first()->id;
         $allPlanning =Planning::all();
-        $GlobaleStatistiqueController = new GlobaleStatistiqueController;
-        $data_dashboard_etablissement_controller = $GlobaleStatistiqueController->globaleStatistiques();
+        $dashboard_etablissement_controller = new GlobaleStatistiqueController;
+        $data_dashboard_etablissement_controller = $dashboard_etablissement_controller->globaleStatistiques();
 
         $poubelle_controller = new PoubelleController;
         $data_poubelle_controller = $poubelle_controller->index()->getData();
         $poubelles = $data_poubelle_controller->data;
 
         $week=['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-        $jour= strtolower(Carbon::now()->translatedFormat('l'));
+        $jour = strtolower(Carbon::now()->translatedFormat('l'));
         $heure_systeme = Carbon::now()->translatedFormat('H');
 
         $horaire= [6,12,13,15,16,19];
@@ -162,12 +166,14 @@ class PlanningController extends BaseController{
                     if($max_plastique >= 75){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -175,12 +181,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -188,12 +196,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -205,25 +215,29 @@ class PlanningController extends BaseController{
                     if($max_papier >= 75){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
-                                'jour' =>$week[self::gererTemps($j+2)],
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -231,12 +245,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -248,12 +264,14 @@ class PlanningController extends BaseController{
                     if($max_composte >= 75){
                         if($avg_composte <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -261,12 +279,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -274,12 +294,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -291,12 +313,14 @@ class PlanningController extends BaseController{
                     if($max_canette >= 75){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -304,12 +328,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -317,12 +343,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -334,12 +362,14 @@ class PlanningController extends BaseController{
                     if($max_plastique >25 && $max_plastique<= 75 ){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -348,12 +378,14 @@ class PlanningController extends BaseController{
 
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -361,12 +393,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -378,12 +412,14 @@ class PlanningController extends BaseController{
                     if($max_papier > 25 && $max_papier < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -391,12 +427,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -404,12 +442,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -421,12 +461,14 @@ class PlanningController extends BaseController{
                     if($max_composte > 25 && $max_composte < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -434,12 +476,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -447,12 +491,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -464,12 +510,14 @@ class PlanningController extends BaseController{
                     if($max_canette > 25 && $max_canette < 75 ){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -477,12 +525,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -490,12 +540,15 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -507,12 +560,14 @@ class PlanningController extends BaseController{
                     if($max_plastique <= 25 ){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -520,12 +575,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -537,12 +594,14 @@ class PlanningController extends BaseController{
                     if($max_papier <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -550,12 +609,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -567,12 +628,14 @@ class PlanningController extends BaseController{
                     if($max_composte <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -580,12 +643,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -597,12 +662,14 @@ class PlanningController extends BaseController{
                     if($max_canette <= 25 ){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -610,12 +677,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -635,12 +704,14 @@ class PlanningController extends BaseController{
                     if($max_plastique >= 75){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
@@ -648,12 +719,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -661,12 +734,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -678,12 +753,14 @@ class PlanningController extends BaseController{
                     if($max_papier >= 75){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -691,12 +768,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -704,12 +783,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -721,12 +802,14 @@ class PlanningController extends BaseController{
                     if($max_composte >= 75){
                         if($avg_composte <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -734,12 +817,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -747,12 +832,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -764,12 +851,14 @@ class PlanningController extends BaseController{
                     if($max_canette >= 75){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -777,12 +866,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -790,12 +881,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -808,12 +901,14 @@ class PlanningController extends BaseController{
                     if($max_plastique >25 && $max_plastique<= 75 ){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -821,12 +916,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[35],
@@ -834,12 +931,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -851,12 +950,14 @@ class PlanningController extends BaseController{
                     if($max_papier > 25 && $max_papier < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -864,12 +965,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -877,12 +980,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -894,12 +999,14 @@ class PlanningController extends BaseController{
                     if($max_composte > 25 && $max_composte < 75 ){
                         if($avg_composte <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -907,12 +1014,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -920,12 +1029,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -937,12 +1048,14 @@ class PlanningController extends BaseController{
                     if($max_canette > 25 && $max_canette < 75 ){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -950,12 +1063,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -963,12 +1078,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -981,12 +1098,14 @@ class PlanningController extends BaseController{
                     if($max_plastique <= 25 ){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -994,12 +1113,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1011,12 +1132,14 @@ class PlanningController extends BaseController{
                     if($max_papier <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -1024,12 +1147,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1041,12 +1166,14 @@ class PlanningController extends BaseController{
                     if($max_composte <= 25 ){
                         if($avg_composte <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -1054,12 +1181,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1071,12 +1200,14 @@ class PlanningController extends BaseController{
                     if($max_canette <= 25 ){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -1084,12 +1215,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1108,12 +1241,14 @@ class PlanningController extends BaseController{
                     if($max_plastique >= 75){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4] ,
                                 'end'=>$horaire[5],
@@ -1121,12 +1256,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1134,12 +1271,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -1151,12 +1290,14 @@ class PlanningController extends BaseController{
                     if($max_papier >= 75){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -1164,12 +1305,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1177,12 +1320,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'papier',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -1194,12 +1339,14 @@ class PlanningController extends BaseController{
                     if($max_composte >= 75){
                         if($avg_composte <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -1207,12 +1354,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1220,12 +1369,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'composte',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+1, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -1237,12 +1388,14 @@ class PlanningController extends BaseController{
                     if($max_canette >= 75){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
@@ -1250,12 +1403,14 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
@@ -1263,12 +1418,14 @@ class PlanningController extends BaseController{
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'canette',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -1280,12 +1437,14 @@ class PlanningController extends BaseController{
                     if($max_plastique >25 && $max_plastique<= 75 ){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+4, $week)],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
@@ -1293,25 +1452,29 @@ class PlanningController extends BaseController{
                             ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
-                                'jour' =>$week[self::gererTemps($j+3, $week)],
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[$j+1],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
-                                'jour' =>$week[$j+1],
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+3, $week)],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
                                 'type_poubelle'=>'plastique',
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
                                 'type_poubelle'=>'plastique',
                             ]);
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[self::gererTemps($j+2, $week)],
                                 'start'=>$horaire[2],
                                 'end'=>$horaire[3],
@@ -1323,25 +1486,48 @@ class PlanningController extends BaseController{
                     if($max_papier > 25 && $max_papier < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'papier',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+4, $week)],
+                                'start'=>$horaire[2] ,
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'papier',
+                            ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'papier',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+3, $week)],
+                                'start'=>$horaire[4],
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'papier',
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'papier',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+2, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'papier',
                             ]);
                         }
                     }
@@ -1349,25 +1535,48 @@ class PlanningController extends BaseController{
                     if($max_composte > 25 && $max_composte < 75 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'composte',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+4, $week)],
+                                'start'=>$horaire[2] ,
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'composte',
+                            ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'composte',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+3, $week)],
+                                'start'=>$horaire[4],
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'composte',
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'composte',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+2, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'composte',
                             ]);
                         }
                     }
@@ -1375,25 +1584,48 @@ class PlanningController extends BaseController{
                     if($max_canette > 25 && $max_canette < 75 ){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+2],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'canette',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+4, $week)],
+                                'start'=>$horaire[2] ,
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'canette',
+                            ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[4],
                                 'end'=>$horaire[5],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'canette',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+3, $week)],
+                                'start'=>$horaire[4],
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'canette',
                             ]);
                         }else{
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+1],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'canette',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+2, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'canette',
                             ]);
                         }
                     }
@@ -1401,17 +1633,32 @@ class PlanningController extends BaseController{
                     if($max_plastique <= 25 ){
                         if($avg_plastique <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[2] ,
                                 'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[4] ,
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'plastique',
+                            ]);
                         }elseif($avg_plastique > 25 && $avg_plastique < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
+                                'type_poubelle'=>'plastique',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
                                 'type_poubelle'=>'plastique',
                             ]);
                         }
@@ -1420,18 +1667,33 @@ class PlanningController extends BaseController{
                     if($max_papier <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'papier',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[4] ,
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'papier',
+                            ]);
                         }elseif($avg_papier > 25 && $avg_papier < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'papier',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'papier',
                             ]);
                         }
                     }
@@ -1439,18 +1701,33 @@ class PlanningController extends BaseController{
                     if($max_composte <= 25 ){
                         if($avg_papier <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'composte',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[4] ,
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'composte',
+                            ]);
                         }elseif($avg_composte > 25 && $avg_composte < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'composte',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'composte',
                             ]);
                         }
                     }
@@ -1458,30 +1735,44 @@ class PlanningController extends BaseController{
                     if($max_canette <= 25 ){
                         if($avg_canette <= 25){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0] ,
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'canette',
                             ]);
-
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[4] ,
+                                'end'=>$horaire[5],
+                                'type_poubelle'=>'canette',
+                            ]);
                         }elseif($avg_canette > 25 && $avg_canette < 75){
                             Planning::create([
+                                'etablissement_id'=> $etablissement,
                                 'jour' =>$week[$j+3],
                                 'start'=>$horaire[0],
                                 'end'=>$horaire[1],
-                                'type_poubelle'=>'plastique',
+                                'type_poubelle'=>'canette',
+                            ]);
+                            Planning::create([
+                                'etablissement_id'=> $etablissement,
+                                'jour' =>$week[self::gererTemps($j+5, $week)],
+                                'start'=>$horaire[2],
+                                'end'=>$horaire[3],
+                                'type_poubelle'=>'canette',
                             ]);
                         }
                     }
 
 
             }
-        } elseif($heure_systeme > 19){
+        } elseif($heure_systeme == 23){
             DB::table('plannings')->truncate();
         }
 
         $planninglist = Planning::all();
-        // $planning_sorted = Planning::where('jour',"mardi")->get();
 
         $lundi = DB::table('plannings')
             ->select('start','end','type_poubelle','validation','statut')
@@ -1528,8 +1819,104 @@ class PlanningController extends BaseController{
         return response()->json($affichage);
     }
 
-
-    public function confirmePlanningOuvrier(){
-        return 'rrr';
+    public function checkEtat ($table, $type){
+        $j=0;
+        for ($i = 0; $i < count($table) ; $i++) {
+            if ($table[$i]->etat == 0) {
+                $j++;
+            }
+        }
+        if ($j == count($table) ) {
+            Planning::all()->where('type_poubelle',$type)->first()->update(['statut' => 'collected']);
+        }
+        return true;
     }
+
+    public function etatCollected(){
+        $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;
+        $etablissement= Etablissement::find($etab_id)->with('poubelles')->first()->poubelles;
+        $allPlanning =Planning::all();
+        $allplastique = DB::table('poubelles')
+            ->select('type', 'etat')
+            ->where('type','plastique')
+            ->get();
+        $allpapier = DB::table('poubelles')
+            ->select('type', 'etat')
+            ->where('type','papier')
+            ->get();
+        $allcomposte = DB::table('poubelles')
+            ->select('type', 'etat')
+            ->where('type','composte')
+            ->get();
+        $allcanette = DB::table('poubelles')
+            ->select('type', 'etat')
+            ->where('type','canette')
+            ->get();
+        self::checkEtat($allplastique,'plastique');
+        self::checkEtat($allpapier,'papier');
+        self::checkEtat($allcomposte,'composte');
+        self::checkEtat($allcanette,'canette');
+
+        return $allPlanning;
+    }
+
+    public function listePannesPoubelles(){
+        $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;
+        $poubellesEtab= Etablissement::find($etab_id)->with('poubelles')->first()->poubelles;
+        // $rep_camion= Etablissement::find($etab_id)->with('reparation_camions')->first();
+
+        $idtypepoubelles= [];
+        foreach($poubellesEtab as $poub){
+            array_push($idtypepoubelles,[$poub->id,$poub->type]);
+        }
+
+        $pannespoubEtab=[];
+        foreach($idtypepoubelles as $ppoub){
+            $poubellePanneetab=Reparation_poubelle::where("poubelle_id", $ppoub[0])->first();
+            if($poubellePanneetab !== null){
+                array_push($pannespoubEtab,$poubellePanneetab);
+            }
+        }
+        $listePannesPoubelle =[];
+        foreach($idtypepoubelles as $poubelle){
+            foreach($pannespoubEtab as $panne){
+                if ($poubelle[0] == $panne->poubelle_id ) {
+                    array_push($listePannesPoubelle, $poubelle);
+                }
+            }
+
+        }
+
+        return response()->json($listePannesPoubelle);
+    }
+
+    public function listePannesCamions(){
+        $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;
+        $camion_id= Etablissement::find($etab_id)->first()->camion_id;
+        // $camion= Camion::find($camion_id)->first();
+        $panneCamion=Reparation_camion::where("camion_id", $camion_id)->first();
+
+        return response()->json($panneCamion);
+    }
+
+    public function etatProblem(){
+        $pannePoubelle= self::listePannesPoubelles()->original;
+        $panneCamion= self::listePannesCamions()->original;
+
+        if( $pannePoubelle !== null ){
+            foreach ($pannePoubelle as $panne) {
+                Planning::all()->where('type_poubelle',$panne[1])->first()->update(['statut' => 'problem']);
+            }
+        }elseif ( $panneCamion !== null  ) {
+            Planning::all()->where('type_poubelle','plastique')->first()->update(['statut' => 'problem']);
+            Planning::all()->where('type_poubelle','papier')->first()->update(['statut' => 'problem']);
+            Planning::all()->where('type_poubelle','composte')->first()->update(['statut' => 'problem']);
+            Planning::all()->where('type_poubelle','canette')->first()->update(['statut' => 'problem']);
+
+        }
+
+        return [['Pannes Poubelles',$pannePoubelle],[ 'Pannes Camions',$panneCamion]];
+
+    }
+
 }

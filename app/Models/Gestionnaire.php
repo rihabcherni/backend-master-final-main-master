@@ -42,4 +42,9 @@ class Gestionnaire extends Authenticatable
         $Gestionnaire = GestionnaireResource::collection(Gestionnaire::where('id',$id)->get());
         return $Gestionnaire;
     }
+
+    public static function getGestionnaireByIdTrashed($id){
+        $Gestionnaire = GestionnaireResource::collection(Gestionnaire::withTrashed()->where('id' ,  $id )->get());
+        return $Gestionnaire;
+    }
 }

@@ -6,9 +6,6 @@ use App\Models\Etablissement;
 use App\Models\Bloc_etablissement;
 use App\Models\Bloc_poubelle;
 use App\Models\Etage_etablissement;
-use Illuminate\Database\Eloquent\Builder;
-use App\Http\Resources\GestionPoubelleEtablissements\Poubelle as PoubelleResource;
-
 class TablePoubellePlusRemplisController extends Controller{
     public function PoubellePlusRemplis(){
         $etab_id=auth()->guard('responsable_etablissement')->user()->etablissement_id;

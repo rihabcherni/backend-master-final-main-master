@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\ClientDechet\AuthClientDechetController;
 use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
 use App\Http\Controllers\Auth\ResponsableEtablissement\AuthResponsableEtablissementController;
+use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\ViderPoubelleController;
+use App\Http\Controllers\Gestionnaire\TableCrud\ViderPoubelleGestionnaireController;
 use App\Http\Controllers\Globale\ViderPoubellesController;
 
     /** -------------  **************          debut recherche    ************************** ------------------**/
@@ -70,6 +72,11 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
 
                 Route::get('/historique-vider-poubelle-responsable', [ViderPoubellesController::class,'HistoriqueViderResponsable']);
                 Route::get('/historique-vider-poubelle-gestionnaire', [ViderPoubellesController::class,'HistoriqueViderGestionnaire']);
+
+                Route::get('/historique-vider-poubelle-gestionnaire-csv', [ViderPoubelleGestionnaireController::class,'exportInfoViderPoubelleCSV']);
+                Route::get('/historique-vider-poubelle-gestionnaire-excel', [ViderPoubelleGestionnaireController::class,'exportInfoViderPoubelleExcel']);
+                Route::get('/historique-vider-poubelle-gestionnaire-all-pdf', [ViderPoubelleGestionnaireController::class,'pdfAllViderPoubelle']);
+                Route::get('/historique-vider-poubelle-gestionnaire-pdf/{id}', [ViderPoubelleGestionnaireController::class,'pdfViderPoubelle']);
 
                 Route::get('/situation-financiere-mois', [ViderPoubellesController::class,'SituationFianciereMoisResponsable']);
 

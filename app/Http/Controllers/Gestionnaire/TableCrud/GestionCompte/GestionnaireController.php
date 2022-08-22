@@ -62,9 +62,14 @@ class GestionnaireController extends BaseController{
         $gestionnaire = Gestionnaire::find($id);
         if (is_null($gestionnaire)) {
             return $this->handleError('gestionnaire n\'existe pas!');
-        }
-        else{
+        }elseif($gestionnaire->photo ==="default.jpeg" || $gestionnaire->photo === NULL){
+            $gestionnaire->delete();
+            return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé!');
+        } else{
             if($gestionnaire->photo){
+                $destinationPath = 'storage/TrashImages/gestionnaire';
+                $profileImage = date('YmdHis') . "." . $gestionnaire->photo->getClientOriginalExtension();
+                $gestionnaire->photo->move($destinationPath, $profileImage);
                 unlink(public_path('storage\images\gestionnaire\\').$gestionnaire->photo );
             }
             $gestionnaire->delete();
@@ -75,6 +80,13 @@ class GestionnaireController extends BaseController{
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
         $gestionnaire->forceDelete();
         return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire supprimé  avec force!');
+    }
+    public function hdeleteAll( ) {
+        $gestionnaires = Gestionnaire::onlyTrashed()->get();
+        foreach($gestionnaires as $gestionnaire){
+            $gestionnaire->forceDelete();
+        }
+        return $this->handleResponse(GestionnaireResource::collection($gestionnaires), 'tous gestionnaires supprimés définitivement');
     }
     public function restore( $id) {
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
@@ -92,67 +104,6 @@ class GestionnaireController extends BaseController{
         $gestionnaire = Gestionnaire::onlyTrashed()->get();
         return $this->handleResponse(GestionnaireResource::collection($gestionnaire), 'affichage des gestionnaires');
     }
-/*
-    public function storeGestionnaire(Request $request){
-        $nom=$request->nom;
-        $prenom=$request->prenom;
-        $CIN=$request->CIN;
-        $numero_telephone=$request->numero_telephone;
-        $email=$request->email;
-        $mot_de_passe=$request->mot_de_passe;
-        $image=$request->file('file');
-
-        $imageName=time(). '.' .$image->extension();
-        $image->move(public_path('images'),$imageName);
-        $gestionnaire =new Gestionnaire();
-        $gestionnaire->nom = $nom;
-        $gestionnaire->prenom = $prenom;
-        $gestionnaire->CIN = $CIN;
-        $gestionnaire->numero_telephone = $numero_telephone;
-        $gestionnaire->email = $email;
-        $gestionnaire->mot_de_passe =  Hash::make($mot_de_passe);
-
-       // $gestionnaire->photo = $imageName;
-        $gestionnaire->save();
-        return $this->handleResponse(new GestionnaireResource($gestionnaire), 'success_added','gestionnaire record has been inserted');
-    }
-
-    public function updateGestionnaire(Request $request){
-        $nom=$request->nom;
-        $prenom=$request->prenom;
-        $CIN=$request->CIN;
-        $numero_telephone=$request->numero_telephone;
-        $email=$request->email;
-        $mot_de_passe=$request->mot_de_passe;
-        $image=$request->file('file');
-
-        $imageName=time(). '.' .$image->extension();
-        $image->move(public_path('images'),$imageName);
-        $gestionnaire = Gestionnaire::find($request->id);
-        $gestionnaire->nom = $nom;
-        $gestionnaire->prenom = $prenom;
-        $gestionnaire->CIN = $CIN;
-        $gestionnaire->numero_telephone = $numero_telephone;
-        $gestionnaire->email = $email;
-        $gestionnaire->mot_de_passe = $mot_de_passe;
-        $gestionnaire->photo = $imageName;
-        $gestionnaire->save();
-        return back()->with('success_update','gestionnaire record has been  updated');
-    }
-    public function deleteGestionnaire($id){
-        $gestionnaire=Gestionnaire::find($id);
-        unlink(public_path('images').'/'.$gestionnaire->profileimage );
-        $gestionnaire->delete();
-        return back()->with('success_delete','gestionnaire record has been  delete');
-    }
-    public function autocomplete(Request $request){
-        $datas=Gestionnaire::select('nom')
-                        ->where('nom','LIKE',"%{$request->terms}%")
-                        ->get();
-        return response()->json($datas);
-    }
-
-*/
     public function exportInfoGestionnaireExcel(){
         return Excel::download(new GestionnaireExport  , 'gestionnaire-liste.xlsx');
     }
@@ -192,4 +143,38 @@ class GestionnaireController extends BaseController{
             return $pdf->download('gestionnaire.pdf');
         }
     }
+    public function pdfAllGestionnaireTrashed(){
+        $gestionnaire = Gestionnaire::onlyTrashed()->get();
+        if (is_null($gestionnaire)) {
+            return $this->handleError('gestionnaire n\'existe pas!');
+        }else{
+            $p= GestionnaireResource::collection( $gestionnaire);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/table/GestionCompte/gestionnaire', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('gestionnaire.pdf');
+        }
+    }
+    public function pdfGestionnaireTrashed( $id) {
+        $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($gestionnaire)) {
+            return $this->handleError('Gestionnaire n\'existe pas!');
+        }else{
+                $data= collect(Gestionnaire::getGestionnaireByIdTrashed($id))->toArray();
+                $liste = [
+                    'id' => $data[0]['id'],
+                    'nom' => $data[0]['nom'],
+                    'prenom' => $data[0]['prenom'],
+                    'CIN' => $data[0]['CIN'],
+                    'photo' => $data[0]['photo'],
+                    'adresse' => $data[0]['adresse'],
+                    'numero_telephone' => $data[0]['numero_telephone'],
+                    'email' => $data[0]['email'],
+                    'created_at' => $data[0]['created_at'],
+                    'updated_at' => $data[0]['updated_at'],
+                    'deleted_at' => $data[0]['deleted_at'],
+                ];
+                $pdf = Pdf::loadView('pdf/unique/GestionCompte/Gestionnaire', $liste);
+                return $pdf->download('gestionnaire.pdf');
+            }
+        }
 }

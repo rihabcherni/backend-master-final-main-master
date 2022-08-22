@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet;
 
+use App\Exports\GestionDechet\Commande_dechetExport;
 use App\Exports\GestionDechet\Detail_commande_dechetExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionDechet\Detail_commande_dechet as Detail_commande_dechetResource;
 use App\Models\Detail_commande_dechet;
 use App\Http\Requests\GestionDechet\Detail_commande_dechetRequest;
+use App\Http\Resources\GestionDechet\Commande_dechet as GestionDechetCommande_dechet;
+use App\Models\Commande_dechet;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -52,10 +55,46 @@ class Detail_commande_dechetController extends BaseController{
     }
 
     public function exportInfoDetailCommandeDechetExcel(){
-        return Excel::download(new Detail_commande_dechetExport  , 'Detail-commande-dechet-liste.xlsx');
+        return Excel::download(new Commande_dechetExport  , 'Detail-commande-dechet-liste.xlsx');
     }
 
     public function exportInfoDetailCommandeDechetCSV(){
-        return Excel::download(new Detail_commande_dechetExport, 'Detail-commande-dechet-liste.csv');
+        return Excel::download(new Commande_dechetExport, 'Detail-commande-dechet-liste.csv');
+    }
+    public function pdfCommandeDechet($id){
+        $Commande_dechet = Commande_dechet::find($id);
+        if (is_null($Commande_dechet)) {
+            return $this->handleError('Commande dechet n\'existe pas!');
+        }else{
+            $data= collect(Commande_dechet::getCommandeDechetById($id))->toArray();
+            $liste = [
+                'id' => $data[0]['id'],
+                'type' => $data[0]['type'],
+                'quantite' => $data[0]['quantite'],
+                "matricule_fiscale" => $data[0]['matricule_fiscale'],
+                "entreprise" => $data[0]['entreprise'],
+                "client_dechet_id" => $data[0]['client_dechet_id'],
+                "client_dechet" => $data[0]['client_dechet'],
+                "montant_total" => $data[0]['montant_total'],
+                "date_commande" => $data[0]['date_commande'],
+                "date_livraison" => $data[0]['date_livraison'],
+                "type_paiment" => $data[0]['type_paiment'],
+                "created_at" => $data[0]['created_at'],
+                "updated_at" => $data[0]['updated_at'],
+            ];
+            $pdf = Pdf::loadView('pdf/unique/GestionDechet/commandeDechet', $liste);
+            return $pdf->download('commande-dechet.pdf');
+        }
+    }
+    public function pdfAllCommandeDechet(){
+        $Commande_dechet = Commande_dechet::all();
+        if (is_null($Commande_dechet)) {
+            return $this->handleError('Commande dechet n\'existe pas!');
+        }else{
+            $p= GestionDechetCommande_dechet::collection( $Commande_dechet);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/table/GestionDechet/commandeDechet', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            return $pdf->download('commande-dechet.pdf');
+        }
     }
 }

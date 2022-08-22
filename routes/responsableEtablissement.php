@@ -24,6 +24,11 @@ use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissem
     Route::group(['prefix' =>'auth-responsable-etablissement'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::get('/planning-responsable', [PlanningController::class, 'planningResponsable']);
+            Route::get('/planning-responsable-collected', [PlanningController::class, 'etatCollected']);
+            Route::get('/planning-responsable-problem', [PlanningController::class, 'etatProblem']);
+            Route::get('/planning-responsable-liste-pannes-poubelles', [PlanningController::class, 'listePannesPoubelles']);
+            Route::get('/planning-responsable-liste-pannes-camions', [PlanningController::class, 'listePannesCamions']);
+
             Route::group(['middleware' => 'auth:responsable_etablissement'], function() {
                  /*****                 dashboard responsable etablissement                   ****/
                   Route::get('/dashboard-etablissement', [GlobaleStatistiqueController::class, 'globaleStatistiques']);

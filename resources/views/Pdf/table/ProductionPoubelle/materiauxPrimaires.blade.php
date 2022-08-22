@@ -7,7 +7,7 @@
         <title>Document</title>
         <style>
             .date{
-                margin:-20px 0 0 75%  ;
+                margin:-20px 0 0 85%  ;
             }
             .img-container{
                 border-radius: 20px;
@@ -34,33 +34,52 @@
         <img class="img-logo" src="{{ public_path('images/logo.png') }}" alt="logo" width="50px" height="50px"/>
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
-        <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des matériaux primaires utilisées par Reschool Ecology: </h2>
         <table>
             <tr>
                 <th>Id:</th>
-                <th>Nom entreprise:</th>
-                <th>Matricule fiscale: </th>
-                <th>Nom: </th>
-                <th>Prénom: </th>
-                <th>Numéro fixe:</th>
-                <th>Adresse:</th>
-                <th>Numéro télephone:</th>
-                <th>E-mail:</th>
+                <th>Nom materiel:</th>
+                <th>Prix unitaire:</th>
+                <th>Quantité:</th>
+                <th>Prix total:</th>
+                <th>Fournisseur:</th>
                 <th>Date de création:</th>
                 <th>Date de dernier modification: </th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td>{{ $l['nom_entreprise'] }}</td>
-                <td>{{ $l['matricule_fiscale'] }}</td>
-                <td>{{ $l['nom'] }}</td>
-                <td>{{ $l['prenom'] }}</td>
-                <td>{{ $l['numero_fixe'] }}</td>
-                <td>{{ $l['adresse'] }}</td>
-                <td>{{ $l['numero_telephone'] }}</td>
-                <td style='color:blue; font-weight:bold;text-decoration:underline;'>{{ $l['email'] }}</td>
+                <td> {{ $l['nom_materiel'] }}</td>
+                <td> {{ $l['prix_unitaire'] }}DT</td>
+                <td> {{ $l['quantite'] }}</td>
+                <td> {{ $l['prix_total'] }}DT</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <?php
+                                $url = 'storage/images/fournisseur/'.$l['fournisseur']->photo;
+                                $path= public_path($url);
+                                if(! file_exists($path) || $l['fournisseur']->photo === null){
+                                    $path= public_path('storage/images/fournisseur/default.jpeg');
+                                }
+                                ?>
+                                <img width="60px" height="60px" src="{{$path}}" alt="fournisseur"/>
+                            </td>
+                            <td>
+                                <b>Id:</b>{{$l['fournisseur_id']}}<br/>
+
+                                <b>Nom et prénom:</b> {{$l['fournisseur_nom']}}<br/>
+
+                                <b>Carte identité national:</b> {{$l['cin']}}<br/>
+
+                                <b>Numéro télophone:</b> {{$l['fournisseur_numero_telephone']}}<br/>
+                                <b>E-mail:</b><sapn style='color:blue; font-weight:bold;text-decoration:underline;'>{{$l['fournisseur']->email}}</sapn><br/>
+                                <b>Adresse:</b>{{$l['fournisseur']->adresse}}<br/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
             </tr>

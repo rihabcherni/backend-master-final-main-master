@@ -56,6 +56,7 @@ class MateriauxPrimaireController extends BaseController{
             $liste = [
                 'id' => $data[0]['id'],
                 "fournisseur_id" => $data[0]['fournisseur_id'],
+                "fournisseur" => $data[0]['fournisseur'],
                 "fournisseur_nom" => $data[0]['fournisseur_nom'],
                 "cin" => $data[0]['cin'],
                 "fournisseur_numero_telephone" => $data[0]['fournisseur_numero_telephone'],

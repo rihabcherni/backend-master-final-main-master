@@ -13,6 +13,7 @@ class Planning extends Model
     use HasFactory,  SoftDeletes, Notifiable , HasApiTokens;
     protected $fillable = [
         'id',
+        'etablissement_id',
         'jour',
         'start',
         'end',
@@ -20,8 +21,12 @@ class Planning extends Model
         'statut',
         'date_collecte',
         'type_poubelle',
-        'id_poubelle',
         'id_ouvrier',
     ];
+
+    public function etablissement(){
+        return $this->belongsTo(etablissement::class);
+    }
+
     protected $dates=['deleted_at'];
 }

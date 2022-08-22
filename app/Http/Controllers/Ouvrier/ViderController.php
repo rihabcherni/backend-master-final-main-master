@@ -76,15 +76,12 @@ class ViderController extends BaseController{
                 'message' => 'poubelle introuvable'
             ],404);
         }
-
-
         $bloc_poubelle = Bloc_poubelle::find($poubelle->bloc_poubelle_id);
         if(!$bloc_poubelle){
             return response([
                 'message' => 'bloc poubelle introuvable'
             ],404);
         }
-
         $etage_etablissement = Etage_etablissement::find($bloc_poubelle->etage_etablissement_id);
         if(!$etage_etablissement){
             return response([
@@ -115,5 +112,9 @@ class ViderController extends BaseController{
             "Etat"=>$poubelle->Etat,
             "type"=>$poubelle->type,
         ]);
+    }
+
+    public function ConfirmerCollecte(){
+        return true;
     }
 }

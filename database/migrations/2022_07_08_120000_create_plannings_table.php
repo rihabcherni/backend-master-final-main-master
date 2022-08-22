@@ -6,15 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePlanningsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('etablissement_id')->constrained('etablissements')->onDelete('cascade')->onUpdate('cascade');
             $table->string('jour');
             $table->string('start');
             $table->string('end');
@@ -29,13 +25,12 @@ class CreatePlanningsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
+        Schema::table("plannings",function(Blueprint $table){
+            $table->dropForeignKey("etablissement_id");
+        });
+
         Schema::dropIfExists('plannings');
     }
 }

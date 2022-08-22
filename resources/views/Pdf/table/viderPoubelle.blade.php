@@ -11,13 +11,14 @@
             }
             .img-container{
                 border-radius: 20px;
-                width: 100px;
-                height: 100px;
+                border:2px rgb(198, 106, 210) dashed;
+                width: 180px;
+                height: 180px;
+                margin-left: 20px;
             }
             .page{
                 padding:20px;
             }
-
             table{
                 border:1px solid;
             }
@@ -33,34 +34,20 @@
         <img class="img-logo" src="{{ public_path('images/logo.png') }}" alt="logo" width="50px" height="50px"/>
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
-        <h2 style="text-align: center;">Liste stock poubelles Reschool Ecology: </h2>
+        <br/>
+        <h2 style="text-align: center;">Historique vider Poubelles Reschool Ecology: </h2>        <br/>
         <table>
             <tr>
-                <th>Id</th>
-                <th>Image produit</th>
-                <th>Type poubelle</th>
-                <th>Quantité disponible</th>
-                <th>Description technique:</th>
-                <th>Date de création</th>
-                <th>Date de dernier modification</th>
+                <th>Id:</th>
+
+                <th>Date de création:</th>
+                <th>Date de dernier modification: </th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td>
-                    <?php $url = 'storage/images/stock_poubelle/'.$l['photo'];
-                    $path= public_path($url);
-                    if(! file_exists($path) || $l['photo'] === null){
-                        $path= public_path('storage/images/stock_poubelle/default.jpeg');
-                    }
-                    ?>
-                    <img class="img-container" src="{{$path }}" alt="stock poubelles"/>
-                </td>
-                <td> {{ $l['type_poubelle'] }}</td>
-                <td> {{ $l['quantite_disponible'] }}</td>
-                <td> {{ $l['description'] }}</td>
-                <td> {{ $l['created_at'] }}</td>
-                <td> {{ $l['updated_at'] }}</td>
+                <td>{{ $l['created_at'] }}</td>
+                <td>{{ $l['updated_at'] }}</td>
             </tr>
             @endforeach
         </table>

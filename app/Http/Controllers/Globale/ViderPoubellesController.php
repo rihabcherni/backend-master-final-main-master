@@ -1,16 +1,16 @@
 <?php
 namespace App\Http\Controllers\Globale;
+
+use App\Http\Resources\ViderPoubelle;
 use App\Models\Bloc_etablissement;
 use App\Models\Bloc_poubelle;
 use App\Models\Camion;
 use App\Models\Dechet;
 use App\Models\Etablissement;
 use App\Models\Etage_etablissement;
-use App\Models\Ouvrier;
 use App\Models\Poubelle;
 use App\Models\Vider_poubelle;
 use Carbon\Carbon;
-
 class ViderPoubellesController extends Controller{
     /**                                 responsable                           */
         public function  HistoriqueViderResponsable(){
@@ -45,32 +45,33 @@ class ViderPoubellesController extends Controller{
         }
         public function  HistoriqueViderGestionnaire(){
             $historique= Vider_poubelle::orderBy('date_depot', 'desc')->get();
-            $a=[];
-            foreach($historique as $h){
-                $poubelle= Poubelle::where('id',$h->poubelle_id)->first();
-                $bloc_poubelle= Bloc_poubelle::where('id',$poubelle->bloc_poubelle_id)->first();
-                $etage= Etage_etablissement::where('id',$bloc_poubelle->etage_etablissement_id)->first();
-                $bloc_etabl= Bloc_etablissement::where('id',$etage->bloc_etablissement_id)->first();
-                $etablissement= Etablissement::where('id',$bloc_etabl->etablissement_id)->first();
-                $h->nom_poubelle=$poubelle->nom;
-                $h->type=$poubelle->type;
-                $quantite=0;
-                if($poubelle->type==="plastique"){
-                    $quantite=$h->quantite_depose_plastique;
-                }else if($poubelle->type==="papier"){
-                    $quantite=$h->quantite_depose_papier;
-                }else if($poubelle->type==="composte"){
-                    $quantite=$h->quantite_depose_composte;
-                }else if($poubelle->type==="canette"){
-                    $quantite=$h->quantite_depose_canette;
-                }
-                $h->quantite=$quantite;
-                $h->etablissement=$etablissement->nom_etablissement;
-            array_push($a,$h);
-            }
-            return $a;
+            // $a=[];
+            // foreach($historique as $h){
+            //     $poubelle= Poubelle::where('id',$h->poubelle_id)->first();
+            //     $bloc_poubelle= Bloc_poubelle::where('id',$poubelle->bloc_poubelle_id)->first();
+            //     $etage= Etage_etablissement::where('id',$bloc_poubelle->etage_etablissement_id)->first();
+            //     $bloc_etabl= Bloc_etablissement::where('id',$etage->bloc_etablissement_id)->first();
+            //     $etablissement= Etablissement::where('id',$bloc_etabl->etablissement_id)->first();
+            //     $h->nom_poubelle=$poubelle->nom;
+            //     $h->type=$poubelle->type;
+            //     $quantite=0;
+            //     if($poubelle->type==="plastique"){
+            //         $quantite=$h->quantite_depose_plastique;
+            //     }else if($poubelle->type==="papier"){
+            //         $quantite=$h->quantite_depose_papier;
+            //     }else if($poubelle->type==="composte"){
+            //         $quantite=$h->quantite_depose_composte;
+            //     }else if($poubelle->type==="canette"){
+            //         $quantite=$h->quantite_depose_canette;
+            //     }
+            //     $h->quantite=$quantite;
+            //     $h->etablissement=$etablissement->nom_etablissement;
+            // array_push($a,$h);
+            // }
+            return ViderPoubelle::collection($historique) ;
+            // return $a ;
         }
-        public function VidagePoubelle(  $poubelle_id){
+        public function VidagePoubelle( $poubelle_id){
             $poubelle = Poubelle::find($poubelle_id);
             $quantite=(config('global.capacite_poubelle')* $poubelle->Etat)/ 100;
             $ouvrier=auth()->guard('ouvrier')->user();
@@ -294,7 +295,6 @@ class ViderPoubellesController extends Controller{
             $canette=   $quantite["canette"];
             return ['annee'=>$annee,'plastique'=>$plastique,'papier'=>$papier,'composte'=>$composte,'canette'=>$canette];
         }
-
         public function QuantiteEtablissementResponsableAnnee(){
             $dashboard_etablissement_controller = new ViderPoubellesController;
             $data_dashboard_etablissement_controller = $dashboard_etablissement_controller->SituationFianciereMoisResponsable();
@@ -322,7 +322,6 @@ class ViderPoubellesController extends Controller{
             }
             return ['annee'=>$annee,'plastique'=>$plastique,'papier'=>$papier,'composte'=>$composte,'canette'=>$canette];
         }
-
         public function revenuEtablissementResponsableAnnee(){
             $dashboard_etablissement_controller = new ViderPoubellesController;
             $data_dashboard_etablissement_controller = $dashboard_etablissement_controller->SituationFianciereMoisResponsable();
@@ -634,7 +633,6 @@ class ViderPoubellesController extends Controller{
                 return $myArray;
             }else{return "vide";}
         }
-
         /*      Revenu Gestionnaire      */
             public function revenuGestionnaire(){
                 $dashboard_etablissement_controller = new ViderPoubellesController;
@@ -707,62 +705,6 @@ class ViderPoubellesController extends Controller{
                 $canette=   $revenu["canette"];
                 return ['annee'=>$annee,'plastique'=>$plastique,'papier'=>$papier,'composte'=>$composte,'canette'=>$canette];
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /*            quantite collecte        */
         public function quantiteCollecteMoisGestionnaire(){
             $dashboard_etablissement_controller = new ViderPoubellesController;
@@ -787,9 +729,6 @@ class ViderPoubellesController extends Controller{
             $canette=   $quantite["canette"];
             return ['annee'=>$annee,'plastique'=>$plastique,'papier'=>$papier,'composte'=>$composte,'canette'=>$canette];
         }
-
-
-
         public function EtablissementListe(){
             return Etablissement::pluck("nom_etablissement");
         }

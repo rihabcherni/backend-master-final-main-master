@@ -15,7 +15,6 @@ class AuthOuvrierController extends BaseController{
             'ouvrier' => $ouvrier
         ]);
     }
-
     public function modifierPasswordOuvrier (Request $request , $email){
         $ouvrier=Ouvrier::where('email',$email)->first();
 
@@ -31,7 +30,6 @@ class AuthOuvrierController extends BaseController{
             'message' => 'incorrect password'
         ],403);
     }
-
     public function sendImage(){
         $ouvrier=auth()->guard('ouvrier')->user();
 
@@ -50,7 +48,6 @@ class AuthOuvrierController extends BaseController{
             'msg' =>"undefiened ouvrier"
         ],401);
     }
-
     public function destroyImage(){
         $ouvrier=auth()->guard('ouvrier')->user();
 

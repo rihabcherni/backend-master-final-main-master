@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Gestionnaire\DashboardGestionnaire\GestionPannesController;
     use App\Http\Controllers\Gestionnaire\DashboardGestionnaire\GlobalStatController;
 /**                              dashboard                 */
-
 /*                                 crud                     */
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\GestionnaireController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\Client_dechetController;
@@ -45,9 +44,6 @@ use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 use App\Http\Controllers\ResponsableEtablissement\SituationFinanciereController;
 use App\Http\Controllers\Globale\ConversationController;
 use App\Http\Controllers\Globale\MessageController;
-use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
-use App\Models\Gestionnaire;
-
 /**                              debut dashboard                            */
     Route::get('/dashboard', [GlobalStatController::class, 'statGetionnaire']);
     /**                             Panne                 */
@@ -64,14 +60,21 @@ use App\Models\Gestionnaire;
         /** -------------------------------------------gestion Compte -----------------------------------------*/
             /**                 gestionnaire                        */
                 Route::apiResource('gestionnaire', GestionnaireController::class);
-                Route::delete('/gestionnaire/hard-delete/{id}', [GestionnaireController::class, 'hdelete']);
-                Route::get('/gestionnaire/restore/{id}', [GestionnaireController::class, 'restore']);
-                Route::get('/admin/restoreall', [GestionnaireController::class, 'restoreAll']);
-                Route::get('/admin/trash', [GestionnaireController::class, 'gestionnairetrash']);
+
                 Route::get('gestionnaire-excel', [GestionnaireController::class, 'exportInfoGestionnaireExcel']);
                 Route::get('gestionnaire-csv', [GestionnaireController::class, 'exportInfoGestionnaireCSV']);
                 Route::get('gestionnaire-pdf/{id}', [GestionnaireController::class, 'pdfGestionnaire']);
                 Route::get('gestionnaire-all-pdf', [GestionnaireController::class, 'pdfAllGestionnaire']);
+
+                Route::get('/gestionnaire-liste-suppression', [GestionnaireController::class, 'gestionnairetrash']);
+                Route::get('/gestionnaire-restore/{id}', [GestionnaireController::class, 'restore']);
+                Route::get('/gestionnaire-restore-all', [GestionnaireController::class, 'restoreAll']);
+                Route::get('/gestionnaire-suppression-definitif/{id}', [GestionnaireController::class, 'hdelete']);
+                Route::get('/gestionnaire-suppression-definitif-all', [GestionnaireController::class, 'hdeleteAll']);
+
+                Route::get('gestionnaire-pdf-trashed/{id}', [GestionnaireController::class, 'pdfGestionnaireTrashed']);
+                Route::get('gestionnaire-all-pdf-trashed', [GestionnaireController::class, 'pdfAllGestionnaireTrashed']);
+
             /**                 client                                  */
                 Route::apiResource('client-dechets', Client_dechetController::class);
                 Route::get('client-dechets-excel', [Client_dechetController::class, 'exportInfoClientDechetExcel']);
@@ -120,7 +123,9 @@ use App\Models\Gestionnaire;
                     Route::apiResource('detail-commande-dechets', Detail_commande_dechetController::class);
                     Route::get('detail-commande-dechets-excel', [Detail_commande_dechetController::class, 'exportInfoDetailCommandeDechetExcel']);
                     Route::get('detail-commande-dechets-csv', [Detail_commande_dechetController::class, 'exportInfoDetailCommandeDechetCSV']);
-                   /** -------------------------------------------gestion Panne -----------------------------------------*/
+                    Route::get('detail-commande-dechets-pdf/{id}', [Detail_commande_dechetController::class, 'pdfCommandeDechet']);
+                    Route::get('detail-commande-dechets-all-pdf', [Detail_commande_dechetController::class, 'pdfAllCommandeDechet']);
+                  /** -------------------------------------------gestion Panne -----------------------------------------*/
             /**                        reparateur poubelle             */
                 Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
                 Route::get('reparateur-poubelle-excel', [Reparateur_poubelleController::class, 'exportInfoReparateurPoubelleExcel']);

@@ -10,8 +10,7 @@
     use App\Http\Controllers\Globale\ConversationController;
     use App\Http\Controllers\Globale\MessageController;
     use App\Http\Controllers\Globale\ViderPoubellesController;
-
-Route::put('confirme-planning-ouvrier/{id}',[AuthOuvrierController::class, 'confirmePlanningOuvrier']);
+    use App\Http\Controllers\Ouvrier\PlanningOuvrierController;
 Route::group(['prefix' => 'auth-ouvrier'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::group(['middleware' => 'auth:ouvrier'], function() {
@@ -34,6 +33,8 @@ Route::group(['prefix' => 'auth-ouvrier'], function () {
                     Route::get('/viderPoubelle/{poubelle}', [ViderPoubellesController::class, 'VidagePoubelle']);
                     Route::post('/viderPoubelleQr/{qr}', [ViderController::class, 'ViderPoubelleQr']);
                     Route::get('/viderCamion', [ViderController::class, 'ViderCamion']);
+                    Route::get('/planning-ouvrier', [PlanningOuvrierController::class, 'planningOuvrier']);
+
                 });
         });
     });

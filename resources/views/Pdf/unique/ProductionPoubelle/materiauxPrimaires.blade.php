@@ -55,22 +55,36 @@
                     <td>{{$prix_total}} DT</td>
                 </tr>
 
+
                 <tr>
-                    <th rowspan="4">Fournisseur:</th>
-                    <th>Id:</th>
-                    <td>{{$fournisseur_id}}</td>
-                </tr>
-                <tr>
-                    <th>Nom et prénom:</th>
-                    <td>{{$fournisseur_nom}}</td>
-                </tr>
-                <tr>
-                    <th>Carte identité national:</th>
-                    <td>{{$cin}}</td>
-                </tr>
-                <tr>
-                    <th>Numéro télophone:</th>
-                    <td>{{$fournisseur_numero_telephone}}</td>
+                    <th>Fournisseur:</th>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <?php
+                                    $url = 'storage/images/fournisseur/'.$fournisseur->photo;
+                                    $path= public_path($url);
+                                    if(! file_exists($path) || $fournisseur->photo === null){
+                                        $path= public_path('storage/images/fournisseur/default.jpeg');
+                                    }
+                                    ?>
+                                    <img width="60px" height="60px" src="{{$path}}" alt="fournisseur"/>
+                                </td>
+                                <td>
+                                    <b>Id:</b>{{$fournisseur_id}}<br/>
+
+                                    <b>Nom et prénom:</b> {{$fournisseur_nom}}<br/>
+
+                                    <b>Carte identité national:</b> {{$cin}}<br/>
+
+                                    <b>Numéro télophone:</b> {{$fournisseur_numero_telephone}}<br/>
+                                    <b>E-mail:</b><sapn style='color:blue; font-weight:bold;text-decoration:underline;'>{{$fournisseur->email}}</sapn><br/>
+                                    <b>Adresse:</b>{{$fournisseur->adresse}}<br/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
 
                 <tr>

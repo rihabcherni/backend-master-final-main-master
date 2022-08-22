@@ -12,6 +12,7 @@ class MateriauxPrimaire extends JsonResource{
         return [
             'id' => $this->id,
             'fournisseur_id' => $this->fournisseur_id,
+            'fournisseur' =>Fournisseur::find($this->fournisseur_id),
             'fournisseur_nom' => $nom,
             'cin' => $cin,
             'fournisseur_numero_telephone'=>Fournisseur::find($this->fournisseur_id)->numero_telephone,
