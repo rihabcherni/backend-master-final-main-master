@@ -49,7 +49,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des poubelles: </h2>
+        <h2 style="text-align: center;">Liste des poubelles supprimés: </h2>
         <br/>
         <table>
             <tr>
@@ -57,7 +57,7 @@
                 <th colspan="3">Etablissement</th>
                 <th colspan="3">Détails poubelle</th>
                 <th colspan="3">Détails emplacement poubelle</th>
-                <th colspan="2">Date</th>
+                <th colspan="3">Date</th>
             </tr>
             <tr>
                 <th>N°</th>

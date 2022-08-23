@@ -16,7 +16,7 @@ class Responsable_etablissementFactory extends Factory{
             'etablissement_id'=>\App\Models\Etablissement::all()->random()->id,
             'nom'=> $this->faker->firstName,
             'prenom'=> $this->faker->lastName,
-            'photo'=> "responsable.png",
+            'photo' =>'default.jpeg',
             'numero_telephone'=> $this->faker->unique()->e164PhoneNumber,
             'numero_fixe'=> $fixe,
             'email'=> $email,

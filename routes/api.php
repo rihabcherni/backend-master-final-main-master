@@ -5,11 +5,7 @@ use App\Http\Controllers\Globale\SommeDechetController;
 use App\Http\Controllers\Globale\RechercheController;
 use App\Http\Controllers\Globale\RegionController;
 use App\Http\Controllers\Globale\LoginController;
-use App\Http\Controllers\Auth\ClientDechet\AuthClientDechetController;
-use App\Http\Controllers\Auth\Gestionnaire\AuthGestionnaireController;
 use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
-use App\Http\Controllers\Auth\ResponsableEtablissement\AuthResponsableEtablissementController;
-use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\ViderPoubelleController;
 use App\Http\Controllers\Gestionnaire\TableCrud\ViderPoubelleGestionnaireController;
 use App\Http\Controllers\Globale\ViderPoubellesController;
 

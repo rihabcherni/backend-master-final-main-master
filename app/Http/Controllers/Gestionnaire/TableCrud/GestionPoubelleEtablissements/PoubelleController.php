@@ -173,7 +173,7 @@ class PoubelleController extends BaseController{
         }else{
             $p= PoubelleResource::collection( $poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/Delete/table/GestionPoubelleEtablissement/poubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionPoubelleEtablissement/poubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('poubelle-supprimes.pdf');
         }
     }

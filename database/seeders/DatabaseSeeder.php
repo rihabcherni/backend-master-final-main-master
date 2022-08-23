@@ -12,8 +12,6 @@ class DatabaseSeeder extends Seeder{
             DechetSeeder::class,
             EtablissementSeeder::class,
             StockPoubelleSeeder::class,
-        ]);
-        $this->call([
             CompteSeeder::class,
         ]);
 

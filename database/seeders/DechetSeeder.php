@@ -3,12 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Dechet;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DechetSeeder extends Seeder{
-    public function run()
-    {
+    public function run(){
         Dechet::create([
             'type_dechet'=> 'plastique',
             'prix_unitaire'=>1.2,

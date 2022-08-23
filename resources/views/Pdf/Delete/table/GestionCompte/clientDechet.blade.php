@@ -49,7 +49,7 @@
                 <th>E-mail:</th>
                 <th>Date de création:</th>
                 <th>Date de dernier modification: </th>
-                <th style="background-color:red;">Date de suppression: </th>
+                <th style="background-color:red; color:white">Date de suppression: </th>
             </tr>
             @foreach ($data as $l)
             <tr>

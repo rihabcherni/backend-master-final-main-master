@@ -6,7 +6,6 @@ use App\Models\Client_dechet;
 use App\Models\Gestionnaire;
 use App\Models\Ouvrier;
 use PDF;
-use Image;
 use App\Models\Responsable_commercial;
 use App\Models\Responsable_etablissement;
 use App\Models\Responsable_personnel ;
@@ -22,7 +21,7 @@ class LoginController extends Controller{
             'email' =>['required','email'],
             'mot_de_passe'=>['required', 'string'],
         ]);
-        if($validator->fails()){return response()->json(['validation_errors' =>$validator->errors()],401);}
+        if($validator->fails()){return response()->json(['validation_errors' =>$validator->errors(),'status'=>401],200);}
         $gestionnaire=Gestionnaire::where('email',$request->email)->first();
         $responsable_etab=Responsable_etablissement::where('email',$request->email)->first();
         $client_dechet=Client_dechet::where('email',$request->email)->first();

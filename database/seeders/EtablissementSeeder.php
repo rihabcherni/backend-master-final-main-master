@@ -253,7 +253,7 @@ class EtablissementSeeder extends Seeder{
             'etablissement_id'=>1,
             'nom'=> 'foulen',
             'prenom'=> 'ben foulen',
-            'photo'=> 'responsable1.jpg',
+            'photo'=> 'responsable.png',
             'numero_telephone'=> 21548796,
             'numero_fixe'=> 231211224,
             'email'=> 'responsable1.reschool@gmail.com',

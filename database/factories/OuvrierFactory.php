@@ -14,7 +14,7 @@ class OuvrierFactory extends Factory{
             'nom'=> $this->faker->firstName,
             'prenom'=> $this->faker->lastName,
             'CIN'=> $this->faker->unique()->numerify('########'),
-            'photo'=>'ouvrier.jpg',
+            'photo' =>'default.jpeg',
             'numero_telephone'=> $this->faker->unique()->e164PhoneNumber,
             'email'=> $email,
             'QRcode' => $qr,

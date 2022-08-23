@@ -46,12 +46,12 @@ class StockPoubelleSeeder extends Seeder{
             'quantite_disponible'=>random_int(0,100),
             'description'=>$desc4,
             'photo'=>"rouge.png",
-        ])->each(function ($u) {
-            $u->rating_poubelle()->save(Rating_poubelle::create([
-                'responsable_etablissement_id'=>\App\Models\Responsable_etablissement::all()->random()->id,
-                'stock_poubelle_id'=>1,
-                'rating'=>random_int(0,5),
-            ]));
+            ])->each(function ($u) {
+                $u->rating_poubelle()->save(Rating_poubelle::create([
+                    'responsable_etablissement_id'=>\App\Models\Responsable_etablissement::all()->random()->id,
+                    'stock_poubelle_id'=>1,
+                    'rating'=>random_int(0,5),
+                ]));
         });
-        }
+    }
 }

@@ -140,7 +140,7 @@ class Client_dechetController extends BaseController{
         }else{
             $p= Client_dechetResource::collection( $client);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/Delete/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('client-dechet-supprimes.pdf');
         }
     }

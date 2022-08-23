@@ -41,7 +41,7 @@ class CompteSeeder extends Seeder{
         Ouvrier::create([
             'camion_id'=> 1,
             'poste'=> 'conducteur',
-            'photo'=>'ouvrier.jpg',
+            'photo'=>'ouvrier.png',
             'QRcode' => Hash::make('ouvrier1'),
             'nom'=> 'Samir',
             'prenom'=> 'Ben salah',
@@ -53,7 +53,7 @@ class CompteSeeder extends Seeder{
         ]);
         Ouvrier::create([
             'camion_id'=> 1,
-            'photo'=>'ouvrier.jpg',
+            'photo'=>'ouvrier2.png',
             'poste'=> 'agent',
             'QRcode' => Hash::make('ouvrier2'),
             'nom'=> 'Ahmed',
