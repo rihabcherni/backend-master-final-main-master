@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <th style='background-color:red; color:white;'>Date de suppression</th>
-                    <td style='color:red;'>{{$deleted_at}}</td>
+                    <td  colspan="2" style='color:red;'>{{$deleted_at}}</td>
                 </tr>
             </table>
         </div>

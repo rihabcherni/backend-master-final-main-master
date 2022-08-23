@@ -60,6 +60,7 @@ class GestionnaireController extends BaseController{
         $gestionnaire->update($input);
         return $this->handleResponse(new GestionnaireResource($gestionnaire), 'gestionnaire modifié avec succes');
     }
+
     public function destroy($id) {
         $gestionnaire = Gestionnaire::find($id);
         if (is_null($gestionnaire)) {
@@ -139,17 +140,18 @@ class GestionnaireController extends BaseController{
         }
         return $this->handleResponse(GestionnaireResource::collection($gestionnaires), 'tous gestionnaires trashed');
     }
-    public function gestionnairetrash(){
+    public function listeSuppression(){
         $gestionnaire = Gestionnaire::onlyTrashed()->get();
         return $this->handleResponse(GestionnaireResource::collection($gestionnaire), 'affichage des gestionnaires');
     }
-    public function exportInfoGestionnaireExcel(){
+
+    public function exportInfoExcel(){
         return Excel::download(new GestionnaireExport  , 'gestionnaire-liste.xlsx');
     }
-    public function exportInfoGestionnaireCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new GestionnaireExport, 'gestionnaire-liste.csv');
     }
-    public function pdfGestionnaire($id){
+    public function pdf($id){
         $Gestionnaire = Gestionnaire::find($id);
         if (is_null($Gestionnaire)) {
             return $this->handleError('Gestionnaire n\'existe pas!');
@@ -171,7 +173,7 @@ class GestionnaireController extends BaseController{
             return $pdf->download('gestionnaire.pdf');
         }
     }
-    public function pdfAllGestionnaire(){
+    public function pdfAll(){
         $gestionnaire = Gestionnaire::all();
         if (is_null($gestionnaire)) {
             return $this->handleError('gestionnaire n\'existe pas!');
@@ -182,7 +184,7 @@ class GestionnaireController extends BaseController{
             return $pdf->download('gestionnaire.pdf');
         }
     }
-    public function pdfAllGestionnaireTrashed(){
+    public function pdfAllTrashed(){
         $gestionnaire = Gestionnaire::onlyTrashed()->get();
         if (is_null($gestionnaire)) {
             return $this->handleError('gestionnaire n\'existe pas!');
@@ -193,7 +195,7 @@ class GestionnaireController extends BaseController{
             return $pdf->download('gestionnaire.pdf');
         }
     }
-    public function pdfGestionnaireTrashed( $id) {
+    public function pdfTrashed( $id) {
         $gestionnaire = Gestionnaire::withTrashed()->where('id' ,  $id )->first();
         if (is_null($gestionnaire)) {
             return $this->handleError('Gestionnaire n\'existe pas!');
@@ -215,5 +217,5 @@ class GestionnaireController extends BaseController{
                 $pdf = Pdf::loadView('pdf/Delete/unique/GestionCompte/Gestionnaire', $liste);
                 return $pdf->download('gestionnaire.pdf');
             }
-        }
+    }
 }

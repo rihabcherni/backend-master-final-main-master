@@ -35,7 +35,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des commandes dechets Reschool Ecology supprimés: </h2>        <br/>
         <table>
             <tr>
 
@@ -48,6 +48,8 @@
 
                 <th rowspan="2">Date de création:</th>
                 <th rowspan="2">Date de modification: </th>
+                <th rowspan="2" style='background-color:red; color:white;'>Date de suppression</th>
+
             </tr>
             <tr>
                 <th>Id:</th>
@@ -62,10 +64,6 @@
                 <th>Nom et prénom</th>
                 <th>Numéro télephone</th>
                 <th>E-mail</th>
-                <th>Date de création:</th>
-                <th>Date de dernier modification: </th>
-                <th style='background-color:red; color:white;'>Date de suppression</th>
-
             </tr>
             @foreach ($data as $l)
             <tr>

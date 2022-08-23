@@ -35,7 +35,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des commandes dechets Reschool Ecology: </h2>        <br/>
         <table>
             <tr>
 
@@ -72,7 +72,7 @@
                 <td>{{ $l['date_commande'] }}</td>
                 <td>{{ $l['date_livraison'] }}</td>
                 <td>{{ $l['type_paiment'] }}</td>
-                
+
                 <td>{{ $l['entreprise'] }}</td>
                 <td>{{ $l['matricule_fiscale'] }}</td>
                 <td>{{ $l['client_dechet']->id }}</td>

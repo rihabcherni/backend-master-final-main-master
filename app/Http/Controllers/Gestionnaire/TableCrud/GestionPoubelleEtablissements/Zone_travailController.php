@@ -44,13 +44,49 @@ class Zone_travailController extends BaseController{
             return $this->handleResponse(new Zone_travailResource($zone_travail), ' zone travail supprimé!');
         }
     }
-    public function exportInfoZoneTravailExcel(){
+    public function hdelete( $id) {
+        $zone_travail = Zone_travail::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($zone_travail)) {
+            return $this->handleError('zone travail n\'existe pas!');
+        }else{
+            $zone_travail->forceDelete();
+            return $this->handleResponse(new Zone_travailResource($zone_travail), 'zone travail supprimé definitivement!');
+        }
+    }
+    public function hdeleteAll( ) {
+        $zone_travails = Zone_travail::onlyTrashed()->get();
+        foreach($zone_travails as $zone_travail){
+            $zone_travail->forceDelete();
+        }
+        return $this->handleResponse(Zone_travailResource::collection($zone_travails), 'tous zones de travail  supprimés définitivement');
+    }
+    public function restore( $id) {
+        $zone_travail = Zone_travail::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($zone_travail)) {
+            return $this->handleError('zone travail n\'existe pas!');
+        } else{
+            $zone_travail->restore();
+            return $this->handleResponse(new Zone_travailResource($zone_travail), 'zone travail supprimé avec retour!');
+        }
+    }
+    public function restoreAll(){
+        $zone_travails= Zone_travail::onlyTrashed()->get();
+        foreach($zone_travails as $zone_travail){
+            $zone_travail->restore();
+        }
+        return $this->handleResponse(Zone_travailResource::collection($zone_travails), 'tous zones de travail  restore');
+    }
+    public function listeSuppression(){
+        $zone_travail = Zone_travail::onlyTrashed()->get();
+        return $this->handleResponse(Zone_travailResource::collection($zone_travail), 'affichage des zones de travail  supprimés');
+    }
+    public function exportInfoExcel(){
         return Excel::download(new Zone_travailExport  , 'zone-travail-liste.xlsx');
     }
-    public function exportInfoZoneTravailCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new Zone_travailExport, 'zone-travail-liste.csv');
     }
-    public function pdfZoneTravail($id){
+    public function pdf($id){
         $zone_travail = Zone_travail::find($id);
         if (is_null($zone_travail)) {
             return $this->handleError('zone travail n\'existe pas!');
@@ -70,7 +106,7 @@ class Zone_travailController extends BaseController{
             return $pdf->download('zone-travail.pdf');
         }
     }
-    public function pdfAllZoneTravail(){
+    public function pdfAll(){
         $zone_travail = Zone_travail::all();
         if (is_null($zone_travail)) {
             return $this->handleError('zone travail n\'existe pas!');
@@ -81,4 +117,37 @@ class Zone_travailController extends BaseController{
             return $pdf->download('zone-travail.pdf');
         }
     }
+    public function pdfAllTrashed(){
+        $zone_travail = Zone_travail::onlyTrashed()->get();
+        if (is_null($zone_travail)) {
+            return $this->handleError('zone travail n\'existe pas!');
+        }else{
+            $p= Zone_travailResource::collection( $zone_travail);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionPoubelleEtablissement/zoneTravail', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('zone-travail-supprimes.pdf');
+        }
+    }
+    public function pdfTrashed( $id) {
+        $zone_travail = Zone_travail::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($zone_travail)) {
+            return $this->handleError('zone travail n\'existe pas!');
+        }else{
+            $data= collect(Zone_travail::getZoneTravailByIdTrashed($id))->toArray();
+            $liste = [
+                'id' => $data[0]['id'],
+                "region" => $data[0]['region'],
+                "quantite_total_collecte_plastique" => $data[0]['quantite_total_collecte_plastique'],
+                "quantite_total_collecte_composte" => $data[0]['quantite_total_collecte_composte'],
+                "quantite_total_collecte_papier" => $data[0]['quantite_total_collecte_papier'],
+                "quantite_total_collecte_canette" => $data[0]['quantite_total_collecte_canette'],
+                "created_at" => $data[0]['created_at'],
+                "updated_at" => $data[0]['updated_at'],
+                'deleted_at' => $data[0]['deleted_at'],
+            ];
+            $pdf = Pdf::loadView('pdf/Delete/unique/GestionPoubelleEtablissement/zoneTravail', $liste);
+            return $pdf->download('zone-travail-supprime.pdf');
+            }
+        }
 }
+

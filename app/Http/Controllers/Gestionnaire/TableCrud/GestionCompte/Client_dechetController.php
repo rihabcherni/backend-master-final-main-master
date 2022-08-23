@@ -49,12 +49,12 @@ class Client_dechetController extends BaseController{
         $client = Client_dechet::find($id);
         if (is_null($client)) {
             return $this->handleError('client  n\'existe pas!');
-        }
-        else{
+        } else{
             $client->delete();
             return $this->handleResponse(new Client_dechetResource($client), 'Client supprimé!');
         }
     }
+
     public function hdelete( $id) {
         $client = Client_dechet::withTrashed()->where('id' ,  $id )->first();
         if (is_null($client)) {
@@ -87,17 +87,19 @@ class Client_dechetController extends BaseController{
         }
         return $this->handleResponse(Client_dechetResource::collection($clients), 'tous clients dechets restore');
     }
-    public function clienttrash(){
+    public function listeSuppression(){
         $client = Client_dechet::onlyTrashed()->get();
         return $this->handleResponse(Client_dechetResource::collection($client), 'affichage des clients dechets supprimés');
     }
-    public function exportInfoClientDechetExcel(){
+
+    public function exportInfoExcel(){
         return Excel::download(new ClientDechetExport  , 'client-dechet-liste.xlsx');
     }
-    public function exportInfoClientDechetCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new ClientDechetExport, 'client-dechet-liste.csv');
     }
-    public function pdfClientDechet($id){
+
+    public function pdf($id){
         $client = Client_dechet::find($id);
         if (is_null($client)) {
             return $this->handleError('client n\'existe pas!');
@@ -120,7 +122,7 @@ class Client_dechetController extends BaseController{
             return $pdf->download('client-dechet.pdf');
         }
     }
-    public function pdfAllClientDechet(){
+    public function pdfAll(){
         $client = Client_dechet::all();
         if (is_null($client)) {
             return $this->handleError('client dechet n\'existe pas!');
@@ -128,10 +130,10 @@ class Client_dechetController extends BaseController{
             $p= Client_dechetResource::collection( $client);
             $data= collect($p)->toArray();
             $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/clientDechet', [ 'data' => $data] )->setPaper('a4', 'landscape');
-            return $pdf->download('client-dechet.pdf');
+            return $pdf->download('client-dechet-supprimes.pdf');
         }
     }
-    public function pdfAllClientDechetTrashed(){
+    public function pdfAllTrashed(){
         $client = Client_dechet::onlyTrashed()->get();
         if (is_null($client)) {
             return $this->handleError('client dechet n\'existe pas!');
@@ -142,7 +144,7 @@ class Client_dechetController extends BaseController{
             return $pdf->download('client-dechet-supprimes.pdf');
         }
     }
-    public function pdfClientDechetTrashed( $id) {
+    public function pdfTrashed( $id) {
         $client = Client_dechet::withTrashed()->where('id' ,  $id )->first();
         if (is_null($client)) {
             return $this->handleError('Client dechet n\'existe pas!');

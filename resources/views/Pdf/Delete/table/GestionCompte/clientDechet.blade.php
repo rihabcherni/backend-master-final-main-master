@@ -35,7 +35,7 @@
         <p class='date'>{{ date('d-m-Y H:i:s') }}</p>
         <hr/>
         <br/>
-        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology: </h2>        <br/>
+        <h2 style="text-align: center;">Liste des clients dechets Reschool Ecology Supprimés: </h2>        <br/>
         <table>
             <tr>
                 <th>Id:</th>

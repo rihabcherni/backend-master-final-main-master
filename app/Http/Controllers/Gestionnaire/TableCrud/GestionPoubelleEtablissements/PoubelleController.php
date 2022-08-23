@@ -81,16 +81,49 @@ class PoubelleController extends BaseController{
             return $this->handleResponse(new PoubelleResource($poubelle), ' poubelle supprimé!');
         }
     }
-
-    public function exportInfoPoubelleExcel(){
+    public function hdelete( $id) {
+        $poubelle = Poubelle::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($poubelle)) {
+            return $this->handleError('poubelle n\'existe pas!');
+        }else{
+            $poubelle->forceDelete();
+            return $this->handleResponse(new PoubelleResource($poubelle), 'poubelle supprimé definitivement!');
+        }
+    }
+    public function hdeleteAll( ) {
+        $poubelles = Poubelle::onlyTrashed()->get();
+        foreach($poubelles as $poubelle){
+            $poubelle->forceDelete();
+        }
+        return $this->handleResponse(PoubelleResource::collection($poubelles), 'tous poubelles supprimés définitivement');
+    }
+    public function restore( $id) {
+        $poubelle = Poubelle::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($poubelle)) {
+            return $this->handleError('poubelle n\'existe pas!');
+        } else{
+            $poubelle->restore();
+            return $this->handleResponse(new PoubelleResource($poubelle), 'poubelle supprimé avec retour!');
+        }
+    }
+    public function restoreAll(){
+        $poubelles= Poubelle::onlyTrashed()->get();
+        foreach($poubelles as $poubelle){
+            $poubelle->restore();
+        }
+        return $this->handleResponse(PoubelleResource::collection($poubelles), 'tous poubelles restore');
+    }
+    public function listeSuppression(){
+        $poubelle = Poubelle::onlyTrashed()->get();
+        return $this->handleResponse(PoubelleResource::collection($poubelle), 'affichage des poubelles supprimés');
+    }
+    public function exportInfoExcel(){
         return Excel::download(new PoubelleExport, 'poubelleliste.xlsx');
     }
-
-    public function exportInfoPoubelleCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new PoubelleExport, 'poubelleliste.csv');
     }
-
-    public function pdfPoubelle($id){
+    public function pdf($id){
         $poubelle = Poubelle::find($id);
         if (is_null($poubelle)) {
             return $this->handleError('poubelle n\'existe pas!');
@@ -122,7 +155,7 @@ class PoubelleController extends BaseController{
             return $pdf->download('poubelle.pdf');
         }
     }
-    public function pdfAllPoubelle(){
+    public function pdfAll(){
         $poubelle = Poubelle::all();
         if (is_null($poubelle)) {
             return $this->handleError('poubelle n\'existe pas!');
@@ -133,4 +166,48 @@ class PoubelleController extends BaseController{
             return $pdf->download('poubelle.pdf');
         }
     }
+    public function pdfAllTrashed(){
+        $poubelle = Poubelle::onlyTrashed()->get();
+        if (is_null($poubelle)) {
+            return $this->handleError('poubelle n\'existe pas!');
+        }else{
+            $p= PoubelleResource::collection( $poubelle);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionPoubelleEtablissement/poubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('poubelle-supprimes.pdf');
+        }
+    }
+    public function pdfTrashed( $id) {
+        $poubelle = Poubelle::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($poubelle)) {
+            return $this->handleError('poubelle n\'existe pas!');
+        }else{
+            $data= collect(Poubelle::getPoubelleByIdTrashed($id))->toArray();
+            $liste = [
+                'id' => $data[0]['id'],
+                'poubelle_id_resp' =>   $data[0]['poubelle_id_resp'],
+
+                "etablissement" => $data[0]['etablissement'],
+                "etablissement_id" =>  $data[0]['etablissement_id'],
+                "nom" => $data[0]['nom'],
+                "nom_poubelle_responsable" => $data[0]['nom_poubelle_responsable'],
+                "type" => $data[0]['type'],
+                "Etat" => $data[0]['Etat'],
+                "quantite" => $data[0]['quantite'],
+                "bloc_poubelle_id" => $data[0]['bloc_poubelle_id'],
+                "bloc_poubelle_id_resp" => $data[0]['bloc_poubelle_id_resp'],
+                "bloc_etablissement" => $data[0]['bloc_etablissement'],
+                "bloc_etablissement_id" => $data[0]['bloc_etablissement_id'],
+
+                "etage" => $data[0]['etage'],
+                "etage_id" => $data[0]['etage_id'],
+                "qrcode" => $data[0]['qrcode'],
+                "created_at" => $data[0]['created_at'],
+                "updated_at" => $data[0]['updated_at'],
+                'deleted_at' => $data[0]['deleted_at'],
+            ];
+            $pdf = Pdf::loadView('pdf/Delete/unique/GestionPoubelleEtablissement/poubelle', $liste);
+            return $pdf->download('poubelle-supprime.pdf');
+            }
+        }
 }

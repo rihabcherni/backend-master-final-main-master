@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class StockPoubelleController extends BaseController{
     public function index(){
         $stock_poubelle = Stock_poubelle::all();
@@ -62,15 +63,88 @@ class StockPoubelleController extends BaseController{
         $stock_poubelle->update();
         return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle modifié!');
     }
-    public function destroy($id){
-        $stock_poubelle =Stock_poubelle::find($id);
+    public function destroy($id) {
+        $stock_poubelle = Stock_poubelle::find($id);
         if (is_null($stock_poubelle)) {
             return $this->handleError('stock poubelle n\'existe pas!');
-        }
-        else{
+        }elseif($stock_poubelle->photo ==="default.jpeg" || $stock_poubelle->photo === NULL){
+            $stock_poubelle->delete();
+            return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle supprimé!');
+        } else{
+            if(File::exists(('storage\images\stock_poubelle\\').$stock_poubelle->photo)){
+                File::copy(public_path('storage\images\stock_poubelle\\').$stock_poubelle->photo,
+                public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo);
+                unlink(public_path('storage\images\stock_poubelle\\').$stock_poubelle->photo );
+            }
             $stock_poubelle->delete();
             return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle supprimé!');
         }
+    }
+    public function hdelete( $id) {
+        $stock_poubelle = Stock_poubelle::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($stock_poubelle)) {
+            return $this->handleError('stock poubelle n\'existe pas!');
+        }elseif($stock_poubelle->photo ==="default.jpeg" || $stock_poubelle->photo === NULL){
+            $stock_poubelle->forceDelete();
+            return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle supprimé!');
+        } else{
+            if(File::exists(('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo)){
+                unlink(public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo );
+            }
+            $stock_poubelle->forceDelete();
+            return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle supprimé definitivement!');
+        }
+    }
+    public function hdeleteAll( ) {
+        $stock_poubelles = Stock_poubelle::onlyTrashed()->get();
+        foreach($stock_poubelles as $stock_poubelle){
+            if($stock_poubelle->photo ==="default.jpeg" || $stock_poubelle->photo === NULL){
+                $stock_poubelle->forceDelete();
+            } else{
+                if(File::exists(('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo)){
+                    unlink(public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo );
+                }
+                $stock_poubelle->forceDelete();
+            }
+        }
+        return $this->handleResponse(Stock_poubelleResource::collection($stock_poubelles), 'tous stock poubelles  supprimés définitivement');
+    }
+    public function restore( $id) {
+        $stock_poubelle = Stock_poubelle::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($stock_poubelle)) {
+            return $this->handleError('stock poubelle n\'existe pas!');
+        }elseif($stock_poubelle->photo ==="default.jpeg" || $stock_poubelle->photo === NULL){
+            $stock_poubelle->restore();
+            return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle supprimé!');
+        } else{
+            if(File::exists(('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo)){
+                File::copy(public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo,
+                public_path('storage\images\stock_poubelle\\').$stock_poubelle->photo);
+                unlink(public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo );
+            }
+            $stock_poubelle->restore();
+            return $this->handleResponse(new Stock_poubelleResource($stock_poubelle), 'stock poubelle supprimé avec retour!');
+        }
+    }
+    public function restoreAll(){
+        $stock_poubelles= Stock_poubelle::onlyTrashed()->get();
+        foreach($stock_poubelles as $stock_poubelle){
+            if($stock_poubelle->photo ==="default.jpeg" || $stock_poubelle->photo === NULL){
+                $stock_poubelle->restore();
+            } else{
+                if(File::exists(('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo)){
+                    File::copy(public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo,
+                    public_path('storage\images\stock_poubelle\\').$stock_poubelle->photo);
+                    unlink(public_path('storage\trashImages\stock_poubelle\\').$stock_poubelle->photo );
+                }
+                $stock_poubelle->restore();
+            }
+        }
+        return $this->handleResponse(Stock_poubelleResource::collection($stock_poubelles), 'tous stock poubelles  trashed');
+    }
+    public function listeSuppression(){
+        $stock_poubelle = Stock_poubelle::onlyTrashed()->get();
+        return $this->handleResponse(Stock_poubelleResource::collection($stock_poubelle), 'affichage des stock poubelles ');
     }
     public function updateStockImage(Request $request,$id){
         $request->validate([
@@ -99,15 +173,13 @@ class StockPoubelleController extends BaseController{
                 'photo' =>'error',
             ]);
     }
-    public function exportInfoStockPoubelleExcel(){
+    public function exportInfoExcel(){
         return Excel::download(new Stock_poubelleExport  , 'stock-poubelle-liste.xlsx');
     }
-
-    public function exportInfoStockPoubelleCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new Stock_poubelleExport, 'stock-poubelle-liste.csv');
     }
-
-    public function pdfStockPoubelle($id){
+    public function pdf($id){
         $stock_poubelle = Stock_poubelle::find($id);
         if (is_null($stock_poubelle)) {
             return $this->handleError('stock poubelle n\'existe pas!');
@@ -126,7 +198,7 @@ class StockPoubelleController extends BaseController{
             return $pdf->download('stock-poubelle.pdf');
         }
     }
-    public function pdfAllStockPoubelle(){
+    public function pdfAll(){
         $stock_poubelle = Stock_poubelle::all();
         if (is_null($stock_poubelle)) {
             return $this->handleError('stock poubelle n\'existe pas!');
@@ -136,5 +208,36 @@ class StockPoubelleController extends BaseController{
             $pdf = Pdf::loadView('pdf/NoDelete/table/ProductionPoubelle/stockPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('stock-poubelle.pdf');
         }
+    }
+    public function pdfAllTrashed(){
+        $stock_poubelle = Stock_poubelle::onlyTrashed()->get();
+        if (is_null($stock_poubelle)) {
+            return $this->handleError('stock poubelle n\'existe pas!');
+        }else{
+            $p= Stock_poubelleResource::collection( $stock_poubelle);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/Delete/table/ProductionPoubelle/stockPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('stock-poubelle.pdf');
+        }
+    }
+    public function pdfTrashed( $id) {
+        $stock_poubelle = Stock_poubelle::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($stock_poubelle)) {
+            return $this->handleError('stock poubelle n\'existe pas!');
+        }else{
+                $data= collect(Stock_poubelle::getStockPoubelleByIdTrashed($id))->toArray();
+                $liste = [
+                    'id' => $data[0]['id'],
+                    "type_poubelle" => $data[0]['type_poubelle'],
+                    "quantite_disponible" => $data[0]['quantite_disponible'],
+                    "description" => $data[0]['description'],
+                    "photo" => $data[0]['photo'],
+                    "created_at" => $data[0]['created_at'],
+                    "updated_at" => $data[0]['updated_at'],
+                    'deleted_at' => $data[0]['deleted_at'],
+                ];
+                $pdf = Pdf::loadView('pdf/Delete/unique/ProductionPoubelle/stockPoubelle', $liste);
+                return $pdf->download('stock-poubelle.pdf');
+            }
     }
 }

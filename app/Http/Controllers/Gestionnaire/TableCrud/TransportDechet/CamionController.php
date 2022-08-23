@@ -41,13 +41,49 @@ class CamionController extends BaseController{
             return $this->handleResponse(new CamionResource($camion), ' Camion supprimé!');
         }
     }
-    public function exportInfoCamionExcel(){
+    public function hdelete( $id) {
+        $camion = Camion::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($camion)) {
+            return $this->handleError('camion n\'existe pas!');
+        }else{
+            $camion->forceDelete();
+            return $this->handleResponse(new CamionResource($camion), 'camion supprimé definitivement!');
+        }
+    }
+    public function hdeleteAll( ) {
+        $camions = Camion::onlyTrashed()->get();
+        foreach($camions as $camion){
+            $camion->forceDelete();
+        }
+        return $this->handleResponse(CamionResource::collection($camions), 'tous camions supprimés définitivement');
+    }
+    public function restore( $id) {
+        $camion = Camion::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($camion)) {
+            return $this->handleError('camion n\'existe pas!');
+        } else{
+            $camion->restore();
+            return $this->handleResponse(new CamionResource($camion), 'camion supprimé avec retour!');
+        }
+    }
+    public function restoreAll(){
+        $camions= Camion::onlyTrashed()->get();
+        foreach($camions as $camion){
+            $camion->restore();
+        }
+        return $this->handleResponse(CamionResource::collection($camions), 'tous camions restore');
+    }
+    public function listeSuppression(){
+        $camion = Camion::onlyTrashed()->get();
+        return $this->handleResponse(CamionResource::collection($camion), 'affichage des camions supprimés');
+    }
+    public function exportInfoExcel(){
         return Excel::download(new CamionExport  , 'camion-liste.xlsx');
     }
-    public function exportInfoCamionCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new CamionExport, 'camion-liste.csv');
     }
-    public function pdfCamion($id){
+    public function pdf($id){
         $camion = Camion::find($id);
         if (is_null($camion)) {
             return $this->handleError('Camion n\'existe pas!');
@@ -79,7 +115,7 @@ class CamionController extends BaseController{
             return $pdf->download('camion.pdf');
         }
     }
-    public function pdfAllCamion(){
+    public function pdfAll(){
         $camion = Camion::all();
         if (is_null($camion)) {
             return $this->handleError('camion n\'existe pas!');
@@ -90,4 +126,48 @@ class CamionController extends BaseController{
             return $pdf->download('camion.pdf');
         }
     }
+    public function pdfAllTrashed(){
+        $camion = Camion::onlyTrashed()->get();
+        if (is_null($camion)) {
+            return $this->handleError('camion n\'existe pas!');
+        }else{
+            $p= CamionResource::collection( $camion);
+            $data= collect($p)->toArray();
+            $pdf = Pdf::loadView('pdf/Delete/table/TransportDechet/camion', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            return $pdf->download('camion-supprimes.pdf');
+        }
+    }
+    public function pdfTrashed( $id) {
+        $camion = Camion::withTrashed()->where('id' ,  $id )->first();
+        if (is_null($camion)) {
+            return $this->handleError('camion n\'existe pas!');
+        }else{
+            $data= collect(Camion::getCamionByIdTrashed($id))->toArray();
+            $liste = [
+                'id' => $data[0]['id'],
+                'zone_travail'=> $data[0]['zone_travail'],
+                'zone_depot'=> $data[0]['zone_depot'],
+                'ouvrier'=> $data[0]['ouvrier'],
+                "zone_travail_id" => $data[0]['zone_travail_id'],
+                "zone_depot_id" => $data[0]['zone_depot_id'],
+                "matricule" => $data[0]['matricule'],
+                "heure_sortie" => $data[0]['heure_sortie'],
+                "heure_entree" => $data[0]['heure_entree'],
+                "longitude" => $data[0]['longitude'],
+                "latitude" => $data[0]['latitude'],
+                "volume_maximale_camion" => $data[0]['volume_maximale_camion'],
+                "volume_actuelle_plastique" => $data[0]['volume_actuelle_plastique'],
+                "volume_actuelle_papier" => $data[0]['volume_actuelle_papier'],
+                "volume_actuelle_composte" => $data[0]['volume_actuelle_composte'],
+                "volume_actuelle_canette" => $data[0]['volume_actuelle_canette'],
+                "volume_carburant_consomme" => $data[0]['volume_carburant_consomme'],
+                "Kilometrage" => $data[0]['Kilometrage'],
+                "created_at" => $data[0]['created_at'],
+                "updated_at" => $data[0]['updated_at'],
+                'deleted_at' => $data[0]['deleted_at'],
+            ];
+            $pdf = Pdf::loadView('pdf/Delete/unique/TransportDechet/camion', $liste);
+            return $pdf->download('camion-supprime.pdf');
+            }
+        }
 }
