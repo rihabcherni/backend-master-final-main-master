@@ -113,8 +113,4 @@ class ViderController extends BaseController{
             "type"=>$poubelle->type,
         ]);
     }
-
-    public function ConfirmerCollecte(){
-        return true;
-    }
 }

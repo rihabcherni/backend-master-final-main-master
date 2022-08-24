@@ -20,6 +20,7 @@ class LoginController extends Controller{
         $validator= Validator::make($request->all(),[
             'email' =>['required','email'],
             'mot_de_passe'=>['required', 'string'],
+            'recaptcha'=>['required', 'string'],
         ]);
         if($validator->fails()){return response()->json(['validation_errors' =>$validator->errors(),'status'=>401],200);}
         $gestionnaire=Gestionnaire::where('email',$request->email)->first();
@@ -30,7 +31,7 @@ class LoginController extends Controller{
         $responsable_personnel=Responsable_personnel::where('email',$request->email)->first();
 
         if ($gestionnaire !== null) {
-            if(Auth::guard('gestionnaire') && (Hash::check($request->mot_de_passe,  $gestionnaire->mot_de_passe)) ){
+            if(Auth::guard('gestionnaire') && (Hash::check($request->mot_de_passe,  $gestionnaire->mot_de_passe))  && ($request->recaptcha!== null) ){
                 return response()->json([
                     'Role'=>'gestionnaire',
                     'device_name'=>$request->device_name,
@@ -43,7 +44,7 @@ class LoginController extends Controller{
                 return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
             }
         }else if ($responsable_etab !== null){
-            if(Auth::guard('responsable_etablissement') && (Hash::check($request->mot_de_passe,  $responsable_etab->mot_de_passe)) ){
+            if(Auth::guard('responsable_etablissement') && (Hash::check($request->mot_de_passe,  $responsable_etab->mot_de_passe))   && ($request->recaptcha!== null) ){
                 return response()->json([
                     'Role'=>'responsable_etablissement',
                     'status'=>200,
@@ -55,7 +56,7 @@ class LoginController extends Controller{
                 return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
             }
         }else if ($client_dechet !== null){
-            if(Auth::guard('client_dechet') && (Hash::check($request->mot_de_passe,  $client_dechet->mot_de_passe)) ){
+            if(Auth::guard('client_dechet') && (Hash::check($request->mot_de_passe,  $client_dechet->mot_de_passe))   && ($request->recaptcha!== null)){
                 return response()->json([
                     'Role'=>'client_dechet',
                     'status'=>200,
@@ -67,7 +68,7 @@ class LoginController extends Controller{
                 return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
             }
         }else if ($ouvrier !== null){
-            if(Auth::guard('ouvrier') && (Hash::check($request->mot_de_passe,  $ouvrier->mot_de_passe)) ){
+            if(Auth::guard('ouvrier') && (Hash::check($request->mot_de_passe,  $ouvrier->mot_de_passe))   && ($request->recaptcha!== null)){
                 return response()->json([
                     'Role'=>'ouvrier',
                     'status'=>200,
@@ -79,7 +80,7 @@ class LoginController extends Controller{
                 return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
             }
         }else if ($responsable_personnel !== null){
-            if(Auth::guard('responsable_personnel') && (Hash::check($request->mot_de_passe,  $responsable_personnel->mot_de_passe)) ){
+            if(Auth::guard('responsable_personnel') && (Hash::check($request->mot_de_passe,  $responsable_personnel->mot_de_passe))  && ($request->recaptcha!== null) ){
                 return response()->json([
                     'Role'=>'responsable_personnel',
                     'status'=>200,
@@ -91,7 +92,7 @@ class LoginController extends Controller{
                 return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
             }
         }else if ($responsable_commerciale !== null){
-            if(Auth::guard('responsable_commercial') && (Hash::check($request->mot_de_passe,$responsable_commerciale->mot_de_passe)) ){
+            if(Auth::guard('responsable_commercial') && (Hash::check($request->mot_de_passe,$responsable_commerciale->mot_de_passe))  && ($request->recaptcha!== null) ){
                 return response()->json([
                     'Role'=>'responsable_commerciale',
                     'status'=>200,
