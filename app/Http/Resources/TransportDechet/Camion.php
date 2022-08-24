@@ -8,11 +8,9 @@ use App\Models\Zone_travail;
 use App\Models\Zone_depot;
 
 class Camion extends JsonResource{
-    public function toArray($request)
-    {
+    public function toArray($request){
         return [
             'id' => $this->id,
-
             'zone_travail_id' => $this->zone_travail_id,
             'zone_travail' => Zone_travail::find($this->zone_travail_id),
             'ouvrier'=>Ouvrier::where('camion_id',$this->id)->get(),
@@ -34,8 +32,7 @@ class Camion extends JsonResource{
 
             'created_at' => $this->created_at->format('d/m/y H:i:s'),
             'updated_at' => $this->updated_at->format('d/m/y H:i:s'),
-            'deleted_at' => $this->deleted_at,
-
+            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
         ];
     }
 }

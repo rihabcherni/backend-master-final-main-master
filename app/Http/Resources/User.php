@@ -16,7 +16,7 @@ class User extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at
+            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
         ];
     }
 }
