@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ConversationResource;
 
 class ConversationController extends Controller{
-
     public function index(Request $request){
         $conversations = Conversation::where( function ($query){
             $query->where('user_id', request()->user()->id)

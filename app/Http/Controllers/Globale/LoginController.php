@@ -401,22 +401,5 @@ class LoginController extends Controller{
             $pdf = Pdf::loadView('pdf', $data);
             return $pdf->download('poubelle.pdf');
     }
-
-    // public function pdf()
-    // {
-    //     $data["email"] = "reschool2022.ecolgy@gmail.com";
-    //     $data["title"] = "From reschool.tech";
-    //     $data["body"] = "This is Demo";
-
-    //     $pdf = PDF::loadView('email', $data)->setOptions(['defaultFont' => 'sans-serif']);
-
-    //     // Mail::send('email', $data, function($message)use($data, $pdf) {
-    //     //     $message->to($data["email"], $data["email"])
-    //     //             ->subject($data["title"])
-    //     //             ->attachData($pdf->output(), "qrcode.pdf");
-    //     // });
-
-    //     return('Mail sent successfully');
-    // }
 }
 
