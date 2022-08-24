@@ -23,15 +23,16 @@ class Reparation_poubelle extends JsonResource{
         $bloc_etabl= Bloc_etablissement::where('id',$etage->bloc_etablissement_id)->first();
         $bloc_etabl_nom= $bloc_etabl->nom_bloc_etablissement;
         $etablissement= Etablissement::where('id',$bloc_etabl->etablissement_id)->first();
-
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
        return [
             'id' => $this->id,
-
             'reparateur_poubelle' => Reparateur_poubelle::find($this->reparateur_poubelle_id),
             'reparateur_poubelle_id' => $this->reparateur_poubelle_id,
             'reparateur_nom_prenom' => $reparateur_nom_prenom,
             'reparateur_cin' => $reparateur_cin,
-
             'poubelle' => Poubelle::find($this->poubelle_id),
             'poubelle_id' => $this->poubelle_id,
             'nom_poubelle'=>$nom_poubelle,
@@ -40,17 +41,15 @@ class Reparation_poubelle extends JsonResource{
             'bloc_etablissement'=> $bloc_etabl_nom,
             'etage'=> $etage_nom,
             'bloc_poubelle_id' => $bloc_poubelle->id,
-
             'reparateur_poubelle' => Reparateur_poubelle::find($this->reparateur_poubelle_id),
             'image_panne_poubelle'=> $this->image_panne_poubelle,
             'description_panne' => $this->description_panne,
             'cout' => $this->cout,
             'date_debut_reparation' => $this->date_debut_reparation,
             'date_fin_reparation' => $this->date_fin_reparation,
-
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
        ];
     }
 }

@@ -12,7 +12,10 @@ class Reparation_camion extends JsonResource{
         $matricule= Camion::find($this->camion_id)->matricule;
         $mecanicien_nom_prenom= Mecanicien::find($this->mecanicien_id)->nom.' '.Mecanicien::find($this->mecanicien_id)->prenom;
         $mecanicien_cin= Mecanicien::find($this->mecanicien_id)->CIN;
-
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         return [
             'id' => $this->id,
             'camion_id' => $this->camion_id,
@@ -29,7 +32,7 @@ class Reparation_camion extends JsonResource{
             'mecanicien'=> Mecanicien::find($this->mecanicien_id),
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
     }
 }

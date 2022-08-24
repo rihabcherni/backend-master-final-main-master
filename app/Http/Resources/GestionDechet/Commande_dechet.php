@@ -22,6 +22,10 @@ class Commande_dechet extends JsonResource{
             $type_dechet=Dechet::find($this->detail_commande_dechet->dechet_id)->type_dechet;
             $quantite=$this->detail_commande_dechet->quantite;
         }
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         return [
             'id' => $this->id,
             'type' => $type_dechet,
@@ -39,7 +43,7 @@ class Commande_dechet extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
     }
 }

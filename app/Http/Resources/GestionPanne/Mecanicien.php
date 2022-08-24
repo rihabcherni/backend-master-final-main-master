@@ -22,7 +22,10 @@ class Mecanicien extends JsonResource{
                 "date_fin_reparation"=>$l->date_fin_reparation,
             ]);
         }
-
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
       return [
         'id' => $this->id,
         'Liste_camions_repares' => $liste_panne_camion,
@@ -36,7 +39,7 @@ class Mecanicien extends JsonResource{
         'mot_de_passe' => $this->mot_de_passe,
         'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
         'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-        'deleted_at' => $this->deleted_at,
+        'deleted_at' => $deleted_at,
        ];
     }
 }

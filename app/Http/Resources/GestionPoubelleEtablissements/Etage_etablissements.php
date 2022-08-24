@@ -7,8 +7,11 @@ use App\Models\Etablissement;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Etage_etablissements extends JsonResource{
-    public function toArray($request)
-    {
+    public function toArray($request){
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         $bloc_etabl= Bloc_etablissement::where('id',$this->bloc_etablissement_id)->first();
         $bloc_etabl_nom= $bloc_etabl->nom_bloc_etablissement;
         $etablissement= Etablissement::where('id',$bloc_etabl->etablissement_id)->first()->nom_etablissement;
@@ -23,7 +26,7 @@ class Etage_etablissements extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
      }
 }

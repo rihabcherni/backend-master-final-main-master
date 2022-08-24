@@ -8,8 +8,11 @@ use App\Models\Etage_etablissement;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Bloc_poubelle extends JsonResource{
-    public function toArray($request)
-    {
+    public function toArray($request){
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         $etage= Etage_etablissement::where('id',$this->etage_etablissement_id)->first();
         $nom_etage= $etage->nom_etage_etablissement;
         $bloc_etabl= Bloc_etablissement::where('id',$etage->bloc_etablissement_id)->first();
@@ -28,7 +31,7 @@ class Bloc_poubelle extends JsonResource{
 
         'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
         'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-        'deleted_at' => $this->deleted_at,
+        'deleted_at' => $deleted_at,
     ];
     }
 }

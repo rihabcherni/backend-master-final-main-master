@@ -5,8 +5,11 @@ use App\Models\Zone_travail;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Zone_depot extends JsonResource{
-    public function toArray($request)
-    {
+    public function toArray($request){
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
       return [
         'id' => $this->id,
         'zone_travail_id'=> $this->zone_travail_id,
@@ -22,7 +25,7 @@ class Zone_depot extends JsonResource{
 
         'created_at' => $this->created_at->format('d/m/y H:i:s'),
         'updated_at' => $this->updated_at->format('d/m/y H:i:s'),
-        'deleted_at' => $this->deleted_at,
+        'deleted_at' => $deleted_at,
     ];
     }
 }

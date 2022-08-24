@@ -18,7 +18,10 @@ class Fournisseur extends JsonResource{
                 "prix_total"=>$l->prix_total,
             ]);
         }
-
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
        return [
         'id' => $this->id,
 
@@ -32,7 +35,7 @@ class Fournisseur extends JsonResource{
         'Liste_matieres'=>$Liste_matieres,
         'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
         'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-        'deleted_at' => $this->deleted_at,
+        'deleted_at' => $deleted_at,
 
     ];
     }

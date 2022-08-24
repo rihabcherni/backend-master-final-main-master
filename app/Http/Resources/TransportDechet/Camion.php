@@ -9,6 +9,10 @@ use App\Models\Zone_depot;
 
 class Camion extends JsonResource{
     public function toArray($request){
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         return [
             'id' => $this->id,
             'zone_travail_id' => $this->zone_travail_id,
@@ -29,10 +33,9 @@ class Camion extends JsonResource{
             'volume_actuelle_canette' => $this->volume_actuelle_canette,
             'volume_carburant_consomme' => $this->volume_carburant_consomme,
             'Kilometrage' => $this->Kilometrage,
-
             'created_at' => $this->created_at->format('d/m/y H:i:s'),
             'updated_at' => $this->updated_at->format('d/m/y H:i:s'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
     }
 }

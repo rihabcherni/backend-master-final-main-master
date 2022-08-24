@@ -12,6 +12,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ViderPoubelle extends JsonResource{
     public function toArray($request){
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         $poubelle=Poubelle::find($this->poubelle_id);
         $bloc_poubelle= Bloc_poubelle::where('id',$poubelle->bloc_poubelle_id)->first();
         $etage= Etage_etablissement::where('id',$bloc_poubelle->etage_etablissement_id)->first();
@@ -51,7 +55,7 @@ class ViderPoubelle extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
     }
 }

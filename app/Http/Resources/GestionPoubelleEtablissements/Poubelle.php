@@ -35,7 +35,10 @@ class Poubelle extends JsonResource{
         while ($id_resp_Poubelles > $lengthPoubelles){ $id_resp_Poubelles-=$lengthPoubelles;} ;
         $posPb =strpos($str,'-BP');
         $nom_poubelle_responsable=substr($str,0,$posPb).'-BP'.$id_resp_Bloc.'-N'.$id_resp_Poubelles ;
-
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         return [
             'id' => $this->id,
             'poubelle_id_resp' => $id_resp_Poubelles,
@@ -62,7 +65,7 @@ class Poubelle extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
     }
 }

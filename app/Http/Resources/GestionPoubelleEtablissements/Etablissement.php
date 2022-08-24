@@ -8,6 +8,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class Etablissement extends JsonResource{
     public function toArray($request){
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
         $zone_travail= Zone_travail::find($this->zone_travail_id)->region;
         return [
             'id' => $this->id,
@@ -44,7 +48,7 @@ class Etablissement extends JsonResource{
 
             'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
             'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-            'deleted_at' => $this->deleted_at->translatedFormat('H:i:s j F Y'),
+            'deleted_at' => $deleted_at,
         ];
     }
 }

@@ -24,6 +24,10 @@ class Reparateur_poubelle extends JsonResource{
                 "date_fin_reparation"=>$l->date_fin_reparation,
             ]);
         }
+        $deleted_at=null;
+        if($this->deleted_at  !== null){
+            $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
+        }
        return [
         'id' => $this->id,
         'Liste_poubelles_repares' => $liste_panne_pouelle,
@@ -39,7 +43,7 @@ class Reparateur_poubelle extends JsonResource{
 
         'created_at' => $this->created_at->translatedFormat('H:i:s j F Y'),
         'updated_at' => $this->updated_at->translatedFormat('H:i:s j F Y'),
-        'deleted_at' => $this->deleted_at,
+        'deleted_at' => $deleted_at,
     ];
     }
 }
