@@ -93,7 +93,7 @@ class RechercheController extends Controller{
             return Poubelle::where('bloc_poubelle_id', 'like', $bloc_poubelle_id)->get();
         }
     }
-    public function searchEType($type){
+    public function searcheType($type){
         return Poubelle::where('type', 'like', $type)->get();
     }
 

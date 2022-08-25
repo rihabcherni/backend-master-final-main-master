@@ -7,7 +7,7 @@ use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
 use App\Models\Gestionnaire;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Globale\LoginController;
+use App\Http\Controllers\Authentification\SendFirstPasswordController;
 use App\Http\Requests\GestionCompte\GestionnaireRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -22,7 +22,7 @@ class GestionnaireController extends BaseController{
         $input = $request->all();
         $pass = Str::random(8);
         $pass = Str::random(8);
-        $SendEmail = new LoginController;
+        $SendEmail = new SendFirstPasswordController;
         $mp=$SendEmail->sendFirstPassword( $input['email'], $input['nom'], $input['prenom'],$pass);
         if ($image = $request->file('photo')) {
             $destinationPath = 'storage/images/gestionnaire';

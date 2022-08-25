@@ -1,10 +1,7 @@
 <?php
 namespace App\Http\Controllers\Auth\Gestionnaire;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Globale\BaseController as BaseController;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Gestionnaire;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 
 class AuthGestionnaireController extends BaseController{
@@ -13,22 +10,6 @@ class AuthGestionnaireController extends BaseController{
         return response([
             'gestionnaire' => $gestionnaire
         ]);
-    }
-
-    public function modifierPasswordGestionnaire (Request $request ){
-        $gestionnaire=auth()->guard('gestionnaire')->user();
-
-        if(Auth::guard('gestionnaire') && (Hash::check($request->mot_de_passe, $gestionnaire->mot_de_passe)) ){
-                $gestionnaire['mot_de_passe'] = Hash::make($request->nouveau_mot_de_passe);
-                $gestionnaire->save();
-                return response([
-                    'message'=>'password updated'
-                ],200);
-            }
-
-        return response([
-            'message' => 'verifier votre ancien mot de passe',
-        ],403);
     }
 
     public function sendImage(){

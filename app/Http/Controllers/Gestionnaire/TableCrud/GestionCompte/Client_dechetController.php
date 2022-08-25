@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
 use App\Http\Controllers\Globale\BaseController as BaseController;
-use App\Http\Controllers\Globale\LoginController;
 use App\Http\Resources\GestionCompte\Client_dechet as Client_dechetResource;
 use App\Models\Client_dechet;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\GestionCompte\Client_dechetRequest;
 use Illuminate\Support\Str;
 use App\Exports\GestionCompte\ClientDechetExport;
+use App\Http\Controllers\Authentification\SendFirstPasswordController;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -20,7 +20,7 @@ class Client_dechetController extends BaseController{
         $input = $request->all();
         $pass = Str::random(8);
         $pass = Str::random(8);
-        $SendEmail = new LoginController;
+        $SendEmail = new SendFirstPasswordController;
         $mp=$SendEmail->sendFirstPassword( $input['email'], $input['nom'], $input['prenom'],$pass);
         $input['mot_de_passe'] =  Hash::make($mp->getData()->mot_de_passe);
         $input['QRcode'] =  Hash::make($mp->getData()->mot_de_passe);

@@ -47,7 +47,6 @@ use App\Http\Controllers\ResponsableEtablissement\DashboardResponsableEtablissem
 
 
                   /*****                 dashboard responsable etablissement                     ****/
-                Route::post('/modifier-responsable-etablissement-password',[AuthResponsableEtablissementController::class,'modifierPasswordResponsableEtablissement']);
                 Route::post('/send',[AuthResponsableEtablissementController::class,'send']);
                 Route::post('/sendImage',[AuthResponsableEtablissementController::class,'sendImage']);
                 Route::post('/destroyImage',[AuthResponsableEtablissementController::class,'destroyImage']);

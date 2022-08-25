@@ -1907,16 +1907,14 @@ class PlanningController extends BaseController{
             foreach ($pannePoubelle as $panne) {
                 Planning::all()->where('type_poubelle',$panne[1])->first()->update(['statut' => 'problem']);
             }
-        }elseif ( $panneCamion !== null  ) {
+        }
+        if ( $panneCamion !== null  ) {
             Planning::all()->where('type_poubelle','plastique')->first()->update(['statut' => 'problem']);
             Planning::all()->where('type_poubelle','papier')->first()->update(['statut' => 'problem']);
             Planning::all()->where('type_poubelle','composte')->first()->update(['statut' => 'problem']);
             Planning::all()->where('type_poubelle','canette')->first()->update(['statut' => 'problem']);
-
         }
-
         return [['Pannes Poubelles',$pannePoubelle],[ 'Pannes Camions',$panneCamion]];
 
     }
-
 }

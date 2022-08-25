@@ -14,7 +14,6 @@
 Route::group(['prefix' => 'auth-ouvrier'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::group(['middleware' => 'auth:ouvrier'], function() {
-                    Route::post('/modifier-ouvrier-password/{email}',[AuthOuvrierController::class,'modifierPasswordOuvrier']);
                     Route::post('/sendImage',[AuthOuvrierController::class,'sendImage']);
                     Route::post('/destroyImage',[AuthOuvrierController::class,'destroyImage']);
                     Route::get('/camion',[RegionController::class, 'OuvrierCamion']);

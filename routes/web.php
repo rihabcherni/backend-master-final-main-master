@@ -20,4 +20,4 @@ Route::get('/', function () {
 Route::get('/t', function () {
     return view('email-template');
 });
-// Route::get('qrcode',  [LoginController::class,'qrcode']);
+

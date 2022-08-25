@@ -6,7 +6,6 @@
 use App\Http\Controllers\Globale\MessageController;
     Route::group(['prefix' => 'auth-responsable-commercial'], function () {
             Route::group(['middleware'=>['auth:sanctum']], function() {
-                        Route::post('/modifier-responsable-commercial-password/{email}',[ResponsableCommercialController::class,'modifierPasswordResponsableCommercial']);
                         Route::post('/sendImage',[ResponsableCommercialController::class,'sendImage']);
                         Route::post('/destroyImage',[ResponsableCommercialController::class,'destroyImage']);
                         Route::post('/getConversations' , [ConversationController::class , 'index']);

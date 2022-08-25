@@ -22,7 +22,6 @@
 
 
                     Route::apiResource('dechets', DechetController::class);
-                    Route::post('/modifier-client-dechet-password/{email}',[AuthClientDechetController::class,'modifierPasswordClientDechet']);
                     Route::post('/send',[AuthClientDechetController::class,'send']);
 
                     Route::post('/afficherDechetsClient',[Commande_dechetController::class , 'afficherDechetsClient']);

@@ -7,7 +7,7 @@ use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Http\Resources\GestionCompte\Ouvrier as OuvrierResource;
 use App\Models\Ouvrier;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Globale\LoginController;
+use App\Http\Controllers\Authentification\SendFirstPasswordController;
 use App\Http\Requests\GestionCompte\OuvrierRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -22,7 +22,7 @@ class OuvrierController extends BaseController{
         $input = $request->all();
         $pass = Str::random(8);
         $pass = Str::random(8);
-        $SendEmail = new LoginController;
+        $SendEmail = new SendFirstPasswordController;
         $mp=$SendEmail->sendFirstPassword( $input['email'], $input['nom'], $input['prenom'],$pass);
         if ($image = $request->file('photo')) {
             $destinationPath = 'storage/images/ouvrier';
@@ -77,7 +77,7 @@ class OuvrierController extends BaseController{
             return $this->handleResponse(new OuvrierResource($ouvrier), 'Ouvrier supprimé!');
         }
     }
-    
+
     public function hdelete( $id) {
         $ouvrier = Ouvrier::withTrashed()->where('id' ,  $id )->first();
         if (is_null($ouvrier)) {

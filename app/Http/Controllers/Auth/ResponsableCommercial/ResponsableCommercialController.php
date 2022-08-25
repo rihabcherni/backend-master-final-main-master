@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Auth\ResponsableCommercial;
 
 use App\Models\Responsable_commercial;
 use App\Http\Controllers\Globale\BaseController as BaseController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 class ResponsableCommercialController extends BaseController{
     public function allResponsableCommercials(){
@@ -14,23 +11,6 @@ class ResponsableCommercialController extends BaseController{
         return response([
             'responsable_commercial' => $responsable_commercial
         ]);
-    }
-
-
-    public function modifierPasswordResponsableCommercial (Request $request , $email){
-        $responsable_commercial=Responsable_commercial::where('email',$email)->first();
-
-        if(Auth::guard('responsable_commercial') && (Hash::check($request->mot_de_passe, $responsable_commercial->mot_de_passe)) ){
-                $responsable_commercial['mot_de_passe'] = Hash::make($request->newPassword);
-                $responsable_commercial->save();
-                return response([
-                    'message'=>'password updated'
-                ],200);
-            }
-
-        return response([
-            'message' => 'incorrect password'
-        ],403);
     }
 
     public function sendImage(){

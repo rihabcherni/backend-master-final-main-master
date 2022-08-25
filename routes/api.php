@@ -4,10 +4,52 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Globale\SommeDechetController;
 use App\Http\Controllers\Globale\RechercheController;
 use App\Http\Controllers\Globale\RegionController;
-use App\Http\Controllers\Globale\LoginController;
 use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
 use App\Http\Controllers\Gestionnaire\TableCrud\ViderPoubelleGestionnaireController;
-use App\Http\Controllers\Globale\ViderPoubellesController;
+use App\Http\Controllers\Authentification\LoginController;
+use App\Http\Controllers\Authentification\LogoutController;
+use App\Http\Controllers\Authentification\ModifierPasswordController;
+use App\Http\Controllers\Authentification\ModifierProfileController;
+use App\Http\Controllers\Authentification\ProfileController;
+use App\Http\Controllers\Authentification\QrloginController;
+use App\Http\Controllers\Authentification\ViderPoubellesController;
+
+/********************               Authentification           ****************************** */
+    Route::post('/login', [LoginController::class,'login']);
+    Route::post('/logout', [LogoutController::class,'logout']);
+    Route::post('/modifier-password', [ModifierPasswordController::class,'modifierPassword']);
+    Route::post('/modifier-profile', [ModifierProfileController::class,'modifierProfile']);
+
+    Route::post('/modifier-photo', [ModifierProfileController::class,'updatePhoto']);
+    Route::get('/profile', [ProfileController::class,'profile']);
+    Route::post('/qrlogin/{qrcode}',[QrloginController::class,'qrlogin']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /** -------------  **************          debut recherche    ************************** ------------------**/
             Route::get('/recherche-etablissement-zone-travail-nom/{nom_zone}', [RechercheController::class, 'rechercheEtablissementNomZone']);
@@ -20,7 +62,7 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
             Route::get('/recherche-bloc-poubelle/{etablissement}/{nom_bloc_etab}/{nom_etage}/{id_bloc_poubelle}', [RechercheController::class, 'rechercheBlocPoubelleEtab']);
 
             Route::get('/poubelle-bloc-poubelle-id/{bloc_poubelle_id}', [RechercheController::class, 'rechercheBlocPoubelleId']);
-            Route::get('/poubelle/searchEType/{type}', [RechercheController::class, 'searchEType']);
+            Route::get('/poubelle/searcheType/{type}', [RechercheController::class, 'searcheType']);
 
             Route::get('/camion/searchMatricule/{matricule}', [RechercheController::class, 'searchMatricule']);
 
@@ -59,12 +101,6 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
                 Route::get('/google-map-camion/{id}', [RegionController::class, 'GoogleMapCamionId']);
 
 
-                Route::post('/login', [LoginController::class,'login']);
-                Route::post('/logout', [LoginController::class,'logout']);
-                Route::post('/modifier-profile', [LoginController::class,'modifierProfile']);
-                Route::post('/modifier-photo', [LoginController::class,'updatePhoto']);
-                Route::get('/profile', [LoginController::class,'profile']);
-                Route::post('/qrlogin/{qrcode}',[LoginController::class,'qrlogin']);
 
                 Route::get('/historique-vider-poubelle-responsable', [ViderPoubellesController::class,'HistoriqueViderResponsable']);
                 Route::get('/historique-vider-poubelle-gestionnaire', [ViderPoubellesController::class,'HistoriqueViderGestionnaire']);
@@ -100,8 +136,3 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
                 Route::get('/EtablissementListe', [ViderPoubellesController::class,'EtablissementListe']);
 
 
-
-
-
-                Route::get('pdf', [LoginController::class, 'pdf']);
-                Route::post('grayscaleImagePost', [LoginController::class, 'grayscaleImagePost']);

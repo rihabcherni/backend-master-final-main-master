@@ -462,7 +462,6 @@ use App\Http\Controllers\Globale\MessageController;
     Route::group(['prefix' => 'auth-gestionnaire'], function () {
         Route::group(['middleware'=>['auth:sanctum']], function() {
             Route::group(['middleware' => 'auth:gestionnaire'], function() {
-                Route::post('/modifier-gestionnaire-password',[AuthGestionnaireController::class,'modifierPasswordGestionnaire']);
                 Route::post('/send',[AuthGestionnaireController::class,'send']);
                 Route::post('/sendImage',[AuthGestionnaireController::class,'sendImage']);
                 Route::post('/destroyImage',[AuthGestionnaireController::class,'destroyImage']);
