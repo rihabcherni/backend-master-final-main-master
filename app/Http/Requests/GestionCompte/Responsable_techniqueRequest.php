@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\GestionPanne;
+namespace App\Http\Requests\GestionCompte;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
-class MecanicienRequest extends FormRequest{
+class Responsable_techniqueRequest extends FormRequest{
     public function authorize()
     {
         return true;

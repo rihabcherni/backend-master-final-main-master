@@ -41,7 +41,8 @@ class ViderPoubellesController extends Controller{
                 array_push($poubelle_etab, $pb);
                 }
             }
-            return $poubelle_etab;
+            return ViderPoubelle::collection($poubelle_etab) ;
+
         }
         public function  HistoriqueViderGestionnaire(){
             $historique= Vider_poubelle::orderBy('date_depot', 'desc')->get();

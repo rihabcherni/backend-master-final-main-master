@@ -116,13 +116,13 @@ class Reparation_camionController extends BaseController{
         $reparation_camion = Reparation_camion::onlyTrashed()->get();
         return $this->handleResponse(Reparation_camionResource::collection($reparation_camion), 'affichage des reparations camions');
     }
-    public function exportInfoReparationCamionExcel(){
+    public function exportInfoExcel(){
         return Excel::download(new Reparation_camionExport  , 'reparation-camion-liste.xlsx');
     }
-    public function exportInfoReparationCamionCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new Reparation_camionExport, 'reparation-camion-liste.csv');
     }
-    public function pdfReparationCamion($id){
+    public function pdf($id){
         $reparation_camion = Reparation_camion::find($id);
         if (is_null($reparation_camion)) {
             return $this->handleError('reparation camion n\'existe pas!');
@@ -149,7 +149,7 @@ class Reparation_camionController extends BaseController{
             return $pdf->download('reparation-camion.pdf');
         }
     }
-    public function pdfAllReparationCamion(){
+    public function pdfAll(){
         $reparation_camion = Reparation_camion::all();
         if (is_null($reparation_camion)) {
             return $this->handleError('reparation camion n\'existe pas!');

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Exports\GestionPanne;
+namespace App\Exports\GestionCompte;
 
-use App\Models\Reparateur_poubelle;
+use App\Models\Mecanicien;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class Reparateur_poubelleExport implements FromCollection ,WithHeadings{
+class MecanicienExport implements FromCollection ,WithHeadings{
     public function headings():array{
         return[
             "ID",
@@ -22,6 +22,6 @@ class Reparateur_poubelleExport implements FromCollection ,WithHeadings{
         ];
     }
     public function collection(){
-        return collect(Reparateur_poubelle::getReparateurPoubelle());
+        return collect(Mecanicien::getMecanicien());
     }
 }

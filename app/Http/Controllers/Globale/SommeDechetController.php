@@ -32,10 +32,10 @@ class SommeDechetController extends Controller{
         $canette_achette=Detail_commande_dechet::where('dechet_id',4)->sum("quantite");
 
         $myArray = [
-            'somme_depot_actuelle_plastique'=>round( ($plastique_tot -$plastique_achette)* 1000)/1000,
-            'somme_depot_actuelle_papier'=>round( ($papier_tot-$papier_achette )* 1000)/1000,
-            'somme_depot_actuelle_composte'=>round(($composte_tot- $composte_achette) * 1000)/1000,
-            'somme_depot_actuelle_canette'=>round(($canette_tot - $canette_achette) * 1000)/1000,
+            'somme_depot_actuelle_plastique'=>abs(round( ($plastique_tot -$plastique_achette)* 1000)/1000) ,
+            'somme_depot_actuelle_papier'=>abs(round( ($papier_tot-$papier_achette )* 1000)/1000),
+            'somme_depot_actuelle_composte'=>abs(round(($composte_tot- $composte_achette) * 1000)/1000),
+            'somme_depot_actuelle_canette'=>abs(round(($canette_tot - $canette_achette) * 1000)/1000),
         ];
         return $myArray;
     }

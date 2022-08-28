@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsableEtablissementController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsableCommercialeController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\ResponsablePersonnelController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\MecanicienController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\Reparateur_poubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte\Responsable_techniqueController;
 
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Commande_dechetController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Detail_commande_dechetController;
 
-    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\MecanicienController;
-    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_camionController;
-    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparateur_poubelleController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_poubelleController;
+    use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_camionController;
 
     use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\DepotController;
     use App\Http\Controllers\Gestionnaire\TableCrud\TransportDechet\Zone_depotController;
@@ -146,6 +147,53 @@ use App\Http\Controllers\Globale\MessageController;
                     Route::get('responsable-etablissement-pdf-trashed/{id}', 'pdfTrashed');
                     Route::get('responsable-etablissement-all-pdf-trashed', 'pdfAllTrashed');
                 });
+            /**                        reparateur poubelle             */
+                Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
+                Route::controller(Reparateur_poubelleController::class)->group(function () {
+                    Route::get('reparateur-poubelle-liste-suppression', 'listeSuppression');
+                    Route::get('reparateur-poubelle-excel', 'exportInfoExcel');
+                    Route::get('reparateur-poubelle-csv', 'exportInfoCSV');
+                    Route::get('reparateur-poubelle-pdf/{id}', 'pdf');
+                    Route::get('reparateur-poubelle-all-pdf', 'pdfAll');
+                    Route::get('reparateur-poubelle-restore/{id}', 'restore');
+                    Route::get('reparateur-poubelle-restore-all', 'restoreAll');
+                    Route::get('reparateur-poubelle-suppression-definitif/{id}', 'hdelete');
+                    Route::get('reparateur-poubelle-suppression-definitif-all', 'hdeleteAll');
+                    Route::get('reparateur-poubelle-pdf-trashed/{id}', 'pdfTrashed');
+                    Route::get('reparateur-poubelle-all-pdf-trashed', 'pdfAllTrashed');
+                });
+            /**                        mecanicien                  */
+                Route::apiResource('mecanicien', MecanicienController::class);
+                Route::controller(MecanicienController::class)->group(function () {
+                    Route::get('mecanicien-liste-suppression', 'listeSuppression');
+                    Route::get('mecanicien-excel', 'exportInfoExcel');
+                    Route::get('mecanicien-csv', 'exportInfoCSV');
+                    Route::get('mecanicien-pdf/{id}', 'pdf');
+                    Route::get('mecanicien-all-pdf', 'pdfAll');
+                    Route::get('mecanicien-restore/{id}', 'restore');
+                    Route::get('mecanicien-restore-all', 'restoreAll');
+                    Route::get('mecanicien-suppression-definitif/{id}', 'hdelete');
+                    Route::get('mecanicien-suppression-definitif-all', 'hdeleteAll');
+                    Route::get('mecanicien-pdf-trashed/{id}', 'pdfTrashed');
+                    Route::get('mecanicien-all-pdf-trashed', 'pdfAllTrashed');
+                });
+
+            /**                        responsble technique                  */
+            Route::apiResource('responsable-technique', Responsable_techniqueController::class);
+            Route::controller(Responsable_techniqueController::class)->group(function () {
+                Route::get('responsable-technique-liste-suppression', 'listeSuppression');
+                Route::get('responsable-technique-excel', 'exportInfoExcel');
+                Route::get('responsable-technique-csv', 'exportInfoCSV');
+                Route::get('responsable-technique-pdf/{id}', 'pdf');
+                Route::get('responsable-technique-all-pdf', 'pdfAll');
+                Route::get('responsable-technique-restore/{id}', 'restore');
+                Route::get('responsable-technique-restore-all', 'restoreAll');
+                Route::get('responsable-technique-suppression-definitif/{id}', 'hdelete');
+                Route::get('responsable-technique-suppression-definitif-all', 'hdeleteAll');
+                Route::get('responsable-technique-pdf-trashed/{id}', 'pdfTrashed');
+                Route::get('responsable-technique-all-pdf-trashed', 'pdfAllTrashed');
+            });
+
         /** -------------------------------------------gestion Dechet -----------------------------------------*/
                 /**                  commandes                     */
                     Route::apiResource('commande-dechet', Commande_dechetController::class);
@@ -193,37 +241,6 @@ use App\Http\Controllers\Globale\MessageController;
                         Route::get('detail-commande-dechets-all-pdf-trashed', 'pdfAllTrashed');
                     });
         /** -------------------------------------------gestion Panne -----------------------------------------*/
-                /**                        reparateur poubelle             */
-                    Route::apiResource('reparateur-poubelle', Reparateur_poubelleController::class);
-                    Route::controller(Reparateur_poubelleController::class)->group(function () {
-                        Route::get('reparateur-poubelle-liste-suppression', 'listeSuppression');
-                        Route::get('reparateur-poubelle-excel', 'exportInfoExcel');
-                        Route::get('reparateur-poubelle-csv', 'exportInfoCSV');
-                        Route::get('reparateur-poubelle-pdf/{id}', 'pdf');
-                        Route::get('reparateur-poubelle-all-pdf', 'pdfAll');
-                        Route::get('reparateur-poubelle-restore/{id}', 'restore');
-                        Route::get('reparateur-poubelle-restore-all', 'restoreAll');
-                        Route::get('reparateur-poubelle-suppression-definitif/{id}', 'hdelete');
-                        Route::get('reparateur-poubelle-suppression-definitif-all', 'hdeleteAll');
-                        Route::get('reparateur-poubelle-pdf-trashed/{id}', 'pdfTrashed');
-                        Route::get('reparateur-poubelle-all-pdf-trashed', 'pdfAllTrashed');
-                    });
-                /**                        mecanicien                  */
-                    Route::apiResource('mecanicien', MecanicienController::class);
-                    Route::controller(MecanicienController::class)->group(function () {
-                        Route::get('mecanicien-liste-suppression', 'listeSuppression');
-                        Route::get('mecanicien-excel', 'exportInfoExcel');
-                        Route::get('mecanicien-csv', 'exportInfoCSV');
-                        Route::get('mecanicien-pdf/{id}', 'pdf');
-                        Route::get('mecanicien-all-pdf', 'pdfAll');
-                        Route::get('mecanicien-restore/{id}', 'restore');
-                        Route::get('mecanicien-restore-all', 'restoreAll');
-                        Route::get('mecanicien-suppression-definitif/{id}', 'hdelete');
-                        Route::get('mecanicien-suppression-definitif-all', 'hdeleteAll');
-                        Route::get('mecanicien-pdf-trashed/{id}', 'pdfTrashed');
-                        Route::get('mecanicien-all-pdf-trashed', 'pdfAllTrashed');
-                    });
-
                 /**                        reparation poubelle            */
                     Route::apiResource('reparation-poubelle', Reparation_poubelleController::class);
                     Route::controller(Reparation_poubelleController::class)->group(function () {

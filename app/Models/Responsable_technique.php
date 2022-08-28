@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\GestionCompte\Mecanicien as MecanicienResource;
 
-class Mecanicien extends Model
+class Responsable_technique extends Model
 {
     use HasFactory,  SoftDeletes;
     protected $fillable = [
@@ -21,24 +21,20 @@ class Mecanicien extends Model
         'adresse',
         'QRcode',
     ];
-    public function reparationCamions()
-    {
-        return $this->hasMany(Reparation_camion::class);
-    }
     protected $dates=['deleted_at'];
 
-    public static function getMecanicien(){
+    public static function getResponsableTechnique(){
         $mecanicien = MecanicienResource::collection(Mecanicien::all())->map(function ($item, $key) {
             return collect($item)->except(['deleted_at','mot_de_passe','Liste_camions_repares'])->toArray();
         });
         return $mecanicien;
     }
 
-    public static function getMecanicienById($id){
+    public static function getResponsableTechniqueById($id){
         $mecanicien = MecanicienResource::collection(Mecanicien::where('id',$id)->get());
         return $mecanicien;
     }
-    public static function getMecanicienByIdTrashed($id){
+    public static function getResponsableTechniqueByIdTrashed($id){
         $mecanicien = MecanicienResource::collection(Mecanicien::withTrashed()->where('id',$id )->get());
         return $mecanicien;
     }

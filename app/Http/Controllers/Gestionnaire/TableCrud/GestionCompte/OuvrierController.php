@@ -187,7 +187,6 @@ class OuvrierController extends BaseController{
             return $pdf->download('ouvrier.pdf');
         }
     }
-
     public function pdfAllTrashed(){
         $ouvrier = Ouvrier::onlyTrashed()->get();
         if (is_null($ouvrier)) {

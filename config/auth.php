@@ -70,6 +70,18 @@ return [
             'driver' => 'sanctum',
             'provider' => 'responsable_commercials',
         ],
+        'responsable_technique' => [
+            'driver' => 'sanctum',
+            'provider' => 'responsable_techniques',
+        ],
+        'mecanicien' => [
+            'driver' => 'sanctum',
+            'provider' => 'mecaniciens',
+        ],
+        'reparateur_poubelle' => [
+            'driver' => 'sanctum',
+            'provider' => 'reparateur_poubelles',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
@@ -118,6 +130,19 @@ return [
         'responsable_commercials' => [
             'driver' => 'eloquent',
             'model' => App\Models\Responsable_commercial::class,
+        ],
+
+        'mecaniciens' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Mecanicien::class,
+        ],
+        'reparateur_poubelles' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Reparateur_poubelle::class,
+        ],
+        'responsable_techniques' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Responsable_technique::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
@@ -181,6 +206,24 @@ return [
         ],
         'responsable_commercial' => [
             'provider' => 'responsable_commercial',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'mecanicien' => [
+            'provider' => 'mecanicien',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'reparateur_poubelle' => [
+            'provider' => 'reparateur_poubelle',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'responsable_technique' => [
+            'provider' => 'responsable_technique',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

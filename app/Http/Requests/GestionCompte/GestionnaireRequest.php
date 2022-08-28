@@ -17,10 +17,10 @@ class GestionnaireRequest extends FormRequest{
             return [
             'nom' => 'required|string|regex:/^[A-Za-z ]*$/i',
             'prenom' => 'required|string|regex:/^[A-Za-z ]*$/i',
-            'CIN' => 'required|numeric',
+            'CIN' => 'required|numeric|unique:gestionnaires',
             'adresse' => 'required|string',
-            'numero_telephone'=> 'required|integer',
-            'email' => 'required|email|max:50',
+            'numero_telephone'=> 'required|integer|unique:gestionnaires',
+            'email' => 'required|email|max:50|unique:gestionnaires',
             'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ];
         }else if($this->isMethod('PUT')){

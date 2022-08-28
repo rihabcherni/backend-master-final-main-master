@@ -116,15 +116,15 @@ class Reparation_poubelleController extends BaseController{
         $reparation_poubelle = Reparation_poubelle::onlyTrashed()->get();
         return $this->handleResponse(Reparation_poubelleResource::collection($reparation_poubelle), 'affichage des reparations poubelles');
     }
-    public function exportInfoReparationPoubelleExcel(){
+    public function exportInfoExcel(){
         return Excel::download(new Reparation_poubelleExport  , 'reparation-poubelle-liste.xlsx');
     }
 
-    public function exportInfoReparationPoubelleCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new Reparation_poubelleExport, 'reparation-poubelle-liste.csv');
     }
 
-    public function pdfReparationPoubelle($id){
+    public function pdf($id){
         $reparation_poubelle = Reparation_poubelle::find($id);
         if (is_null($reparation_poubelle)) {
             return $this->handleError('reparation poubelle n\'existe pas!');
@@ -157,7 +157,7 @@ class Reparation_poubelleController extends BaseController{
             return $pdf->download('reparation-poubelle.pdf');
         }
     }
-    public function pdfAllReparationPoubelle(){
+    public function pdfAll(){
         $reparation_poubelle = Reparation_poubelle::all();
         if (is_null($reparation_poubelle)) {
             return $this->handleError('reparation poubelle  n\'existe pas!');

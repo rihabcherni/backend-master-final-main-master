@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\GestionPanne;
+namespace App\Http\Requests\GestionCompte;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
-class Reparateur_poubelleRequest extends FormRequest{
+class MecanicienRequest extends FormRequest{
     public function authorize()
     {
         return true;
@@ -18,22 +18,19 @@ class Reparateur_poubelleRequest extends FormRequest{
                 'numero_telephone'=> 'required|integer',
                 'email' => 'required|email|max:50',
                 'mot_de_passe' => 'required|string|min:6',
-                // 'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'adresse' =>'required|string',
+                'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
 
             ];
         }else if($this->isMethod('PUT')){
             return [
-            //     'nom' => 'required|string',
-            //     'prenom' => 'required|string',
-            //     'CIN' => 'required|numeric',
-            //     'numero_telephone'=> 'required|integer',
-            //     'email' => 'required|email|max:50',
-            //     'mot_de_passe' => 'required|string|min:6',
-                // 'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                // 'adresse' =>'required|string',
-
-             ];
+                // 'nom' => 'required|string',
+                // 'prenom' => 'required|string',
+                // 'CIN' => 'required|numeric',
+                // 'numero_telephone'=> 'required|integer',
+                // 'email' => 'required|email|max:50',
+                // 'mot_de_passe' => 'required|string|min:6',
+                // 'photo' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+          ];
         }
 
     }

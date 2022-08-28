@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
 
-use App\Exports\GestionPanne\MecanicienExport;
+use App\Exports\GestionCompte\MecanicienExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
-use App\Http\Resources\GestionPanne\Mecanicien as MecanicienResource;
+use App\Http\Resources\GestionCompte\Mecanicien as MecanicienResource;
 use App\Models\Mecanicien;
-use App\Http\Requests\GestionPanne\MecanicienRequest;
+use App\Http\Requests\GestionCompte\MecanicienRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
@@ -121,11 +121,9 @@ class MecanicienController extends BaseController{
     public function exportInfoExcel(){
         return Excel::download(new MecanicienExport  , 'mecanicien-liste.xlsx');
     }
-
     public function exportInfoCSV(){
         return Excel::download(new MecanicienExport, 'mecanicien-liste.csv');
     }
-
     public function pdf($id){
         $mecanicien = Mecanicien::find($id);
         if (is_null($mecanicien)) {
@@ -145,7 +143,7 @@ class MecanicienController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPanne/mecanicien', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/mecanicien', $liste);
             return $pdf->download('mecanicien.pdf');
         }
     }
@@ -156,7 +154,7 @@ class MecanicienController extends BaseController{
         }else{
             $p= MecanicienResource::collection( $mecanicien);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPanne/mecanicien', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/mecanicien', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('mecanicien.pdf');
         }
     }
@@ -167,7 +165,7 @@ class MecanicienController extends BaseController{
         }else{
             $p= MecanicienResource::collection( $mecanicien);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/Delete/table/GestionPanne/mecanicien', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionCompte/mecanicien', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('mecanicien.pdf');
         }
     }
@@ -190,7 +188,7 @@ class MecanicienController extends BaseController{
                     'updated_at' => $data[0]['updated_at'],
                     'deleted_at' => $data[0]['deleted_at'],
                 ];
-                $pdf = Pdf::loadView('pdf/Delete/unique/GestionPanne/mecanicien', $liste);
+                $pdf = Pdf::loadView('pdf/Delete/unique/GestionCompte/mecanicien', $liste);
                 return $pdf->download('mecanicien.pdf');
             }
     }

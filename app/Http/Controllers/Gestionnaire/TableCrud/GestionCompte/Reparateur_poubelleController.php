@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne;
+namespace App\Http\Controllers\Gestionnaire\TableCrud\GestionCompte;
 
-use App\Exports\GestionPanne\Reparateur_poubelleExport;
+use App\Exports\GestionCompte\Reparateur_poubelleExport;
 use App\Http\Controllers\Globale\BaseController as BaseController;
-use App\Http\Resources\GestionPanne\Reparateur_poubelle as Reparateur_poubelleResource;
+use App\Http\Resources\GestionCompte\Reparateur_poubelle as Reparateur_poubelleResource;
 use App\Models\Reparateur_poubelle;
-use App\Http\Requests\GestionPanne\Reparateur_poubelleRequest;
+use App\Http\Requests\GestionCompte\Reparateur_poubelleRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
@@ -117,15 +117,15 @@ class Reparateur_poubelleController extends BaseController{
         $reparateur_poubelle = Reparateur_poubelle::onlyTrashed()->get();
         return $this->handleResponse(Reparateur_poubelleResource::collection($reparateur_poubelle), 'affichage des reparateurs poubelles');
     }
-    public function exportInfoReparateurPoubelleExcel(){
+    public function exportInfoExcel(){
         return Excel::download(new Reparateur_poubelleExport  , 'reparateur-poubelle-liste.xlsx');
     }
 
-    public function exportInfoReparateurPoubelleCSV(){
+    public function exportInfoCSV(){
         return Excel::download(new Reparateur_poubelleExport, 'reparateur-poubelle-liste.csv');
     }
 
-    public function pdfReparateurPoubelle($id){
+    public function pdf($id){
         $reparateur_poubelle = Reparateur_poubelle::find($id);
         if (is_null($reparateur_poubelle)) {
             return $this->handleError('reparateur poubelle n\'existe pas!');
@@ -144,18 +144,18 @@ class Reparateur_poubelleController extends BaseController{
                 "created_at" => $data[0]['created_at'],
                 "updated_at" => $data[0]['updated_at'],
             ];
-            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionPanne/reparateurPoubelle', $liste);
+            $pdf = Pdf::loadView('pdf/NoDelete/unique/GestionCompte/reparateurPoubelle', $liste);
             return $pdf->download('reparateur-poubelle.pdf');
         }
     }
-    public function pdfAllReparateurPoubelle(){
+    public function pdfAll(){
         $reparateur_poubelle = Reparateur_poubelle::all();
         if (is_null($reparateur_poubelle)) {
             return $this->handleError('reparateur poubelle n\'existe pas!');
         }else{
             $p= Reparateur_poubelleResource::collection( $reparateur_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionPanne/reparateurPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
+            $pdf = Pdf::loadView('pdf/NoDelete/table/GestionCompte/reparateurPoubelle', [ 'data' => $data] )->setPaper('a3', 'landscape');
             return $pdf->download('reparateur-poubelle.pdf');
         }
     }
@@ -166,7 +166,7 @@ class Reparateur_poubelleController extends BaseController{
         }else{
             $p= Reparateur_poubelleResource::collection( $reparateur_poubelle);
             $data= collect($p)->toArray();
-            $pdf = Pdf::loadView('pdf/Delete/table/GestionPanne/reparateurPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('pdf/Delete/table/GestionCompte/reparateurPoubelle', [ 'data' => $data] )->setPaper('a4', 'landscape');
             return $pdf->download('Reparateur-poubelle.pdf');
         }
     }
@@ -190,7 +190,7 @@ class Reparateur_poubelleController extends BaseController{
                     "updated_at" => $data[0]['updated_at'],
                     'deleted_at' => $data[0]['deleted_at'],
                 ];
-                $pdf = Pdf::loadView('pdf/Delete/unique/GestionPanne/reparateurPoubelle', $liste);
+                $pdf = Pdf::loadView('pdf/Delete/unique/GestionCompte/reparateurPoubelle', $liste);
                 return $pdf->download('Reparateur-poubelle.pdf');
             }
     }

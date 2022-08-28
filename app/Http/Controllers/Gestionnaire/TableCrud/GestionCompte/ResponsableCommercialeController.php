@@ -181,7 +181,6 @@ class ResponsableCommercialeController extends BaseController{
             return $pdf->download('responsable-commerciale.pdf');
         }
     }
-
     public function pdfAllTrashed(){
         $responsablecommercial = Responsable_commercial::onlyTrashed()->get();
         if (is_null($responsablecommercial)) {

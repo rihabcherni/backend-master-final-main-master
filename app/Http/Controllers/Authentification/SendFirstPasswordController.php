@@ -13,7 +13,7 @@ class SendFirstPasswordController extends Controller{
                 'subject' => 'nouveau mot de passe',
                 'body' => ["password"=>$pass, "prenom"=>$prenom,"email"=>$email, "nom"=>$nom ],
             ];
-            Mail::send('email-template' ,$mail_data , function($message) use ($mail_data){
+            Mail::send('email/first-password' ,$mail_data , function($message) use ($mail_data){
                 $message->from($mail_data['fromEmail'], $mail_data['fromName']);
                 $message->to($mail_data['toEmail'], $mail_data['toName'] )->subject($mail_data['subject']);
             });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\GestionPanne;
+namespace App\Http\Resources\GestionCompte;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Reparation_camion;
 use App\Models\Camion;

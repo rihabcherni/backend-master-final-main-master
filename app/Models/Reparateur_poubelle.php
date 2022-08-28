@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Resources\GestionPanne\Reparateur_poubelle as ReparateurPoubelleResource;
+use App\Http\Resources\GestionCompte\Reparateur_poubelle as ReparateurPoubelleResource;
 
 class Reparateur_poubelle extends Model
 {

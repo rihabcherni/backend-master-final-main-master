@@ -24,11 +24,13 @@ class GestionnaireController extends BaseController{
         $pass = Str::random(8);
         $SendEmail = new SendFirstPasswordController;
         $mp=$SendEmail->sendFirstPassword( $input['email'], $input['nom'], $input['prenom'],$pass);
-        if ($image = $request->file('photo')) {
-            $destinationPath = 'storage/images/gestionnaire';
+        if($request->hasFile('photo')){
+            $image = $request->file('photo');
+            $destinationPath = 'storage/images/Gestionnaire';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
-            $input['photo'] = "$profileImage";
+            $input['photo'] = $profileImage;
+            $input['photo']=$input['photo'];
         }
         $input['mot_de_passe'] =  Hash::make($mp->getData()->mot_de_passe);
         $input['QRcode'] =  Hash::make($mp->getData()->mot_de_passe);

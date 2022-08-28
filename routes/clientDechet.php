@@ -34,6 +34,10 @@
                     Route::post('/message' , [MessageController::class , 'store']);
 
                     Route::post('/panier' , [DechetController::class ,'panier']);
+
+
+
+
                     Route::get('/quantite-dechet-total-client', [SommeDechetController::class, 'QuantiteDechetTotaleClient']);
                 });
         });

@@ -5,6 +5,7 @@ use App\Http\Controllers\Globale\SommeDechetController;
 use App\Http\Controllers\Globale\RechercheController;
 use App\Http\Controllers\Globale\RegionController;
 use App\Http\Controllers\Auth\Ouvrier\AuthOuvrierController;
+use App\Http\Controllers\Authentification\ForgotPasswordController;
 use App\Http\Controllers\Gestionnaire\TableCrud\ViderPoubelleGestionnaireController;
 use App\Http\Controllers\Authentification\LoginController;
 use App\Http\Controllers\Authentification\LogoutController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Authentification\ModifierPasswordController;
 use App\Http\Controllers\Authentification\ModifierProfileController;
 use App\Http\Controllers\Authentification\ProfileController;
 use App\Http\Controllers\Authentification\QrloginController;
-use App\Http\Controllers\Authentification\ViderPoubellesController;
+use App\Http\Controllers\Globale\ViderPoubellesController;
 
 /********************               Authentification           ****************************** */
     Route::post('/login', [LoginController::class,'login']);
@@ -24,6 +25,8 @@ use App\Http\Controllers\Authentification\ViderPoubellesController;
     Route::get('/profile', [ProfileController::class,'profile']);
     Route::post('/qrlogin/{qrcode}',[QrloginController::class,'qrlogin']);
 
+    Route::post('/oublier-password-verification-code', [ForgotPasswordController::class,'forgotPasswordVerificationCode']);
+    Route::post('/oublier-password-update', [ForgotPasswordController::class,'updatePasswordOublier']);
 
 
 
@@ -80,7 +83,6 @@ use App\Http\Controllers\Authentification\ViderPoubellesController;
 
                 /** -------------  **************         fin somme      **************************  ------------------**/
             /** -------------  **************         fin dashborad gestionnaire        **************************  ------------------**/
-
 
 
             /** -------------  **************         debut map      **************************  ------------------**/

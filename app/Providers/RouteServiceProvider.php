@@ -85,6 +85,21 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/responsablePersonnels.php'));
+        /*         responsable technique       */
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/responsableTechnique.php'));
+        /*         reparateur poubelle       */
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/reparateurPoubelle.php'));
+        /*         mecanicien         */
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/mecanicien.php'));
 
   });
 }

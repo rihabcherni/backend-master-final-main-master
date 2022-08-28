@@ -143,7 +143,6 @@ class ResponsablePersonnelController extends BaseController{
         $responsablePersonnel = Responsable_personnel::onlyTrashed()->get();
         return $this->handleResponse(Responsable_personnelResource::collection($responsablePersonnel), 'affichage des responsable personnel');
     }
-
     public function exportInfoExcel(){
         return Excel::download(new Responsable_personnelExport  , 'responsable-personnele-liste.xlsx');
     }
