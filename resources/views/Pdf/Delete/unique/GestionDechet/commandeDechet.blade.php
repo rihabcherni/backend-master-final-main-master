@@ -34,72 +34,86 @@
             <table>
                 <tr>
                     <th>Numéro commande:</th>
-                    <td>{{$id}}</td>
+                   <td colspan="4">{{$id}}</td>
+                </tr>
+
+                <tr>
+                    <th>Type dechet</th>
+                    <th  style="color:blue">Plastique</th>
+                    <th  style="color:orange">Papier</th>
+                    <th  style="color:green">Composte</th>
+                    <th  style="color:red">Canette</th>
+                </tr>
+
+                <tr>
+                    <th>Quantité</th>
+                    <th style="color:blue">{{ $quantite_plastique }} KG</th>
+                    <th style="color:orange">{{ $quantite_papier }} KG</th>
+                    <th style="color:green">{{ $quantite_composte}} KG</th>
+                    <th style="color:red">{{ $quantite_canette }} KG</th>
                 </tr>
                 <tr>
-                    <th>Type dechets:</th>
-                    <td>{{$type}}</td>
+                    <th>Prix</th>
+                    <th style="color:blue">{{ $prix_plastique }} DT</th>
+                    <th style="color:orange">{{ $prix_papier }} DT</th>
+                    <th style="color:green">{{ $prix_composte}} DT</th>
+                    <th style="color:red">{{ $prix_canette }} DT</th>
                 </tr>
-                <tr>
-                    <th>Quantité :</th>
-                    <td>{{$quantite}}</td>
-                </tr>
+
                 <tr>
                     <th>Montant total:</th>
-                    <td>{{$montant_total}}</td>
+                    <th colspan="4" style="text-align:center;">{{$montant_total}} DT</th>
                 </tr>
                 <tr>
                     <th>date commande :</th>
-                    <td>{{$date_commande}}</td>
+                    <td colspan="4">{{$date_commande}}</td>
                 </tr>
                 <tr>
                     <th>date livraison :</th>
-                    <td>{{$date_livraison}}</td>
+                    <td colspan="4">{{$date_livraison}}</td>
                 </tr>
                 <tr>
                     <th>Type paiment :</th>
-                    <td>{{$type_paiment}}</td>
+                    <td colspan="4">{{$type_paiment}}</td>
                 </tr>
                 <tr>
                     <th rowspan='2'>entreprise :</th>
-                    <td><b>Nom :</b>{{$entreprise}}</td>
+                    <td colspan="4"><b>Nom :</b>{{$entreprise}}</td>
                 </tr>
 
                 <tr>
-                    <td><b>Matricule fiscale</b>{{$matricule_fiscale}}</td>
+                    <td colspan="4"><b>Matricule fiscale</b>{{$matricule_fiscale}}</td>
                 </tr>
 
                 <tr>
-                    <th  rowspan='6'>Client dechet:</th>
-                    <td><b>ID: </b>{{$client_dechet_id}}</td>
-                </tr>
-                <tr>
-                    <td><b>Nom et prénom :</b>{{$client_dechet->nom.' '.$client_dechet->prenom }}</t</td>
-                </tr>
-                <tr>
-                    <td><b> Numéro télephone :</b>{{$client_dechet->numero_telephone}}</td>
-                </tr>
-                <tr>
-                    <td><b> Numéro fixe :</b>{{$client_dechet->numero_fixe}}</td>
-                </tr>
-                <tr>
-                    <td><b> Adresse :</b>{{$client_dechet->adresse}}</td>
-                </tr>
-                <tr>
-                    <td><b>E-mail :</b>{{$client_dechet->email}}</td>
+                    <th>Client dechet:</th>
+                   <td colspan="4">
+                    <b>ID: </b>{{$client_dechet_id}} <br/>
+
+                    <b>Nom et prénom :</b>{{$client_dechet->nom.' '.$client_dechet->prenom }}<br/>
+
+                    <b> Numéro télephone :</b>{{$client_dechet->numero_telephone}}<br/>
+
+                    <b> Numéro fixe :</b>{{$client_dechet->numero_fixe}}<br/>
+
+                    <b> Adresse :</b>{{$client_dechet->adresse}}<br/>
+
+                    <b>E-mail :</b>{{$client_dechet->email}}<br/>
+
+                </td>
                 </tr>
 
                 <tr>
                     <th>Date de création:</th>
-                    <td>{{$created_at}}</td>
+                   <td colspan="4">{{$created_at}}</td>
                 </tr>
                 <tr>
                     <th>Date de dernier modification: </th>
-                    <td>{{$updated_at}}</td>
+                   <td colspan="4">{{$updated_at}}</td>
                 </tr>
                 <tr>
                     <th style='background-color:red; color:white;'>Date de suppression</th>
-                    <td style='color:red;'>{{$deleted_at}}</td>
+                    <td  colspan="4" style='color:red;'>{{$deleted_at}}</td>
                 </tr>
             </table>
         </div>

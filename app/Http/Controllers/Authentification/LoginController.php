@@ -4,10 +4,13 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Globale\Controller;
 use App\Models\Client_dechet;
 use App\Models\Gestionnaire;
+use App\Models\Mecanicien;
 use App\Models\Ouvrier;
+use App\Models\Reparateur_poubelle;
 use App\Models\Responsable_commercial;
 use App\Models\Responsable_etablissement;
 use App\Models\Responsable_personnel ;
+use App\Models\Responsable_technique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +29,9 @@ class LoginController extends Controller{
         $ouvrier=Ouvrier::where('email',$request->email)->first();
         $responsable_commerciale=Responsable_commercial::where('email',$request->email)->first();
         $responsable_personnel=Responsable_personnel::where('email',$request->email)->first();
+        $responsable_technique=Responsable_technique::where('email',$request->email)->first();
+        $reparateur_poubelle=Reparateur_poubelle::where('email',$request->email)->first();
+        $mecanicien=Mecanicien::where('email',$request->email)->first();
 
         if ($gestionnaire !== null) {
             if(Auth::guard('gestionnaire') && (Hash::check($request->mot_de_passe,  $gestionnaire->mot_de_passe))  && ($request->recaptcha!== null) ){
@@ -95,7 +101,43 @@ class LoginController extends Controller{
                     'status'=>200,
                     'user'=>$responsable_commerciale,
                     'token'=> $responsable_commerciale->createToken('responsable-commercial-login')->plainTextToken,
-                    'message' =>'responsable_commercial vous avez connecté avec success',
+                    'message' =>'responsable commercial vous avez connecté avec success',
+                ],200);
+            }else{
+                return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
+            }
+        }else if ($responsable_technique !== null){
+            if(Auth::guard('responsable_technique') && (Hash::check($request->mot_de_passe,$responsable_technique->mot_de_passe))  && ($request->recaptcha!== null) ){
+                return response()->json([
+                    'Role'=>'responsable_technique',
+                    'status'=>200,
+                    'user'=>$responsable_technique,
+                    'token'=> $responsable_technique->createToken('responsable-technique-login')->plainTextToken,
+                    'message' =>'responsable technique vous avez connecté avec success',
+                ],200);
+            }else{
+                return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
+            }
+        }else if ($reparateur_poubelle !== null){
+            if(Auth::guard('reparateur_poubelle') && (Hash::check($request->mot_de_passe,$reparateur_poubelle->mot_de_passe))  && ($request->recaptcha!== null) ){
+                return response()->json([
+                    'Role'=>'reparateur_poubelle',
+                    'status'=>200,
+                    'user'=>$reparateur_poubelle,
+                    'token'=> $reparateur_poubelle->createToken('reparateur-poubelle-login')->plainTextToken,
+                    'message' =>'reparateur_poubelle vous avez connecté avec success',
+                ],200);
+            }else{
+                return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);
+            }
+        }else if ($mecanicien !== null){
+            if(Auth::guard('mecanicien') && (Hash::check($request->mot_de_passe,$mecanicien->mot_de_passe))  && ($request->recaptcha!== null) ){
+                return response()->json([
+                    'Role'=>'mecanicien',
+                    'status'=>200,
+                    'user'=>$mecanicien,
+                    'token'=> $mecanicien->createToken('mecanicien-login')->plainTextToken,
+                    'message' =>'mecanicien vous avez connecté avec success',
                 ],200);
             }else{
                 return response()->json(['error' => 'Invalid credentials','validation_errors' =>["mot_de_passe"=>"votre mot de passe est incorrect. Veuillez réessayer ultérieurement."], 'status'=>401]);

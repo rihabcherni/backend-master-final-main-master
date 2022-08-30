@@ -7,8 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Resources\GestionCompte\Gestionnaire as GestionnaireResource;
 
-class Gestionnaire extends Authenticatable
-{
+class Gestionnaire extends Authenticatable{
     use HasApiTokens, SoftDeletes,HasFactory, Notifiable;
 
     protected $guarded=[];

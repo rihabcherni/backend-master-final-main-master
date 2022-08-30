@@ -7,7 +7,7 @@
         <title>Document</title>
         <style>
             .date{
-                margin:-20px 0 0 75%  ;
+                margin:-20px 0 0 90%  ;
             }
             .img-container{
                 border-radius: 20px;
@@ -39,39 +39,59 @@
         <table>
             <tr>
 
-                <th colspan="7">Détails commande</th>
+                <th colspan="13">Détails commande</th>
 
-                <th rowspan="2">Entreprise:</th>
-                <th rowspan="2">Matricule fiscale:</th>
+                <th rowspan="3">Entreprise:</th>
+                <th rowspan="3">Matricule fiscale:</th>
 
                 <th colspan="4">Détails client</th>
 
-                <th rowspan="2">Date de création:</th>
-                <th rowspan="2">Date de modification: </th>
+                <th rowspan="3">Date de création:</th>
+                <th rowspan="3">Date de modification: </th>
             </tr>
             <tr>
-                <th>Id:</th>
-                <th>Type dechet</th>
-                <th>Quantite</th>
-                <th>Montant total:</th>
-                <th>Date commande:</th>
-                <th>Date livraison:</th>
-                <th>Type paiment:</th>
+                <th rowspan="2">Id:</th>
+                <th colspan="2" style="background-color:blue; color:white">Plastique:</th>
+                <th colspan="2" style="background-color:orange; color:white">Papier:</th>
+                <th colspan="2" style="background-color:green; color:white">Composte:</th>
+                <th colspan="2" style="background-color:red; color:white">Canette:</th>
+                <th rowspan="2">Montant total:</th>
+                <th rowspan="2">Date commande:</th>
+                <th rowspan="2">Date livraison:</th>
+                <th rowspan="2">Type paiment:</th>
 
-                <th>ID</th>
-                <th>Nom et prénom</th>
-                <th>Numéro télephone</th>
-                <th>E-mail</th>
+                <th rowspan="2">ID</th>
+                <th rowspan="2">Nom et prénom</th>
+                <th rowspan="2">Numéro télephone</th>
+                <th rowspan="2">E-mail</th>
+            </tr>
+
+            <tr>
+                <th style="background-color:blue; color:white">Quantité</th>
+                <th style="background-color:blue; color:white">Montant</th>
+                <th style="background-color:orange; color:white">Quantité</th>
+                <th style="background-color:orange; color:white">Montant</th>
+                <th style="background-color:green; color:white">Quantité</th>
+                <th style="background-color:green; color:white">Montant</th>
+                <th style="background-color:red; color:white">Quantité</th>
+                <th style="background-color:red; color:white">Montant</th>
             </tr>
             @foreach ($data as $l)
             <tr>
                 <td> {{ $l['id'] }}</td>
-                <td> {{ $l['type'] }}</td>
-                <td> {{ $l['quantite'] }}</td>
-                <td> {{ $l['montant_total'] }}</td>
+                <td style="color:blue;"> {{ $l['quantite_plastique'] }} KG</td>
+                <td style="color:blue;"> {{ $l['prix_plastique'] }} DT</td>
+                <td style="color:orange;"> {{ $l['quantite_papier'] }} KG</td>
+                <td style="color:orange;"> {{ $l['prix_papier'] }} DT</td>
+                <td style="color:green;"> {{ $l['quantite_composte'] }} KG</td>
+                <td style="color:green;"> {{ $l['prix_composte'] }} DT</td>
+                <td style="color:red;"> {{ $l['quantite_canette'] }} KG</td>
+                <td style="color:red;"> {{ $l['prix_canette'] }} DT</td>
+                <td> {{ $l['montant_total'] }} DT</td>
                 <td>{{ $l['date_commande'] }}</td>
                 <td>{{ $l['date_livraison'] }}</td>
                 <td>{{ $l['type_paiment'] }}</td>
+
 
                 <td>{{ $l['entreprise'] }}</td>
                 <td>{{ $l['matricule_fiscale'] }}</td>
@@ -82,9 +102,9 @@
 
                 <td>{{ $l['created_at'] }}</td>
                 <td>{{ $l['updated_at'] }}</td>
-            </tr>
             @endforeach
         </table>
+
 
     </body>
 </html>

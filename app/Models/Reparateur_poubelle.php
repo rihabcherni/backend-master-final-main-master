@@ -1,16 +1,14 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use App\Http\Resources\GestionCompte\Reparateur_poubelle as ReparateurPoubelleResource;
 
-class Reparateur_poubelle extends Model
-{
-    use HasFactory ,  SoftDeletes;
-
+class Reparateur_poubelle extends Authenticatable{
+    use HasApiTokens, SoftDeletes,HasFactory, Notifiable;
     protected $fillable = [
         'nom',
         'prenom',

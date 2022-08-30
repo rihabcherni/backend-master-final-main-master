@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Commande_dechetController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;
-    use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Detail_commande_dechetController;
 
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_poubelleController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionPanne\Reparation_camionController;
@@ -224,21 +223,6 @@ use App\Http\Controllers\Globale\MessageController;
                         Route::get('dechets-suppression-definitif-all', 'hdeleteAll');
                         Route::get('dechets-pdf-trashed/{id}', 'pdfTrashed');
                         Route::get('dechets-all-pdf-trashed', 'pdfAllTrashed');
-                    });
-                /**                  detail commande dechet         */
-                    Route::apiResource('detail-commande-dechets', Detail_commande_dechetController::class);
-                    Route::controller(Detail_commande_dechetController::class)->group(function () {
-                        Route::get('detail-commande-dechets-liste-suppression', 'listeSuppression');
-                        Route::get('detail-commande-dechets-excel', 'exportInfoExcel');
-                        Route::get('detail-commande-dechets-csv', 'exportInfoCSV');
-                        Route::get('detail-commande-dechets-pdf/{id}', 'pdf');
-                        Route::get('detail-commande-dechets-all-pdf', 'pdfAll');
-                        Route::get('detail-commande-dechets-restore/{id}', 'restore');
-                        Route::get('detail-commande-dechets-restore-all', 'restoreAll');
-                        Route::get('detail-commande-dechets-suppression-definitif/{id}', 'hdelete');
-                        Route::get('detail-commande-dechets-suppression-definitif-all', 'hdeleteAll');
-                        Route::get('detail-commande-dechets-pdf-trashed/{id}', 'pdfTrashed');
-                        Route::get('detail-commande-dechets-all-pdf-trashed', 'pdfAllTrashed');
                     });
         /** -------------------------------------------gestion Panne -----------------------------------------*/
                 /**                        reparation poubelle            */

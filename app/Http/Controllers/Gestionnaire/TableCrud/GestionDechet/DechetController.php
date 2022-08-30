@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 Use \Carbon\Carbon;
-use App\Models\Detail_commande_dechet;
 use Illuminate\Support\Facades\File;
 
 class DechetController extends BaseController{
@@ -124,52 +123,52 @@ class DechetController extends BaseController{
 
 
 
-    public function panier(Request $request){
-        $myArray = array();
-        $json = utf8_decode($request->commande);
-        $data = json_decode($json,true);
-        $bool = false;
-        // $len = count($data);
+    // public function panier(Request $request){
+    //     $myArray = array();
+    //     $json = utf8_decode($request->commande);
+    //     $data = json_decode($json,true);
+    //     $bool = false;
+    //     // $len = count($data);
 
-        // $id_dechets = $data[0]['type']['id'];
-        // $qte_dechets = data[0]['qte'];
+    //     // $id_dechets = $data[0]['type']['id'];
+    //     // $qte_dechets = data[0]['qte'];
 
-        // $id = $request->id;
-        // $prix_totals = json_decode($request->prix_total);
+    //     // $id = $request->id;
+    //     // $prix_totals = json_decode($request->prix_total);
 
-        $cmd=Dechet::create([
-            'client_dechet_id' => $request->id_client,
-            "type_paiment"=> $request->type_paiment,
-            'montant_total'=>$request->montant_total,
-            'date_commande' => Carbon::now()->translatedFormat('H:i:s j F Y')
-        ]);
+    //     $cmd=Dechet::create([
+    //         'client_dechet_id' => $request->id_client,
+    //         "type_paiment"=> $request->type_paiment,
+    //         'montant_total'=>$request->montant_total,
+    //         'date_commande' => Carbon::now()->translatedFormat('H:i:s j F Y')
+    //     ]);
 
-        if(count($data)>1){
-            for ($i=0; $i <count($data) ; $i++){
-                Detail_commande_dechet::create([
-                    'commande_dechet_id' => $cmd->id,
-                    'dechet_id' => $data[$i]['type']['id'],
-                    'quantite' => $data[$i]['qte'],
-                ]);
-            }
-        }else{
-            Detail_commande_dechet::create([
-                'commande_dechet_id' => $cmd->id,
-                'dechet_id' => $data[0]['type']['id'],
-                'quantite' => $data[0]['qte'],
-            ]);
-        }
+    //     if(count($data)>1){
+    //         for ($i=0; $i <count($data) ; $i++){
+    //             Commande_dechet::create([
+    //                 'commande_dechet_id' => $cmd->id,
+    //                 'dechet_id' => $data[$i]['type']['id'],
+    //                 'quantite' => $data[$i]['qte'],
+    //             ]);
+    //         }
+    //     }else{
+    //             Commande_dechet::create([
+    //             'commande_dechet_id' => $cmd->id,
+    //             'dechet_id' => $data[0]['type']['id'],
+    //             'quantite' => $data[0]['qte'],
+    //         ]);
+    //     }
 
-        return response([
-            // "prix_total" => $prix_totals[0]->prix_total,
-            // "data" => $data,
-            // "myArrayCount" => count($myArray),
-            // "myArray" => $myArray,
-            'cmd' => $cmd,
-            'id_cmd' => $cmd->id,
-            'bool' => $bool
-        ]);
-    }
+    //     return response([
+    //         // "prix_total" => $prix_totals[0]->prix_total,
+    //         // "data" => $data,
+    //         // "myArrayCount" => count($myArray),
+    //         // "myArray" => $myArray,
+    //         'cmd' => $cmd,
+    //         'id_cmd' => $cmd->id,
+    //         'bool' => $bool
+    //     ]);
+    // }
     public function exportInfoDechetExcel(){
         return Excel::download(new DechetExport  , 'dechet-liste.xlsx');
     }

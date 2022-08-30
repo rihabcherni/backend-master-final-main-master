@@ -10,8 +10,16 @@ class CreateCommandeDechetsTable extends Migration{
         Schema::create('commande_dechets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_dechet_id')->constrained('client_dechets')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('type_paiment',['en ligne','en cheque','en espece']);
-            $table->float('montant_total');
+            $table->float('quantite_plastique')->nullable();
+            $table->float('quantite_papier')->nullable();
+            $table->float('quantite_composte')->nullable();
+            $table->float('quantite_canette')->nullable();
+            $table->float('prix_plastique')->nullable();
+            $table->float('prix_papier')->nullable();
+            $table->float('prix_composte')->nullable();
+            $table->float('prix_canette')->nullable();
+            $table->enum('type_paiment',['en ligne','en cheque','en espece'])->nullable();
+            $table->float('montant_total')->nullable();
             $table->datetime('date_commande')->nullable();
             $table->datetime('date_livraison')->nullable();
             $table->timestamps();

@@ -16,20 +16,22 @@ class Commande_dechet extends JsonResource{
             $matricule=$client->matricule_fiscale;
             $entreprise=$client->nom_entreprise;
         }
-        $type_dechet="";
-        $quantite=0;
-        if($this->detail_commande_dechet !== Null){
-            $type_dechet=Dechet::find($this->detail_commande_dechet->dechet_id)->type_dechet;
-            $quantite=$this->detail_commande_dechet->quantite;
-        }
         $deleted_at=null;
         if($this->deleted_at  !== null){
             $deleted_at=  $this->deleted_at->translatedFormat('H:i:s j F Y');
         }
         return [
             'id' => $this->id,
-            'type' => $type_dechet,
-            "quantite"=>$quantite,
+            'quantite_plastique'=> $this->quantite_plastique,
+            'quantite_papier'=> $this->quantite_papier,
+            'quantite_composte'=> $this->quantite_composte,
+            'quantite_canette'=> $this->quantite_canette,
+
+            'prix_plastique'=> $this->prix_plastique,
+            'prix_papier'=> $this->prix_papier,
+            'prix_composte'=> $this->prix_composte,
+            'prix_canette'=> $this->prix_canette,
+
             'montant_total' => $this->montant_total,
             'date_commande' => Carbon::parse($this->date_commande)->translatedFormat('d M Y'),
             'date_livraison' => $this->date_livraison,

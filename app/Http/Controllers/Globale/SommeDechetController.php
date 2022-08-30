@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Globale;
 
 use App\Http\Controllers\Globale\Controller;
-use App\Models\Commande_dechet;
 use App\Models\Dechet;
 use App\Models\Zone_depot;
 use App\Models\Zone_travail;
 use App\Models\Depot;
-use App\Models\Detail_commande_dechet;
+use App\Models\Commande_dechet;
 
 class SommeDechetController extends Controller{
     public function SommeDechetZoneDepot(){
@@ -26,10 +25,10 @@ class SommeDechetController extends Controller{
         $composte_tot=Zone_depot::sum("quantite_depot_actuelle_composte");
         $canette_tot=Zone_depot::sum("quantite_depot_actuelle_canette");
 
-        $plastique_achette=Detail_commande_dechet::where('dechet_id',1)->sum("quantite");
-        $papier_achette=Detail_commande_dechet::where('dechet_id',3)->sum("quantite");
-        $composte_achette=Detail_commande_dechet::where('dechet_id',2)->sum("quantite");
-        $canette_achette=Detail_commande_dechet::where('dechet_id',4)->sum("quantite");
+        $plastique_achette=Commande_dechet::where('dechet_id',1)->sum("quantite");
+        $papier_achette=Commande_dechet::where('dechet_id',3)->sum("quantite");
+        $composte_achette=Commande_dechet::where('dechet_id',2)->sum("quantite");
+        $canette_achette=Commande_dechet::where('dechet_id',4)->sum("quantite");
 
         $myArray = [
             'somme_depot_actuelle_plastique'=>abs(round( ($plastique_tot -$plastique_achette)* 1000)/1000) ,
@@ -63,38 +62,38 @@ class SommeDechetController extends Controller{
         $client=auth()->guard('client_dechet')->user();
         $commande=Commande_dechet::where('client_dechet_id',$client->id)->pluck("id");
         $myArray = [
-            'quantite_total_achetee_plastique'=>Detail_commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',1)->sum("quantite"),
-            'quantite_total_achetee_composte'=>Detail_commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',2)->sum("quantite"),
-            'quantite_total_achetee_papier'=>Detail_commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',3)->sum("quantite"),
-            'quantite_total_achetee_canette'=>Detail_commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',4)->sum("quantite"),
+            'quantite_total_achetee_plastique'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',1)->sum("quantite"),
+            'quantite_total_achetee_composte'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',2)->sum("quantite"),
+            'quantite_total_achetee_papier'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',3)->sum("quantite"),
+            'quantite_total_achetee_canette'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',4)->sum("quantite"),
         ];
         return response()->json($myArray);
       }
 
     public function SommeDechetsVendus(){
-        $year = Detail_commande_dechet::selectRaw('year(created_at) as year')
+        $year = Commande_dechet::selectRaw('year(created_at) as year')
             ->groupBy('year')
             ->orderByRaw('min(created_at) desc')
             ->get();
-        $sommeplastique = Detail_commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
+        $sommeplastique = Commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
         ifnull(sum(quantite),0) as quantite_vendu_plastique')
             ->groupBy('year','month')
             ->where('dechet_id',1)
             ->orderByRaw('min(created_at) desc')
             ->get();
-        $sommepapier = Detail_commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
+        $sommepapier = Commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
         ifnull(sum(quantite),0) as quantite_vendu_papier')
             ->groupBy('year','month')
             ->where('dechet_id',2)
             ->orderByRaw('min(created_at) desc')
             ->get();
-        $sommecomposte = Detail_commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
+        $sommecomposte = Commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
         ifnull(sum(quantite),0) as quantite_vendu_composte')
             ->groupBy('year','month')
             ->where('dechet_id',3)
             ->orderByRaw('min(created_at) desc')
             ->get();
-        $sommecanette = Detail_commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
+        $sommecanette = Commande_dechet::selectRaw('year(created_at) as year, month(created_at) as month,
         ifnull(sum(quantite),0) as quantite_vendu_canette')
             ->groupBy('year','month')
             ->where('dechet_id',4)

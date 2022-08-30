@@ -5,10 +5,13 @@ use App\Models\Client_dechet;
 use App\Models\Forget_password;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Gestionnaire;
+use App\Models\Mecanicien;
 use App\Models\Ouvrier;
+use App\Models\Reparateur_poubelle;
 use App\Models\Responsable_commercial;
 use App\Models\Responsable_etablissement;
 use App\Models\Responsable_personnel;
+use App\Models\Responsable_technique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -47,6 +50,10 @@ class ForgotPasswordController extends Controller{
         $ouvrier=Ouvrier::where('email', '=', $input['email'])->first();
         $responsable_commerciale=Responsable_commercial::where('email', '=', $input['email'])->first();
         $responsable_personnel=Responsable_personnel::where('email', '=', $input['email'])->first();
+        $mecanicien=Mecanicien::where('email', '=', $input['email'])->first();
+        $reparateur_poubelle=Reparateur_poubelle::where('email', '=', $input['email'])->first();
+        $responsable_technique=Responsable_technique::where('email', '=', $input['email'])->first();
+
         $user=null;
         if($gestionnaire!==null){
             $user=$gestionnaire;
@@ -66,6 +73,15 @@ class ForgotPasswordController extends Controller{
         }else if($responsable_personnel!==null){
             $user=$responsable_personnel;
             $type="responsable personnel";
+        }else if($mecanicien!==null){
+            $user=$mecanicien;
+            $type="mecanicien";
+        }else if($reparateur_poubelle!==null){
+            $user=$reparateur_poubelle;
+            $type="reparateur poubelle";
+        }else if($responsable_technique!==null){
+            $user=$responsable_technique;
+            $type="responsable technique";
         }
         if($user!==null){
             $test=Forget_password::where('email', '=', $input['email'])->first();
@@ -167,7 +183,31 @@ class ForgotPasswordController extends Controller{
                     $responsable_presonnel->mot_de_passe =$hash_password;
                     $responsable_presonnel->save();
                     return response()->json([
-                        'message' =>"responsable personnel, votre mot de passe a été modifié avec succès. Essayez de vous connecter avec ce nouveau mot de passe. Si vous avez un problème, n'hésitez pas à nous contacter",
+                        'message' =>"Responsable personnel, votre mot de passe a été modifié avec succès. Essayez de vous connecter avec ce nouveau mot de passe. Si vous avez un problème, n'hésitez pas à nous contacter",
+                        'status'=>200
+                    ],200);
+                }else if($code->user_type=== "responsable technique"){
+                    $responsable_technique= Responsable_technique::where('email', $code->email)->first();
+                    $responsable_technique->mot_de_passe =$hash_password;
+                    $responsable_technique->save();
+                    return response()->json([
+                        'message' =>"responsable technique, votre mot de passe a été modifié avec succès. Essayez de vous connecter avec ce nouveau mot de passe. Si vous avez un problème, n'hésitez pas à nous contacter",
+                        'status'=>200
+                    ],200);
+                }else if($code->user_type=== "mecanicien"){
+                    $mecanicien= Mecanicien::where('email', $code->email)->first();
+                    $mecanicien->mot_de_passe =$hash_password;
+                    $mecanicien->save();
+                    return response()->json([
+                        'message' =>"Mecanicien, votre mot de passe a été modifié avec succès. Essayez de vous connecter avec ce nouveau mot de passe. Si vous avez un problème, n'hésitez pas à nous contacter",
+                        'status'=>200
+                    ],200);
+                }else if($code->user_type=== "reparateur poubelle"){
+                    $reparateur_poubelle= Reparateur_poubelle::where('email', $code->email)->first();
+                    $reparateur_poubelle->mot_de_passe =$hash_password;
+                    $reparateur_poubelle->save();
+                    return response()->json([
+                        'message' =>"Reparateur poubelle, votre mot de passe a été modifié avec succès. Essayez de vous connecter avec ce nouveau mot de passe. Si vous avez un problème, n'hésitez pas à nous contacter",
                         'status'=>200
                     ],200);
                 }

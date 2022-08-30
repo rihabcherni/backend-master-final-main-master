@@ -8,7 +8,6 @@
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\DechetController;
     use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Commande_dechetController;
-    use App\Http\Controllers\Gestionnaire\TableCrud\GestionDechet\Detail_commande_dechetController;
     use App\Http\Controllers\Globale\ConversationController;
     use App\Http\Controllers\Globale\MessageController;
 
@@ -25,7 +24,6 @@
                     Route::post('/send',[AuthClientDechetController::class,'send']);
 
                     Route::post('/afficherDechetsClient',[Commande_dechetController::class , 'afficherDechetsClient']);
-                    Route::post('/afficherDetailsDechet',[Detail_commande_dechetController::class , 'afficherDetailsDechet']);
 
                     Route::post('/getConversations' , [ConversationController::class , 'index']);
                     Route::post('/getConversationId/{id}' , [ConversationController::class , 'getConversationId']);
@@ -33,10 +31,7 @@
                     Route::post('/conversation/read' , [ConversationController::class , 'makeConversationAsReaded']);
                     Route::post('/message' , [MessageController::class , 'store']);
 
-                    Route::post('/panier' , [DechetController::class ,'panier']);
-
-
-
+                    // Route::post('/panier' , [DechetController::class ,'panier']);
 
                     Route::get('/quantite-dechet-total-client', [SommeDechetController::class, 'QuantiteDechetTotaleClient']);
                 });

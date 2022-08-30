@@ -1,15 +1,16 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use App\Http\Resources\GestionCompte\Mecanicien as MecanicienResource;
 
-class Mecanicien extends Model
-{
-    use HasFactory,  SoftDeletes;
+class Mecanicien extends Authenticatable{
+    use HasApiTokens, SoftDeletes,HasFactory, Notifiable;
+
+    protected $guarded=[];
     protected $fillable = [
         'nom',
         'prenom',

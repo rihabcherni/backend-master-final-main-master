@@ -13,18 +13,36 @@ class Commande_dechetRequest extends FormRequest{
         if ($this->isMethod('post')) {
             return [
                 'client_dechet_id'=> 'required|numeric',
-                'quantite'=> 'required|numeric',
-                'montant_total'=> 'required|numeric',
+                'quantite_plastique'=> 'sometimes|numeric',
+                'quantite_papier'=> 'sometimes|numeric',
+                'quantite_composte'=> 'sometimes|numeric',
+                'quantite_canette'=> 'sometimes|numeric',
+                'prix_plastique'=> 'sometimes|numeric',
+                'prix_papier'=> 'sometimes|numeric',
+                'prix_composte'=> 'sometimes|numeric',
+                'prix_canette'=> 'sometimes|numeric',
+                'type_paiment'=> 'sometimes|numeric',
+                'montant_total'=> 'sometimes|numeric',
                 'date_commande'=> 'sometimes|date_format:Y-m-d',
                 'date_livraison'=> 'sometimes|date_format:Y-m-d',
+
+
             ];
         }else if($this->isMethod('PUT')){
             return [
                 // 'client_dechet_id'=> 'required|numeric',
-                // 'quantite'=> 'required|numeric',
-                // 'montant_total'=> 'required|numeric',
-                // 'date_commande'=> 'required|date_format:Y-m-d',
-                // 'date_livraison'=> 'required|date_format:Y-m-d',
+                // 'quantite_plastique'=> 'sometimes|numeric',
+                // 'quantite_papier'=> 'sometimes|numeric',
+                // 'quantite_composte'=> 'sometimes|numeric',
+                // 'quantite_canette'=> 'sometimes|numeric',
+                // 'prix_plastique'=> 'sometimes|numeric',
+                // 'prix_papier'=> 'sometimes|numeric',
+                // 'prix_composte'=> 'sometimes|numeric',
+                // 'prix_canette'=> 'sometimes|numeric',
+                // 'type_paiment'=> 'sometimes|numeric',
+                // 'montant_total'=> 'sometimes|numeric',
+                // 'date_commande'=> 'sometimes|date_format:Y-m-d',
+                // 'date_livraison'=> 'sometimes|date_format:Y-m-d',
             ];
         }
 
