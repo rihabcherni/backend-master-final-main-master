@@ -62,10 +62,10 @@ class SommeDechetController extends Controller{
         $client=auth()->guard('client_dechet')->user();
         $commande=Commande_dechet::where('client_dechet_id',$client->id)->pluck("id");
         $myArray = [
-            'quantite_total_achetee_plastique'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',1)->sum("quantite"),
-            'quantite_total_achetee_composte'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',2)->sum("quantite"),
-            'quantite_total_achetee_papier'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',3)->sum("quantite"),
-            'quantite_total_achetee_canette'=>Commande_dechet::whereIn('commande_dechet_id',$commande )->where('dechet_id',4)->sum("quantite"),
+            'quantite_total_achetee_plastique'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_plastique"),
+            'quantite_total_achetee_composte'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_composte"),
+            'quantite_total_achetee_papier'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_papier"),
+            'quantite_total_achetee_canette'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_canette"),
         ];
         return response()->json($myArray);
       }
