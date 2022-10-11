@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Ouvrier;
 use App\Http\Controllers\Globale\BaseController as BaseController;
 use App\Models\Poubelle;
-use App\Models\Ouvrier;
 use App\Models\Camion;
 use App\Models\Depot;
 use App\Models\Zone_depot;
@@ -10,10 +9,10 @@ use App\Models\Bloc_etablissement;
 use App\Models\Bloc_poubelle;
 use App\Models\Etablissement;
 use App\Models\Etage_etablissement;
+use App\Models\Vider_poubelle;
 use App\Models\Zone_travail;
 
 class ViderController extends BaseController{
-
     public function ViderCamion(){
         $ouvrier=auth()->guard('ouvrier')->user();
         $camion_id = $ouvrier->camion_id;
@@ -68,7 +67,6 @@ class ViderController extends BaseController{
         ];
         return response()->json($myArray);
     }
-
     public function ViderPoubelleQr($qr){
         $poubelle = Poubelle::where('nom',$qr)->first();
         if(!$poubelle){
@@ -112,5 +110,56 @@ class ViderController extends BaseController{
             "Etat"=>$poubelle->Etat,
             "type"=>$poubelle->type,
         ]);
+    }
+    public function VidagePoubelle( $poubelle_id){
+        $poubelle = Poubelle::find($poubelle_id);
+        $quantite=(config('global.capacite_poubelle')* $poubelle->Etat)/ 100;
+        $ouvrier=auth()->guard('ouvrier')->user();
+        $camion_id = $ouvrier->camion_id;
+        $camion = Camion::find($camion_id);
+
+        $quantite_plastique =0;
+        $quantite_papier =0;
+        $quantite_composte =0;
+        $quantite_canette =0;
+        if ($poubelle->type==="plastique"){
+            $camion->volume_actuelle_plastique+=$quantite;
+            $quantite_plastique=$quantite;
+        }else if($poubelle->type==="papier"){
+            $camion->volume_actuelle_papier+=$quantite;
+            $quantite_papier=$quantite;
+        }else if($poubelle->type==="composte"){
+            $camion->volume_actuelle_composte+=$quantite;
+            $quantite_composte=$quantite;
+        }else if($poubelle->type==="canette"){
+            $camion->volume_actuelle_canette+=$quantite;
+            $quantite_canette=$quantite;
+        }
+        Vider_poubelle::create([
+            'poubelle_id'=>$poubelle_id,
+            'camion_id'=>$camion_id,
+            'date_depot'=>now(),
+            'quantite_depose_plastique'=>$quantite_plastique,
+            'quantite_depose_papier'=>$quantite_papier,
+            'quantite_depose_composte'=>$quantite_composte,
+            'quantite_depose_canette'=>$quantite_canette,
+            'type_poubelle'=>$poubelle->type,
+            'etat'=>$poubelle->Etat,
+        ]);
+        $poubelle->Etat=0;
+        $poubelle->save();
+        $camion->save();
+        $myArray = [
+            'poubelle_id'=>$poubelle->id,
+            'type'=>$poubelle->type,
+            'camion_id'=>$camion->id,
+            'ouvrier_id'=>$ouvrier->id,
+            'quantite'=>$quantite,
+            'quantite_plastique_camion'=>$camion->volume_actuelle_plastique,
+            'quantite_papier_camion'=>$camion->volume_actuelle_papier,
+            'quantite_composte_camion'=>$camion->volume_actuelle_composte,
+            'quantite_canette_camion'=>$camion->volume_actuelle_canette,
+        ];
+        return response()->json($myArray);
     }
 }

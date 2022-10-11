@@ -13,13 +13,13 @@ class ZoneTravailSeeder extends Seeder{
         foreach($region as $reg){
             Zone_travail::create([
                 'region'=> $reg,
-                'quantite_total_collecte_plastique'=> 0,
-                'quantite_total_collecte_composte'=>0,
-                'quantite_total_collecte_papier'=> 0,
-                'quantite_total_collecte_canette'=>0,
+                'quantite_total_collecte_plastique'=> random_int(1000,10000000),
+                'quantite_total_collecte_composte'=>random_int(1000,10000000),
+                'quantite_total_collecte_papier'=> random_int(1000,10000000),
+                'quantite_total_collecte_canette'=>random_int(1000,10000000),
             ]);
         }
-        Zone_depot::factory(7)->create();
+        Zone_depot::factory(6)->create();
 
         Camion::factory(10)->create();
 

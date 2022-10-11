@@ -19,34 +19,6 @@ class SommeDechetController extends Controller{
         ];
         return $myArray;
     }
-    public function StockDechetActuelle(){
-        $plastique_tot=Zone_depot::sum("quantite_depot_actuelle_plastique");
-        $papier_tot=Zone_depot::sum("quantite_depot_actuelle_papier");
-        $composte_tot=Zone_depot::sum("quantite_depot_actuelle_composte");
-        $canette_tot=Zone_depot::sum("quantite_depot_actuelle_canette");
-
-        $plastique_achette=Commande_dechet::where('dechet_id',1)->sum("quantite");
-        $papier_achette=Commande_dechet::where('dechet_id',3)->sum("quantite");
-        $composte_achette=Commande_dechet::where('dechet_id',2)->sum("quantite");
-        $canette_achette=Commande_dechet::where('dechet_id',4)->sum("quantite");
-
-        $myArray = [
-            'somme_depot_actuelle_plastique'=>abs(round( ($plastique_tot -$plastique_achette)* 1000)/1000) ,
-            'somme_depot_actuelle_papier'=>abs(round( ($papier_tot-$papier_achette )* 1000)/1000),
-            'somme_depot_actuelle_composte'=>abs(round(($composte_tot- $composte_achette) * 1000)/1000),
-            'somme_depot_actuelle_canette'=>abs(round(($canette_tot - $canette_achette) * 1000)/1000),
-        ];
-        return $myArray;
-    }
-    public function SommeDechetZoneTravail(){
-        $myArray = [
-            'quantite_total_collecte_plastique'=>Zone_travail::sum("quantite_total_collecte_plastique"),
-            'quantite_total_collecte_composte'=>Zone_travail::sum("quantite_total_collecte_composte"),
-            'quantite_total_collecte_papier'=>Zone_travail::sum("quantite_total_collecte_papier"),
-            'quantite_total_collecte_canette'=>Zone_travail::sum("quantite_total_collecte_canette"),
-        ];
-        return response()->json($myArray);
-    }
 
     public function PrixDechets(){
         $myArray = [
@@ -57,19 +29,6 @@ class SommeDechetController extends Controller{
         ];
         return response()->json($myArray);
     }
-
-    public function QuantiteDechetTotaleClient(){
-        $client=auth()->guard('client_dechet')->user();
-        $commande=Commande_dechet::where('client_dechet_id',$client->id)->pluck("id");
-        $myArray = [
-            'quantite_total_achetee_plastique'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_plastique"),
-            'quantite_total_achetee_composte'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_composte"),
-            'quantite_total_achetee_papier'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_papier"),
-            'quantite_total_achetee_canette'=>Commande_dechet::whereIn('id',$commande )->sum("quantite_canette"),
-        ];
-        return response()->json($myArray);
-      }
-
     public function SommeDechetsVendus(){
         $year = Commande_dechet::selectRaw('year(created_at) as year')
             ->groupBy('year')

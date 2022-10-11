@@ -75,8 +75,6 @@ use App\Http\Controllers\Globale\ViderPoubellesController;
 /** ---------------------------------------------- debut Dashboard ----------------------------------------------------*/
             /** -------------  **************         debut somme      **************************  ------------------**/
                     Route::get('/somme-total-stock-dechet-zone-depot', [SommeDechetController::class, 'SommeDechetZoneDepot']);
-                    Route::get('/stock-dechet-actuelle', [SommeDechetController::class, 'StockDechetActuelle']);
-                    Route::get('/somme-total-dechet-zone-travail', [SommeDechetController::class, 'SommeDechetZoneTravail']);
                     // Route::get('/somme-total-dechet-etablissement/{zone_travail_id}', [SommeDechetController::class, 'SommeDechetBlocEtablissement']);
 
                     Route::get('/prixdechets', [SommeDechetController::class, 'PrixDechets']);

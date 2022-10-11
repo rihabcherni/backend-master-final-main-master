@@ -29,9 +29,9 @@ Route::group(['prefix' => 'auth-ouvrier'], function () {
 
                     Route::post('/responsable' , [ResponsablePersonnelController::class , 'allResponsablePersonnels']);
 
-                    Route::get('/viderPoubelle/{poubelle}', [ViderPoubellesController::class, 'VidagePoubelle']);
-                    Route::post('/viderPoubelleQr/{qr}', [ViderController::class, 'ViderPoubelleQr']);
-                    Route::get('/viderCamion', [ViderController::class, 'ViderCamion']);
+                    Route::get('/vider-poubelle/{poubelle}', [ViderController::class, 'VidagePoubelle']);
+                    Route::post('/vider-poubelleQr/{qr}', [ViderController::class, 'ViderPoubelleQr']);
+                    Route::get('/vider-camion', [ViderController::class, 'ViderCamion']);
                     Route::get('/planning-ouvrier', [PlanningOuvrierController::class, 'planningOuvrier']);
 
                 });

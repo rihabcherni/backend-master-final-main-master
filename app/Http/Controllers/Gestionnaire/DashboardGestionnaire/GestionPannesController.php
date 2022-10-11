@@ -119,7 +119,6 @@ class GestionPannesController extends Controller{
                 ];
                 return response()->json($myArray);
     }
-
     public function PannesCamionAnnees(){
             $year = Reparation_camion::selectRaw('year(date_debut_reparation) as year')->groupBy('year')
             ->orderByRaw('min(date_debut_reparation) desc')->get();
@@ -138,7 +137,6 @@ class GestionPannesController extends Controller{
                 ];
                 return response()->json($myArray);
     }
-
     public function PanneCamionparMois(){
         $year = Reparation_camion::selectRaw('year(date_debut_reparation) as year')
             ->groupBy('year')->orderByRaw('min(date_debut_reparation) desc')->get();
@@ -168,7 +166,6 @@ class GestionPannesController extends Controller{
         $myArray = ['annee'=>$an,'nbr'=>$nbr_camion_panne,'cout'=>$cout_camion_panne,];
         return response()->json($myArray);
     }
-
     public function PannePoubelleparMois(){
         $year = Reparation_poubelle::selectRaw('year(date_debut_reparation) as year')
             ->groupBy('year')->orderByRaw('min(date_debut_reparation) desc')->get();
